@@ -1,9 +1,19 @@
-interface FooterProps {
-  className?: string;
-}
+import { Layout, Typography } from 'antd';
 
-function Footer({ className = '' }: FooterProps) {
-  return <></>;
-}
+const { Footer } = Layout;
 
-export default Footer;
+export function FooterComponent() {
+  return (
+    <Footer className="flex items-center justify-between bg-[#00081e] py-5">
+      <Typography.Text className="text-md">
+        Copyright © 2021{' '}
+        <Typography.Text className="text-md">POLARIS EVENT</Typography.Text>,
+        All rights reserved.
+      </Typography.Text>
+      <Typography.Text className="text-md">
+        Coded with{' '}
+        <Typography.Text className="text-md"> POLARIS EVENT</Typography.Text>{' '}
+      </Typography.Text>
+    </Footer>
+  );
+}
