@@ -1,0 +1,6 @@
+<svg width="0" height="0" viewBox="0 0 64 64" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+<rect width="64" height="64" rx="32" fill="#555555" fill-opacity="0.3"/>
+<path d="M38 26H36V32H38V26Z" fill="currentColor"/>
+<path d="M31 26H33V32H31V26Z" fill="currentColor"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M21 24L22.568 20H44V35L38 41H33L29.886 44H26V41H21V24ZM38 37L42 33V22H25V37H29V40L32 37H38Z" fill="currentColor"/>
+</svg>

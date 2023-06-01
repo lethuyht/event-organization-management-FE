@@ -1,0 +1,12 @@
+mutation signIn($input: SignInDto!) {
+  signIn(input: $input) {
+    token
+    refreshToken
+    id
+    email
+    role {
+      id
+      name
+    }
+  }
+}

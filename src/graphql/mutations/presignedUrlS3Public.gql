@@ -1,0 +1,7 @@
+mutation presignedUrlS3Public($presignedUrlDto: PresignedUrlDto!) {
+  presignedUrlS3(presignedUrlDto: $presignedUrlDto) {
+    fileType
+    pathFile
+    uploadUrl
+  }
+}

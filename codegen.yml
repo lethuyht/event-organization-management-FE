@@ -1,0 +1,22 @@
+overwrite: true
+schema:
+  - ${VITE_API_URL}:
+      headers:
+        authorization: ${CODE_GEN_TOKEN}
+config:
+  namingConvention:
+    transformUnderscore: true
+
+generates:
+  src/generated/schemas.tsx:
+    documents: 'src/graphql/**/**.gql'
+    plugins:
+      - typescript
+      - typescript-react-apollo
+      - typescript-operations
+    config:
+      withHOC: false
+      withComponent: false
+      withHooks: true
+      withRefetchFn: true
+      skipTypename: true

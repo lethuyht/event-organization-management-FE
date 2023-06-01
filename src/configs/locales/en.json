@@ -1,0 +1,402 @@
+{
+  "appInfo": {
+    "footer": "",
+    "name": "IT JOB FIND",
+    "description": "The system provides the fastest information technology job search and recruitment space."
+  },
+  "ZERO_RESULTS": "Address not found",
+  "sideBar": {
+    "employer": {
+      "dashboard": "Dashboard",
+      "companyProfile": "Company Profile",
+      "manageJobs": "Manage Jobs",
+      "manageCandidates": "Manage Candidates",
+      "postJob": "Post Job"
+    }
+  },
+  "forgotPassword": {
+    "title": "FORGOT PASSWORD",
+    "success": {
+      "description": "Please enter the email associated with your account so that we can assist you to reset your password."
+    },
+    "code": "Code"
+  },
+  "resetPassword": {
+    "title": "RESET PASSWORD",
+    "placeholderPassword": "Enter your new password",
+    "verifyAuthentication": "Verify Authentication Code"
+  },
+  "changePassword": {
+    "changePassword": "Change Password",
+    "oldPassword": "Current Password",
+    "newPassword": "New Password",
+    "confirmNewPassword": "Confirm New Password",
+    "newPasswordRequired": "New Password",
+    "twoPasswordNotMatch": "The two passwords that you entered do not match!"
+  },
+  "header": {
+    "profile": "Profile",
+    "logout": "Logout",
+    "notification": "Notification"
+  },
+  "signIn": {
+    "title": "Sign in to access your account",
+    "description": "Have a great experience with it job find",
+    "subTitle": "Smarter - Faster - Easier",
+    "rememberMe": "Remember me",
+    "signInBtn": "Sign In",
+    "email": "Email",
+    "forgotPassword": "Forgot password?",
+    "password": "Password",
+    "goToSignUp": "Not have an account yet?",
+    "permission": "Your account is disabled or you don't have access to this page!",
+    "passwordValidator": "Minimum eight characters with at least one letter, one number and one special character",
+    "check": "Wrong email or password"
+  },
+  "signUp": {
+    "title": "Register a account",
+    "signUpBtn": "Sign Up",
+    "email": "Email",
+    "phone": "Phone Number",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "fullName": "Full Name",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "confirmPasswordNotMatch": "Confirm new password does not match!",
+    "agreement": "I have read the",
+    "agreementLink": "agreement",
+    "goToLogin": "Already have an account?",
+    "gender": "Gender"
+  },
+  "gender": {
+    "male": "Male",
+    "female": "Female",
+    "nonBinary": "Non Binary"
+  },
+  "authentication": {
+    "authenticationRequired": "Authentication required!",
+    "description": "Please sign in before accessing this page"
+  },
+  "register": {
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "phoneNumber": "Phone Number",
+    "password": "Password",
+    "confirmNotMatch": "Confirm password does not match!",
+    "confirmPassword": "Confirm password",
+    "confirmAccount": "Already have an account?",
+    "description": "By clicking on Register, you agreed to our",
+    "termsOfUse": "Terms of Use",
+    "privacyPolicy": "Privacy Policy",
+    "companyName": "Company Name",
+    "title": "Register",
+    "yourName": "Your Name",
+    "emailAddress": "Email Address",
+    "signUp": "Sign up",
+    "loginQuotes": "Already have an account?",
+    "loginNow": "Log in now",
+    "agreeToTerms": "Agree to Terms & Conditions",
+    "yourBusinessName": "Your Business Name",
+    "businessOwnerName": "Business Owner Name",
+    "mustBeAtLeast8Characters": "Minimum 8 characters with at least one letter, one number and one special character",
+    "createAccount": "Create Account",
+    "cancelAndBackToWebsite": "Cancel and back to website",
+    "signUpWithFacebook": "Sign up with Facebook",
+    "registeredSuccessfully": "Account created successfully! Please check your mailbox to verify your account.",
+    "fullName": "Your Full Name",
+    "confirmPasswordNotMatch": "Confirm password doesn't match!",
+    "validPassword": "Minimum eight characters with at least one letter, one number and one special character",
+    "validPhoneNumber": "Please enter valid phone number!",
+    "validEmail": "Please enter valid email!",
+    "invalidEmailOrPassword": "Invalid email or password!",
+    "businessInformationRequired": "You must create your business information before access this page!",
+    "goToDashboard": "Go to Dashboard"
+  },
+  "profile": {
+    "title": "General Information",
+    "header": "Profile",
+    "profileInfo": "Profile Information",
+    "email": "Email",
+    "uploadAvatar": "Upload Avatar",
+    "username": "Username",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "gender": "Gender",
+    "phone": "Phone",
+    "fullName": "Full Name",
+    "role": "Role",
+    "required": "This is a required field!",
+    "descriptionRecommended": "Recommended 350px x 350px",
+    "descriptionMaxSize": "Max size: 100MB",
+    "profileImage": "Profile Image",
+    "name": "Name",
+    "updateSuccess": "Update successfully!"
+  },
+  "fields": {
+    "phoneNumber": "Phone Number",
+    "address": "Address",
+    "notes": "Notes",
+    "status": "Status",
+    "fullName": "Full Name",
+    "email": "Email",
+    "avatar": "Avatar",
+    "yourFullName": "Your full name",
+    "yourEmail": "Your email",
+    "yourPhone": "Your phone"
+  },
+  "CV": {
+    "title": "CV Management",
+    "description": "Manage your cv with create, view, download and delete action",
+    "CVName": "CV Name",
+    "appliedJobList": "Applied Job List",
+    "lastEdited": "Last Edited",
+    "action": "Action",
+    "createNewCv": "Create New CV",
+    "confirmDelete": "Are you sure to delete this CV ?",
+    "createYourNewCV": "Create Your New CV",
+    "yourCv": "Your CV",
+    "nameLabel": "Name"
+  },
+
+  "button": {
+    "create": "Create",
+    "add": "Add",
+    "edit": "Edit",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "save": "Save",
+    "ok": "Ok",
+    "search": "Search",
+    "reset": "Reset",
+    "resetMyPassword": "Reset Password",
+    "changePassword": "Change Password",
+    "forgotPassword": "Forgot Password",
+    "submit": "Submit",
+    "loadMore": "Load More...",
+    "update": "Update",
+    "filter": "Filter",
+    "clearFilter": "Clear",
+    "change": "Change",
+    "confirm": "Confirm",
+    "verify": "Verify",
+    "reject": "Reject",
+    "push": "Push",
+    "uploadFiles": "Upload Files",
+    "preview": "Preview",
+    "previous": "Previous",
+    "next": "Next",
+    "goTo": "Go to",
+    "backHome": "Back Home",
+    "clear": "Clear",
+    "readMore": "...",
+    "readLess": "less",
+    "downloadTemplate": "Download Template",
+    "upload": "Upload",
+    "mint": "Mint",
+    "transfer": "Transfer",
+    "viewTransaction": "View Transaction",
+    "signIn": "Sign In",
+    "applyNow": "Apply Now",
+    "apply": "Apply",
+    "follow": "Follow"
+  },
+  "empty": {
+    "page": "Sorry, the page you are trying to access does not exist.",
+    "n/a": "N/A"
+  },
+  "tooltip": {
+    "view": "View",
+    "edit": "Edit",
+    "delete": "Delete",
+    "detail": "Detail",
+    "title": {
+      "jobIsApplied": "This job is applied",
+      "clickToUnFollow": "Click to unfollow this job"
+    }
+  },
+  "label": {
+    "email": "Email",
+    "phoneNumber": "Phone Number",
+    "country": "Country",
+    "city": "City",
+    "address": "Address",
+    "description": "Description",
+    "notAvailable": "Not Available",
+    "currentSelectionIsDisabled": "Current selection is disabled.",
+    "unknown": "Unknown",
+    "addMore": "Add More",
+    "loading": "Loading",
+    "disabledSelection": "Current value is disabled or removed.",
+    "totalItems": "Total Items",
+    "selectCVAndAddInfo": " Select your CV and add some information about you",
+    "addNewCv": "You can add a new CV if you don't already have one or you want",
+    "followed": "Followed",
+    "applied": "Applied",
+    "requirements": "Requirements",
+    "website": "Website",
+    "location": "Location",
+    "companySize": "Company Size",
+    "techStack": "Tech Stack",
+    "benefits": "Benefits"
+  },
+  "modal": {
+    "confirm": "Confirm"
+  },
+  "placeholder": {
+    "jobTitle": "Please enter job title",
+    "companyName": "Please enter company name",
+    "searchBy": "Search by order status",
+    "searchForName": "Search for name",
+    "searchForEmail": "Search for email",
+    "searchForOrderID": "Search for order ID",
+    "searchBuyerWalletAddress": "Search buyer wallet address",
+    "emailAddress": "Email Address",
+    "enterPassword": "Enter your password",
+    "enterConfirmPassword": "Enter confirm password",
+    "enterYourFullName": "Enter your full name",
+    "enterYourPhoneNumber": "Enter your phone number",
+    "addDescription": "Add some description to introduce about yourself"
+  },
+  "configuration": {
+    "searchForAddresses": "Search for addresses",
+    "searchForSalaryRange": "Search for salary range",
+    "typeOfJob": "Type of Job",
+    "clickToSearch": "Click to search",
+    "popularCompanies": "Popular Companies",
+    "popularJobs": "Popular Jobs"
+  },
+  "job": {
+    "allStatuses": "All statues",
+    "fullTime": "Fulltime",
+    "partTime": "Part time",
+    "remote": "Remote",
+    "freelancer": "Freelancer"
+  },
+  "userJob": {
+    "appliedTitle": "Your applied job",
+    "followingTitle": "Your following job",
+    "description": "Manage your applied and following job",
+    "appliedTab": "Applied Job",
+    "followingTab": "Following Job",
+    "appliedJobTitle": "Job Title",
+    "appliedCompanyName": "Company Name",
+    "applicationDate": "Application Date",
+    "feedbackFromRecruiters": "Feedback From Recruiters",
+    "feedbackFromRecruitersDetail": "Feedback From Recruiters Detail",
+    "interview": "Interview",
+    "message": "Message",
+    "time": "Time",
+    "addToCalendar": "Add to calendar",
+    "event": "Event",
+    "accepted": "Accepted",
+    "rejected": "Rejected",
+    "detail": "Detail",
+    "noResponseYet": "No response yet"
+  },
+  "jobInfo": {
+    "roleAndResponse": "Your role & responsibilities",
+    "skillAndQualifications": "Your skills & qualifications",
+    "location": "Location",
+    "skills": "Skills",
+    "jobTypes": "Job Types",
+    "levels": "Levels",
+    "yearOfExperience": "Year Of Experience",
+    "recruitmentProcess": "Recruitment Process"
+  },
+
+  "message": {
+    "required": "This field is required!",
+    "forgotPassword": "An email has just been sent to your email address to reset the password. Follow the instruction to recover you password!",
+    "changePasswordSuccess": "Password changed successfully!",
+    "verifyCodeSuccess": "Code verified successfully!",
+    "updateProduct": "Product updated successfully!",
+    "updateStatus": "Status updated successfully!",
+    "activeCountry": "Country activated successfully!",
+    "deleteCountry": "Country deleted successfully!",
+    "importedProductSuccessfully": "Your request is being processed. Please check your mailbox for request status.",
+    "orderIDEmpty": "Order ID cannot be empty!",
+    "walletAddressEmpty": "Buyer Wallet Address cannot be empty!",
+    "validatedPrice": "Valid value is from 0.5$ to 999999.99$",
+    "noSpasesAllowed": "Cannot input empty value!",
+    "validateName": "The name cannot end with a space!",
+    "savedToClipboard": "Saved to Clipboard",
+    "updateProfileSuccessfully": "Update Profile Successfully! ",
+    "verifiedEmailSuccessfully": "Verified email successfully!",
+    "followingThisJob": "You is following this job",
+    "removedJob": "This job is removed your following job list"
+  },
+  "errors": {
+    "fileTypeIsNotAllowed": "File type is not allowed!",
+    "waitingUpdate": "N/A",
+    "emailExisted": "Email is already existed!",
+    "fileNameTooLong": "File name is too long. Maximum length allowed is 255 characters",
+    "invalidKey": "Invalid Key",
+    "sameAddress": "Recipient Address must not be the same as Sender Address",
+    "updateFullOfInformationBeforeApply": "Please update all information before applying",
+    "signInBefore": "Please sign in before doing action"
+  },
+
+  "options": {
+    "yes": "Yes",
+    "no": "No"
+  },
+  "inStocks": {
+    "create": "Create Stock",
+    "update": "Update Stock"
+  },
+  "navigation": {
+    "jobs": "IT Jobs",
+    "companies": "IT Companies",
+    "aboutUs": "About Us",
+    "services": "Services",
+    "more": "More",
+    "myProfile": "My Profile",
+    "CVManagement": "CV Management",
+    "appliedJob": "Applied Job",
+    "followingJob": "Following Job",
+    "faqs": "FAQs",
+    "blogs": "Blogs",
+    "home": "Home",
+    "employerDashboard": "Employer Dashboard",
+    "adminDashboard": "Admin Dashboard"
+  },
+  "footer": {
+    "home": "Home",
+    "products": "Products",
+    "aboutUs": "About Us",
+    "ourServices": "Our Services",
+    "termsOfService": "Terms of Service",
+    "privacyPolicy": "Privacy Policy",
+    "followUsOn": "Follow us on:",
+    "contactUs": "Contact us:",
+    "quickLink": "Quick links:"
+  },
+  "filter": {
+    "skill": "Skills",
+    "level": "Levels"
+  },
+  "city": {
+    "all": "All addresses ",
+    "HCM": "Ho Chi Minh City",
+    "DN": "Da Nang City",
+    "HN": "Ha Noi City"
+  },
+  "salaryRange": {
+    "upTo": "Up to",
+    "negotiable": "Negotiable",
+    "all": "All salary ranges",
+    "lessThan3000": "< $3000",
+    "300To500": "$300 - $500",
+    "500To700": "$500 - $700",
+    "700To1000": "$700 - $1000",
+    "1000To1200": "$1000 - $1200",
+    "1200To1500": "$1200 - $1500",
+    "1500To2000": "$1500 - $2000",
+    "greater2000": "> $2000"
+  },
+  "text": {
+    "before": "before",
+    "jobs": "Jobs"
+  }
+}

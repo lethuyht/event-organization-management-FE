@@ -1,0 +1,7 @@
+mutation verifyCode($input: CodeVerifyDto!) {
+  verifyCode(input: $input) {
+    token
+    refreshToken
+    id
+  }
+}
