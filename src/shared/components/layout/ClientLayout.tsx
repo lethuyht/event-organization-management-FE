@@ -12,7 +12,7 @@ function ClientLayout({ children }: MainLayoutProps) {
   return (
     <div>
       <Header authenticated={!!getToken()} />
-      <Container className="min-h-screen pt-24 pb-5">{children}</Container>
+      <Container className="min-h-screen pt-24 pb-5 bg-white">{children}</Container>
       <FooterComponent />
     </div>
   );
