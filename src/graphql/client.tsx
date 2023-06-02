@@ -21,7 +21,7 @@ import { GraphQLError } from 'graphql';
 import { cache } from './cache';
 import { omitDeep } from '#/shared/utils/tools';
 
-const httpLink = new HttpLink({ uri: import.meta.env.VITE_CLIENT_API_URL });
+const httpLink = new HttpLink({ uri: import.meta.env.VITE_API_URL });
 
 const withToken = setContext(async () => {
   const token = await getToken();

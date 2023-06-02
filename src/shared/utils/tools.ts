@@ -179,6 +179,7 @@ export const omitDeepArrayWalk = function (arr: any[], key: string): any[] {
 };
 
 import { get } from 'lodash';
+import { ReactNode } from 'react';
 
 export function convertDataToSelectOptions<T>(
   data: T[] | null,
@@ -220,3 +221,4 @@ export const getPopupContainer = (node: any, queries?: any) => {
 
   return document.body as HTMLElement;
 };
+
