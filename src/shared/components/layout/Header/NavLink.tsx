@@ -56,9 +56,8 @@ function NavLink({
       }
     >
       <Col
-        className={`flex h-full items-center justify-center ${
-          isActive ? 'bg-slate-100' : ''
-        }  hover:bg-slate-100`}
+        className={`flex h-full items-center justify-center ${isActive ? 'bg-slate-100' : ''
+          }  hover:bg-slate-100`}
       >
         {href ? (
           renderLink(href)
@@ -75,9 +74,8 @@ function NavLink({
       {href ? (
         <Link to={href}>
           <Typography
-            className={`text-2xl font-bold  ${
-              isActive ? 'text-red-500' : 'text-white'
-            }`}
+            className={`text-2xl font-bold  ${isActive ? 'text-orange-500' : 'text-white'
+              }`}
           >
             {title ?? 'Thông tin cá nhân'}
           </Typography>
