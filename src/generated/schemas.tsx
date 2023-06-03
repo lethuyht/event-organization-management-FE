@@ -36,6 +36,20 @@ export type FilterDto = {
   operator: QueryOperator;
 };
 
+export type IEvent = {
+  createdAt?: Maybe<Scalars['DateTime']>;
+  description: Scalars['String'];
+  id: Scalars['ID'];
+  isPublic: Scalars['Boolean'];
+  name: Scalars['String'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type IEvents = {
+  items: Array<IEvent>;
+  meta: MetaPaginationInterface;
+};
+
 export type IPreSignUrl = {
   fileType: Scalars['String'];
   pathFile: Scalars['String'];
@@ -51,6 +65,22 @@ export type IRole = {
 
 export type IRoles = {
   items: Array<IRole>;
+  meta: MetaPaginationInterface;
+};
+
+export type IService = {
+  createdAt?: Maybe<Scalars['DateTime']>;
+  description?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  images: Array<Scalars['String']>;
+  name: Scalars['String'];
+  serviceItems?: Maybe<Array<ServiceItem>>;
+  type: ServiceType;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type IServices = {
+  items: Array<IService>;
   meta: MetaPaginationInterface;
 };
 
@@ -95,6 +125,8 @@ export type Mutation = {
   signOut: ResponseMessageBase;
   signUp: ResponseMessageBase;
   updateMe: IUser;
+  upsertEvent: IEvent;
+  upsertService: IService;
   verifyCode: LoginResponse;
 };
 
@@ -144,6 +176,16 @@ export type MutationUpdateMeArgs = {
 };
 
 
+export type MutationUpsertEventArgs = {
+  input: UpsertEventDto;
+};
+
+
+export type MutationUpsertServiceArgs = {
+  input: UpsertServiceDto;
+};
+
+
 export type MutationVerifyCodeArgs = {
   input: CodeVerifyDto;
 };
@@ -170,10 +212,24 @@ export enum QueryOperator {
 }
 
 export type Query = {
+  getEvent: IEvent;
+  getEvents: IEvents;
   getMe: IUser;
   getRole: IRole;
   getRoles: IRoles;
+  getService: IService;
+  getServices: IServices;
   testQuery: Scalars['String'];
+};
+
+
+export type QueryGetEventArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryGetEventsArgs = {
+  queryParams: QueryFilterDto;
 };
 
 
@@ -184,6 +240,16 @@ export type QueryGetRoleArgs = {
 
 export type QueryGetRolesArgs = {
   queryParams: QueryFilterDto;
+};
+
+
+export type QueryGetServiceArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryGetServicesArgs = {
+  query: QueryFilterDto;
 };
 
 export type QueryFilterDto = {
@@ -252,6 +318,34 @@ export enum S3UploadType {
   Public = 'Public'
 }
 
+export type Service = {
+  createdAt?: Maybe<Scalars['DateTime']>;
+  description?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  images: Array<Scalars['String']>;
+  name: Scalars['String'];
+  serviceItems?: Maybe<Array<ServiceItem>>;
+  type: ServiceType;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type ServiceItem = {
+  createdAt?: Maybe<Scalars['DateTime']>;
+  description: Scalars['String'];
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  price: Scalars['Float'];
+  service: Service;
+  serviceId: Scalars['ID'];
+  totalQuantity: Scalars['Float'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export enum ServiceType {
+  Device = 'Device',
+  HumanResource = 'HumanResource'
+}
+
 export type SignInDto = {
   email: Scalars['String'];
   password: Scalars['String'];
@@ -266,6 +360,31 @@ export type SignUpDto = {
   firstName: Scalars['String'];
   lastName: Scalars['String'];
   password: Scalars['String'];
+  phoneNumber: Scalars['String'];
+};
+
+export type UpsertEventDto = {
+  description?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+  isPublic?: InputMaybe<Scalars['Boolean']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
+export type UpsertServiceDto = {
+  description: Scalars['String'];
+  id?: InputMaybe<Scalars['ID']>;
+  images: Array<Scalars['String']>;
+  name: Scalars['String'];
+  serviceItems?: InputMaybe<Array<UpsertServiceItemDto>>;
+  type: ServiceType;
+};
+
+export type UpsertServiceItemDto = {
+  description: Scalars['String'];
+  id?: InputMaybe<Scalars['ID']>;
+  name: Scalars['String'];
+  price: Scalars['Float'];
+  totalQuantity?: InputMaybe<Scalars['Float']>;
 };
 
 export type UserUpdateInput = {
@@ -312,9 +431,9 @@ export type ChangePasswordMutationFn = Apollo.MutationFunction<ChangePasswordMut
  * });
  */
 export function useChangePasswordMutation(baseOptions?: Apollo.MutationHookOptions<ChangePasswordMutation, ChangePasswordMutationVariables>) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useMutation<ChangePasswordMutation, ChangePasswordMutationVariables>(ChangePasswordDocument, options);
-}
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ChangePasswordMutation, ChangePasswordMutationVariables>(ChangePasswordDocument, options);
+      }
 export type ChangePasswordMutationHookResult = ReturnType<typeof useChangePasswordMutation>;
 export type ChangePasswordMutationResult = Apollo.MutationResult<ChangePasswordMutation>;
 export type ChangePasswordMutationOptions = Apollo.BaseMutationOptions<ChangePasswordMutation, ChangePasswordMutationVariables>;
@@ -347,9 +466,9 @@ export type PresignedUrlS3MutationFn = Apollo.MutationFunction<PresignedUrlS3Mut
  * });
  */
 export function usePresignedUrlS3Mutation(baseOptions?: Apollo.MutationHookOptions<PresignedUrlS3Mutation, PresignedUrlS3MutationVariables>) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useMutation<PresignedUrlS3Mutation, PresignedUrlS3MutationVariables>(PresignedUrlS3Document, options);
-}
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<PresignedUrlS3Mutation, PresignedUrlS3MutationVariables>(PresignedUrlS3Document, options);
+      }
 export type PresignedUrlS3MutationHookResult = ReturnType<typeof usePresignedUrlS3Mutation>;
 export type PresignedUrlS3MutationResult = Apollo.MutationResult<PresignedUrlS3Mutation>;
 export type PresignedUrlS3MutationOptions = Apollo.BaseMutationOptions<PresignedUrlS3Mutation, PresignedUrlS3MutationVariables>;
@@ -382,9 +501,9 @@ export type PresignedUrlS3PublicMutationFn = Apollo.MutationFunction<PresignedUr
  * });
  */
 export function usePresignedUrlS3PublicMutation(baseOptions?: Apollo.MutationHookOptions<PresignedUrlS3PublicMutation, PresignedUrlS3PublicMutationVariables>) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useMutation<PresignedUrlS3PublicMutation, PresignedUrlS3PublicMutationVariables>(PresignedUrlS3PublicDocument, options);
-}
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<PresignedUrlS3PublicMutation, PresignedUrlS3PublicMutationVariables>(PresignedUrlS3PublicDocument, options);
+      }
 export type PresignedUrlS3PublicMutationHookResult = ReturnType<typeof usePresignedUrlS3PublicMutation>;
 export type PresignedUrlS3PublicMutationResult = Apollo.MutationResult<PresignedUrlS3PublicMutation>;
 export type PresignedUrlS3PublicMutationOptions = Apollo.BaseMutationOptions<PresignedUrlS3PublicMutation, PresignedUrlS3PublicMutationVariables>;
@@ -415,9 +534,9 @@ export type RefreshTokenMutationFn = Apollo.MutationFunction<RefreshTokenMutatio
  * });
  */
 export function useRefreshTokenMutation(baseOptions?: Apollo.MutationHookOptions<RefreshTokenMutation, RefreshTokenMutationVariables>) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useMutation<RefreshTokenMutation, RefreshTokenMutationVariables>(RefreshTokenDocument, options);
-}
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RefreshTokenMutation, RefreshTokenMutationVariables>(RefreshTokenDocument, options);
+      }
 export type RefreshTokenMutationHookResult = ReturnType<typeof useRefreshTokenMutation>;
 export type RefreshTokenMutationResult = Apollo.MutationResult<RefreshTokenMutation>;
 export type RefreshTokenMutationOptions = Apollo.BaseMutationOptions<RefreshTokenMutation, RefreshTokenMutationVariables>;
@@ -455,9 +574,9 @@ export type SignInMutationFn = Apollo.MutationFunction<SignInMutation, SignInMut
  * });
  */
 export function useSignInMutation(baseOptions?: Apollo.MutationHookOptions<SignInMutation, SignInMutationVariables>) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useMutation<SignInMutation, SignInMutationVariables>(SignInDocument, options);
-}
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SignInMutation, SignInMutationVariables>(SignInDocument, options);
+      }
 export type SignInMutationHookResult = ReturnType<typeof useSignInMutation>;
 export type SignInMutationResult = Apollo.MutationResult<SignInMutation>;
 export type SignInMutationOptions = Apollo.BaseMutationOptions<SignInMutation, SignInMutationVariables>;
@@ -489,9 +608,9 @@ export type SignUpMutationFn = Apollo.MutationFunction<SignUpMutation, SignUpMut
  * });
  */
 export function useSignUpMutation(baseOptions?: Apollo.MutationHookOptions<SignUpMutation, SignUpMutationVariables>) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useMutation<SignUpMutation, SignUpMutationVariables>(SignUpDocument, options);
-}
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SignUpMutation, SignUpMutationVariables>(SignUpDocument, options);
+      }
 export type SignUpMutationHookResult = ReturnType<typeof useSignUpMutation>;
 export type SignUpMutationResult = Apollo.MutationResult<SignUpMutation>;
 export type SignUpMutationOptions = Apollo.BaseMutationOptions<SignUpMutation, SignUpMutationVariables>;
@@ -530,9 +649,9 @@ export type UpdateMeMutationFn = Apollo.MutationFunction<UpdateMeMutation, Updat
  * });
  */
 export function useUpdateMeMutation(baseOptions?: Apollo.MutationHookOptions<UpdateMeMutation, UpdateMeMutationVariables>) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useMutation<UpdateMeMutation, UpdateMeMutationVariables>(UpdateMeDocument, options);
-}
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateMeMutation, UpdateMeMutationVariables>(UpdateMeDocument, options);
+      }
 export type UpdateMeMutationHookResult = ReturnType<typeof useUpdateMeMutation>;
 export type UpdateMeMutationResult = Apollo.MutationResult<UpdateMeMutation>;
 export type UpdateMeMutationOptions = Apollo.BaseMutationOptions<UpdateMeMutation, UpdateMeMutationVariables>;
@@ -565,9 +684,9 @@ export type VerifyCodeMutationFn = Apollo.MutationFunction<VerifyCodeMutation, V
  * });
  */
 export function useVerifyCodeMutation(baseOptions?: Apollo.MutationHookOptions<VerifyCodeMutation, VerifyCodeMutationVariables>) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useMutation<VerifyCodeMutation, VerifyCodeMutationVariables>(VerifyCodeDocument, options);
-}
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<VerifyCodeMutation, VerifyCodeMutationVariables>(VerifyCodeDocument, options);
+      }
 export type VerifyCodeMutationHookResult = ReturnType<typeof useVerifyCodeMutation>;
 export type VerifyCodeMutationResult = Apollo.MutationResult<VerifyCodeMutation>;
 export type VerifyCodeMutationOptions = Apollo.BaseMutationOptions<VerifyCodeMutation, VerifyCodeMutationVariables>;
@@ -603,19 +722,132 @@ export const GetMeDocument = gql`
  * });
  */
 export function useGetMeQuery(baseOptions?: Apollo.QueryHookOptions<GetMeQuery, GetMeQueryVariables>) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useQuery<GetMeQuery, GetMeQueryVariables>(GetMeDocument, options);
-}
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMeQuery, GetMeQueryVariables>(GetMeDocument, options);
+      }
 export function useGetMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMeQuery, GetMeQueryVariables>) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useLazyQuery<GetMeQuery, GetMeQueryVariables>(GetMeDocument, options);
-}
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMeQuery, GetMeQueryVariables>(GetMeDocument, options);
+        }
 export type GetMeQueryHookResult = ReturnType<typeof useGetMeQuery>;
 export type GetMeLazyQueryHookResult = ReturnType<typeof useGetMeLazyQuery>;
 export type GetMeQueryResult = Apollo.QueryResult<GetMeQuery, GetMeQueryVariables>;
 export function refetchGetMeQuery(variables?: GetMeQueryVariables) {
-  return { query: GetMeDocument, variables: variables }
+      return { query: GetMeDocument, variables: variables }
+    }
+export const GetServiceDocument = gql`
+    query getService($id: String!) {
+  getService(id: $id) {
+    id
+    name
+    description
+    images
+    type
+    createdAt
+    updatedAt
+    serviceItems {
+      id
+      name
+      price
+      serviceId
+      description
+      totalQuantity
+      updatedAt
+      createdAt
+    }
+  }
 }
+    `;
+
+/**
+ * __useGetServiceQuery__
+ *
+ * To run a query within a React component, call `useGetServiceQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetServiceQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetServiceQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetServiceQuery(baseOptions: Apollo.QueryHookOptions<GetServiceQuery, GetServiceQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetServiceQuery, GetServiceQueryVariables>(GetServiceDocument, options);
+      }
+export function useGetServiceLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetServiceQuery, GetServiceQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetServiceQuery, GetServiceQueryVariables>(GetServiceDocument, options);
+        }
+export type GetServiceQueryHookResult = ReturnType<typeof useGetServiceQuery>;
+export type GetServiceLazyQueryHookResult = ReturnType<typeof useGetServiceLazyQuery>;
+export type GetServiceQueryResult = Apollo.QueryResult<GetServiceQuery, GetServiceQueryVariables>;
+export function refetchGetServiceQuery(variables: GetServiceQueryVariables) {
+      return { query: GetServiceDocument, variables: variables }
+    }
+export const GetServicesDocument = gql`
+    query getServices($query: QueryFilterDto!) {
+  getServices(query: $query) {
+    meta {
+      ...MetaFragment
+    }
+    items {
+      id
+      name
+      description
+      images
+      type
+      createdAt
+      updatedAt
+      serviceItems {
+        id
+        name
+        price
+        serviceId
+        description
+        totalQuantity
+        updatedAt
+        createdAt
+      }
+    }
+  }
+}
+    ${MetaFragmentFragmentDoc}`;
+
+/**
+ * __useGetServicesQuery__
+ *
+ * To run a query within a React component, call `useGetServicesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetServicesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetServicesQuery({
+ *   variables: {
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function useGetServicesQuery(baseOptions: Apollo.QueryHookOptions<GetServicesQuery, GetServicesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetServicesQuery, GetServicesQueryVariables>(GetServicesDocument, options);
+      }
+export function useGetServicesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetServicesQuery, GetServicesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetServicesQuery, GetServicesQueryVariables>(GetServicesDocument, options);
+        }
+export type GetServicesQueryHookResult = ReturnType<typeof useGetServicesQuery>;
+export type GetServicesLazyQueryHookResult = ReturnType<typeof useGetServicesLazyQuery>;
+export type GetServicesQueryResult = Apollo.QueryResult<GetServicesQuery, GetServicesQueryVariables>;
+export function refetchGetServicesQuery(variables: GetServicesQueryVariables) {
+      return { query: GetServicesDocument, variables: variables }
+    }
 export type MetaFragmentFragment = { totalItems: number, itemCount: number, itemsPerPage: number, totalPages: number, currentPage: number };
 
 export type ChangePasswordMutationVariables = Exact<{
@@ -678,3 +910,17 @@ export type GetMeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetMeQuery = { getMe: { avatar?: string | null, email: string, firstName: string, lastName: string, id: string, phoneNumber?: string | null, role: { name: string } } };
+
+export type GetServiceQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetServiceQuery = { getService: { id: string, name: string, description?: string | null, images: Array<string>, type: ServiceType, createdAt?: any | null, updatedAt?: any | null, serviceItems?: Array<{ id: string, name: string, price: number, serviceId: string, description: string, totalQuantity: number, updatedAt?: any | null, createdAt?: any | null }> | null } };
+
+export type GetServicesQueryVariables = Exact<{
+  query: QueryFilterDto;
+}>;
+
+
+export type GetServicesQuery = { getServices: { meta: { totalItems: number, itemCount: number, itemsPerPage: number, totalPages: number, currentPage: number }, items: Array<{ id: string, name: string, description?: string | null, images: Array<string>, type: ServiceType, createdAt?: any | null, updatedAt?: any | null, serviceItems?: Array<{ id: string, name: string, price: number, serviceId: string, description: string, totalQuantity: number, updatedAt?: any | null, createdAt?: any | null }> | null }> } };

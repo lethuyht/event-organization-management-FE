@@ -8,8 +8,8 @@ export const SignUp = () => {
 
   return (
     <ClientLayout >
-      <div className='w-full flex justify-center'>
-        <SignUpForm className="w-1/2 rounded-2xl  bg-[#242424]  " />
+      <div className='w-full flex justify-center pt-24'>
+        <SignUpForm className="w-1/2 rounded-2xl  bg-[#242424] " />
       </div>
 
     </ClientLayout>

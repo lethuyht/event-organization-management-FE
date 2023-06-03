@@ -20,7 +20,7 @@ const StyledPagination = styled(AntdPagination)`
       border-radius: 0.375rem;
       background: none;
       &-active {
-        background: linear-gradient(93.26deg, #f91b5a 1.8%, #712bff 98.01%);
+        background: var(--primary-color) !important;
         a {
           color: white !important;
         }
@@ -33,6 +33,21 @@ const StyledPagination = styled(AntdPagination)`
       }
       a {
         color: var(--color-gray);
+      }
+    }
+
+    .ant-pagination-options {
+      .ant-select-dropdown {
+        width: fit-content !important;
+        min-width: unset !important;
+        padding: 0 20px !important;
+
+        .ant-select-item-option {
+          padding: 0 30px !important;
+          &:hover {
+            color: var(--primary-color) !important;
+          }
+        }
       }
     }
   }

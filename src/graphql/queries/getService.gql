@@ -1,0 +1,21 @@
+query getService($id: String!) {
+  getService(id: $id) {
+    id
+    name
+    description
+    images
+    type
+    createdAt
+    updatedAt
+    serviceItems {
+      id
+      name
+      price
+      serviceId
+      description
+      totalQuantity
+      updatedAt
+      createdAt
+    }
+  }
+}
