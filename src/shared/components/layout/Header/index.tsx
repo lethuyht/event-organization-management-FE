@@ -1,7 +1,11 @@
 import { LogoSVG } from '#/assets/svg';
 
 import { MenuItem } from '#/shared/utils/type';
-import { CloseOutlined, MenuOutlined } from '@ant-design/icons';
+import {
+  CloseOutlined,
+  MenuOutlined,
+  ShoppingCartOutlined,
+} from '@ant-design/icons';
 import { Col, Image, Row, Typography } from 'antd';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -26,7 +30,7 @@ type Route = {
 function OverLay({ setVisible, routes, className }: OverLayProps) {
   const renderHref = (href: string, title: string) => (
     <Link to={href}>
-      <Typography className="cursor-pointer text-xl text-white hover:text-primary-color">
+      <Typography className="cursor-pointer text-xl text-white hover:text-orange-500">
         {title}
       </Typography>
     </Link>
@@ -65,13 +69,13 @@ const routes: MenuItem[] = [
     activeHrefs: ['event'],
   },
   {
-    href: `/device-service`,
+    href: `/device`,
     title: 'Thiết bị sự kiện',
     activeHrefs: ['device-service'],
   },
   {
     href: `/human-event`,
-    title: 'Nhân sự Event',
+    title: 'Nhân sự event',
     activeHrefs: ['human-event'],
   },
 ];
@@ -102,7 +106,7 @@ function Header({ authenticated }: HeaderProps) {
       >
         <Col className="px-[40px]">
           <Link to="/">
-            <Image src="logo.png" preview={false} width={120} />
+            <Image src="logo.png" preview={false} width={150} />
           </Link>
         </Col>
         <>

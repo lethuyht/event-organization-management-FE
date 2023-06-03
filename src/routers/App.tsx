@@ -4,6 +4,7 @@ import ClientLayout from '#/shared/components/layout/ClientLayout';
 import { useRoutes } from 'react-router-dom';
 import GuardRoute from './GuardRoute';
 import { VerifyCode } from '#/pages/Client/VerifyCode';
+import { DevicePage } from '#/pages/Device';
 
 const App = () => {
   const routes = useRoutes([
@@ -26,6 +27,10 @@ const App = () => {
     {
       path: '/verify-code',
       element: <VerifyCode />,
+    },
+    {
+      path: '/device',
+      element: <ClientLayout children={<DevicePage />} />,
     },
   ]);
 

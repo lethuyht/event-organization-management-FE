@@ -1,0 +1,26 @@
+query getServices($query: QueryFilterDto!) {
+  getServices(query: $query) {
+    meta {
+      ...MetaFragment
+    }
+    items {
+      id
+      name
+      description
+      images
+      type
+      createdAt
+      updatedAt
+      serviceItems {
+        id
+        name
+        price
+        serviceId
+        description
+        totalQuantity
+        updatedAt
+        createdAt
+      }
+    }
+  }
+}

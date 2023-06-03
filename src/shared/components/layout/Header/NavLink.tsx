@@ -38,7 +38,7 @@ function NavLink({
             label: menu?.render ? (
               menu?.render()
             ) : (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 ">
                 {menu?.href ? (
                   <Link to={menu?.href}>
                     <>
@@ -56,8 +56,9 @@ function NavLink({
       }
     >
       <Col
-        className={`flex h-full items-center justify-center ${isActive ? 'bg-slate-100' : ''
-          }  hover:bg-slate-100`}
+        className={`flex h-full items-center justify-center ${
+          isActive ? 'bg-slate-100' : ''
+        }  hover:bg-slate-100`}
       >
         {href ? (
           renderLink(href)
@@ -74,8 +75,9 @@ function NavLink({
       {href ? (
         <Link to={href}>
           <Typography
-            className={`text-2xl font-bold  ${isActive ? 'text-orange-500' : 'text-white'
-              }`}
+            className={`text-xl font-bold  ${
+              isActive ? 'text-orange-500' : 'text-white'
+            }`}
           >
             {title ?? 'Thông tin cá nhân'}
           </Typography>

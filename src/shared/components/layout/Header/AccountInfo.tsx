@@ -10,6 +10,8 @@ import { ROLE } from '#/shared/utils/type';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { USER_DEFAULT_IMAGE } from '#/shared/utils/constant';
+import { ShoppingCartOutlined } from '@ant-design/icons';
+import CartIcon from './Cart';
 
 type MenuType = {
   key: string | number;
@@ -38,7 +40,7 @@ const userMenus: MenuType[] = [
     key: 'user-contract',
     to: '/contract-management',
     icon: <UserAccountSVG width={20} height={20} />,
-    title: 'Quản ly hợp đồng',
+    title: 'Quản lý hợp đồng',
     href: ['/user/contract-management'],
   },
   {
@@ -104,49 +106,48 @@ function AccountInfo() {
     }
   }, [data]);
   return (
-    <Dropdown
-      overlay={
-        <Skeleton loading={loading}>
-          <Menu
-            className="bg-color-white-blur "
-            items={menus.map(menu => ({
-              key: menu.key,
-              label: (
-                <span
-                  onClick={menu.to ? () => navigate(`${menu.to}`) : logout}
-                  className={`flex items-center gap-3 ${
-                    menu?.href?.includes(pathname)
-                      ? 'text-gradient-primary text-error-color'
-                      : ''
-                  } text-2xl`}
-                >
-                  {menu?.href?.includes(pathname) && (
-                    <div className="h-2 w-2 rounded-full bg-red-600 " />
-                  )}
-                  {menu.icon}
-                  {menu.title}
-                </span>
-              ),
-            }))}
+    <div className="flex justify-between">
+      <CartIcon itemCount={1} />
+      <Dropdown
+        overlay={
+          <Skeleton loading={loading}>
+            <Menu
+              className="bg-[#242424] "
+              items={menus.map(menu => ({
+                key: menu.key,
+                label: (
+                  <span
+                    onClick={menu.to ? () => navigate(`${menu.to}`) : logout}
+                    className={`flex items-center gap-3 ${
+                      menu?.href?.includes(pathname)
+                        ? 'text-[rgb(249 115 22)]'
+                        : ''
+                    } text-2xl`}
+                  >
+                    {menu?.href?.includes(pathname) && (
+                      <div className="h-2 w-2 rounded-full" />
+                    )}
+                    {menu.icon}
+                    {menu.title}
+                  </span>
+                ),
+              }))}
+            />
+          </Skeleton>
+        }
+        placement="bottomRight"
+      >
+        <div className="flex items-center justify-end gap-2 pb-2">
+          <Avatar
+            className="bg-slate-100"
+            size={45}
+            src={data?.getMe?.avatar ?? USER_DEFAULT_IMAGE}
           />
-        </Skeleton>
-      }
-      placement="bottomRight"
-    >
-      <div className="flex items-center gap-2">
-        <Avatar
-          className="bg-slate-100"
-          size={45}
-          src={data?.getMe?.avatar ?? USER_DEFAULT_IMAGE}
-        />
-        <Typography className="cursor-pointer   text-2xl font-bold">
-          {showName.length >= 10
-            ? showName.slice(0, 10).concat('...')
-            : showName}
-        </Typography>
-        <ArrowDownSVG width={16} height={16} />
-      </div>
-    </Dropdown>
+
+          <ArrowDownSVG width={16} height={16} />
+        </div>
+      </Dropdown>
+    </div>
   );
 }
 

@@ -10,9 +10,9 @@ interface MainLayoutProps {
 }
 function ClientLayout({ children }: MainLayoutProps) {
   return (
-    <div>
+    <div className="bg-white">
       <Header authenticated={!!getToken()} />
-      <Container className="min-h-screen pt-24 pb-5 bg-white">{children}</Container>
+      <Container className="min-h-screen bg-white ">{children}</Container>
       <FooterComponent />
     </div>
   );
