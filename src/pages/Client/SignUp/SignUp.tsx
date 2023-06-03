@@ -29,14 +29,14 @@ const SignUpForm = ({ className }: { className: string }) => {
   };
   return (
     <>
-     
+
       <Form
         onFinish={handleSignUp}
         layout="vertical"
         className={`px-8 ${className}`}
         scrollToFirstError
-      >   
-        <Typography.Title className='w-full text-center py-3 mt-3' level={3}>ĐĂNG KÍ THÀNH VIÊN</Typography.Title>      
+      >
+        <Typography.Title className='w-full text-center py-3 mt-3 text-white' level={3}>ĐĂNG KÍ THÀNH VIÊN</Typography.Title>
         <Row className="mt-10">
           <Col span={24}>
             <Form.Item
@@ -49,12 +49,12 @@ const SignUpForm = ({ className }: { className: string }) => {
                   required: true,
                 },
               ]}
-              
+
             >
               <Input
                 prefix={
                   <span className="anticon mr-3">
-                    <Email width={15} height={15} style={{color:"black !important"}}/>
+                    <Email width={15} height={15} style={{ color: "white !important" }} />
                   </span>
                 }
               />
@@ -73,7 +73,7 @@ const SignUpForm = ({ className }: { className: string }) => {
               <Input.Password
                 prefix={
                   <span className="anticon mr-2">
-                    <Password width={20} height={20} className="text-[black]" />
+                    <Password width={20} height={20} className="text-[white]" />
                   </span>
                 }
               />
@@ -104,7 +104,7 @@ const SignUpForm = ({ className }: { className: string }) => {
               <Input.Password
                 prefix={
                   <span className="anticon mr-3">
-                    <Password width={20} height={20} className="text-[black]" />
+                    <Password width={20} height={20} className="text-[#ffff]" />
                   </span>
                 }
               />
@@ -158,14 +158,14 @@ const SignUpForm = ({ className }: { className: string }) => {
                 block
                 loading={signUpLoading}
               >
-               Đăng kí
+                Đăng kí
               </PrimaryButton>
             </Form.Item>
           </Col>
           <Col span={24} className="flex justify-center  mb-6">
-            <span className="pr-3 text-black">Đã có tài khoản ? </span>
-            <Link to="/sign-in" className="text-black hover:text-red-600 ">
-               Đăng nhập
+            <span className="pr-3 text-white">Đã có tài khoản? </span>
+            <Link to="/sign-in" className="text-white hover:text-orange-500 ">
+              Đăng nhập
             </Link>
           </Col>
         </Row>
