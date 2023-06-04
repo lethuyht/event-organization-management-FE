@@ -90,7 +90,9 @@ export function DevicePage() {
 
   return (
     <DevicePageStyles className="content">
-      <div className={`thumbnail  bg-[url('device_service_default.png')]`}>
+      <div
+        className={`thumbnail  bg-[url('../../assets/images/device_service_default.jpeg')]`}
+      >
         <Input
           value={inputValue}
           className="w-1/2 text-center "

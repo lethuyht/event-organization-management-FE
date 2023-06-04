@@ -38,9 +38,9 @@ export default ({ mode }) => {
           auto: true,
         },
         sourceMaps: {
-          include: ['./dist'],
+          include: ['./dist/assets'],
           ignore: ['node_modules'],
-          urlPrefix: '~',
+          urlPrefix: '~/assets',
         },
       }),
       vitePluginImp({
