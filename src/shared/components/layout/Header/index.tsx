@@ -100,6 +100,12 @@ function Header({ authenticated }: HeaderProps) {
         <Col className="px-[40px]">
           <Link to="/">
             <Image src="logo.png" preview={false} width={150} />
+            <Image
+              src="device_service_default"
+              preview={false}
+              width={150}
+              className="hidden"
+            />
           </Link>
         </Col>
         <>
