@@ -89,7 +89,7 @@ export function DevicePage() {
   });
 
   return (
-    <DevicePageStyles className="content">
+    <DevicePageStyles className="content ">
       <div
         className={`thumbnail  bg-[url('../../assets/images/device_service_default.jpeg')]`}
       >
@@ -104,10 +104,11 @@ export function DevicePage() {
           onPressEnter={() => {
             setSearch(inputValue);
             setInputValue('');
+            scrollTo({ top: 950, behavior: 'smooth' });
           }}
         />
       </div>
-      <Row className="mx-auto w-full  max-w-container py-8  ">
+      <Row className="mx-auto min-h-[1000px]  w-full max-w-container py-8 ">
         <Typography.Title level={1} className="w-full text-center text-red-500">
           Thiết bị sự kiện
         </Typography.Title>
