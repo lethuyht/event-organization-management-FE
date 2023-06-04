@@ -1,16 +1,9 @@
-import { LogoSVG } from '#/assets/svg';
-
 import { MenuItem } from '#/shared/utils/type';
-import {
-  CloseOutlined,
-  MenuOutlined,
-  ShoppingCartOutlined,
-} from '@ant-design/icons';
+import { CloseOutlined, MenuOutlined } from '@ant-design/icons';
 import { Col, Image, Row, Typography } from 'antd';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import PrimaryButton from '../../buttons/PrimaryButton';
-import Container from '../../common/Container';
 import AccountInfo from './AccountInfo';
 import NavLink from './NavLink';
 
