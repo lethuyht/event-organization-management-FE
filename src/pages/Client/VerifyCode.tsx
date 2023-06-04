@@ -37,7 +37,7 @@ export const VerifyCode = () => {
   };
   return (
     <ClientLayout>
-      <Row align="middle" justify="center" className="h-3/6 pt-24">
+      <Row align="middle" justify="center" className="h-3/6 py-24">
         <div
           className="flex w-1/2 flex-col items-center justify-center rounded-3xl bg-[#242424]  px-8 "
           style={{ margin: 'auto' }}

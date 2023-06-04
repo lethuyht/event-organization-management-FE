@@ -169,8 +169,11 @@ const SignUpForm = ({ className }: { className: string }) => {
             </Form.Item>
           </Col>
           <Col span={24} className="mb-6 flex justify-center ">
-            <span className="pr-3 text-white">Đã có tài khoản? </span>
-            <Link to="/sign-in" className="text-white hover:text-orange-500 ">
+            <span className="pr-3 text-lg text-white">Đã có tài khoản? </span>
+            <Link
+              to="/sign-in"
+              className="text-lg text-white hover:text-orange-500"
+            >
               Đăng nhập
             </Link>
           </Col>

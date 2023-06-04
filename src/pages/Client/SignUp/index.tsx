@@ -3,15 +3,12 @@ import { Typography } from 'antd';
 
 import SignUpForm from './SignUp';
 
-
 export const SignUp = () => {
-
   return (
-    <ClientLayout >
-      <div className='w-full flex justify-center pt-24'>
+    <ClientLayout>
+      <div className="flex w-full justify-center py-24">
         <SignUpForm className="w-1/2 rounded-2xl  bg-[#242424] " />
       </div>
-
     </ClientLayout>
   );
 };
