@@ -5,6 +5,7 @@ import { useRoutes } from 'react-router-dom';
 import GuardRoute from './GuardRoute';
 import { VerifyCode } from '#/pages/Client/VerifyCode';
 import { DevicePage } from '#/pages/Device';
+import { HumanPage } from '#/pages/Human';
 
 const App = () => {
   const routes = useRoutes([
@@ -31,6 +32,10 @@ const App = () => {
     {
       path: '/device',
       element: <ClientLayout children={<DevicePage />} />,
+    },
+    {
+      path: '/human-event',
+      element: <ClientLayout children={<HumanPage />} />,
     },
   ]);
 

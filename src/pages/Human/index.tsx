@@ -58,7 +58,7 @@ const DevicePageStyles = styled.div`
   }
 `;
 
-export function DevicePage() {
+export function HumanPage() {
   const [search, setSearch] = useState<string>('');
   const [inputValue, setInputValue] = useState<string>('');
   const { currentPage, pageSize, setCurrentPage } = usePagination();
@@ -68,7 +68,7 @@ export function DevicePage() {
         filters: [
           {
             field: 'Service.type',
-            data: ServiceType.Device,
+            data: ServiceType.HumanResource,
             operator: QueryOperator.Eq,
           },
           {
@@ -90,13 +90,13 @@ export function DevicePage() {
   return (
     <DevicePageStyles className="content ">
       <div
-        className={`thumbnail  bg-[url('../../assets/images/device_service_default.jpeg')]`}
+        className={`thumbnail  bg-[url('../../assets/images/human_service_default.jpeg')]`}
       >
         <Input
           value={inputValue}
           className="w-1/2 text-center "
           prefix={<SearchOutlined />}
-          placeholder="Nhập loại thiết bị cần tìm....."
+          placeholder="Nhập loại hình nhân sự cần tìm....."
           onChange={(value: any) => {
             setInputValue(value.target.value);
           }}
@@ -109,7 +109,7 @@ export function DevicePage() {
       </div>
       <Row className="mx-auto min-h-[1000px]  w-full max-w-container py-8 ">
         <Typography.Title level={1} className="w-full text-center text-red-500">
-          Thiết bị sự kiện
+          Nhân sự Event
         </Typography.Title>
         <Col span={24} className="py-8">
           <Skeleton loading={loading}>
