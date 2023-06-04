@@ -5,7 +5,10 @@ import {
 } from '#/generated/schemas';
 import Pagination from '#/shared/components/Styled/Pagination';
 import usePagination from '#/shared/hooks/usePagination';
-import { LOGO_IMAGE } from '#/shared/utils/constant';
+import {
+  DEVICE_ITEM_DEFAULT,
+  DEVICE_SERVICE_DEFAULT,
+} from '#/shared/utils/constant';
 import { scrollToTop, showError } from '#/shared/utils/tools';
 import { SearchOutlined } from '@ant-design/icons';
 import styled from '@emotion/styled';
@@ -87,7 +90,7 @@ export function DevicePage() {
 
   return (
     <DevicePageStyles className="content">
-      <div className=" thumbnail  bg-[url('public/device_service_default.jpeg')]">
+      <div className={`thumbnail  bg-[url('device_service_default.jpeg')]`}>
         <Input
           value={inputValue}
           className="w-1/2 text-center "
@@ -132,7 +135,7 @@ export function DevicePage() {
                           src={`${
                             device?.images?.length
                               ? device.images[0]
-                              : 'device_item_default.jpg'
+                              : DEVICE_ITEM_DEFAULT
                           }`}
                         />
                       }

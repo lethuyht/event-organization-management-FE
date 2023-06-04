@@ -1,6 +1,5 @@
 import { Email, Password } from '#/assets/svg';
 import PrimaryButton from '#/shared/components/buttons/PrimaryButton';
-import PageTitle from '#/shared/components/common/PageTitle';
 import ClientLayout from '#/shared/components/layout/ClientLayout';
 import useAuthentication from '#/shared/hooks/useAuthentication';
 import { Col, Form, Input, Row, Typography } from 'antd';
@@ -11,7 +10,7 @@ function SignInForm({ className }: { className: string }) {
 
   return (
     <>
-      <div className="flex w-full justify-center pt-24">
+      <div className="flex w-full justify-center py-24">
         <Form
           onFinish={handleSignIn}
           layout="vertical"
@@ -81,7 +80,7 @@ function SignInForm({ className }: { className: string }) {
 
             <Col span={24} className="text-center md:mb-6">
               <span className="pr-3 text-lg text-white">
-                Chưa có tài khoản?{' '}
+                Chưa có tài khoản?
               </span>
               <Link
                 to="/sign-up"
@@ -100,7 +99,7 @@ function SignInForm({ className }: { className: string }) {
 function SignIn() {
   return (
     <ClientLayout>
-      <Row align="middle" justify="center" className="">
+      <Row align="middle" justify="center">
         <div className="flex-col-center ">
           <SignInForm className="w-1/2 rounded-2xl bg-[#242424]  py-10 px-8 backdrop-blur-3xl" />
         </div>
