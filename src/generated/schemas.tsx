@@ -14,6 +14,49 @@ export type Scalars = {
   Int: number;
   Float: number;
   DateTime: any;
+  JSON: any;
+};
+
+export type AddItemToCartDto = {
+  amount?: Scalars['Float'];
+  hireDate: Scalars['DateTime'];
+  hireEndDate: Scalars['DateTime'];
+  serviceItemId: Scalars['ID'];
+};
+
+export enum ContractStatus {
+  Completed = 'Completed',
+  DepositPaid = 'DepositPaid',
+  Draft = 'Draft',
+  InProgress = 'InProgress',
+  WaitingPaid = 'WaitingPaid'
+}
+
+export enum ContractType {
+  Event = 'Event',
+  Service = 'Service'
+}
+
+export type Cart = {
+  cartItems?: Maybe<Array<CartItem>>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id: Scalars['ID'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  user: User;
+  userId: Scalars['ID'];
+};
+
+export type CartItem = {
+  amount: Scalars['Float'];
+  cart: Cart;
+  cartId: Scalars['ID'];
+  createdAt?: Maybe<Scalars['DateTime']>;
+  hireDate: Scalars['DateTime'];
+  hireEndDate: Scalars['DateTime'];
+  id: Scalars['ID'];
+  serviceItem: ServiceItem;
+  serviceItemId: Scalars['ID'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type ChangePasswordInput = {
@@ -26,9 +69,91 @@ export type CodeVerifyDto = {
   email: Scalars['String'];
 };
 
+export type Contract = {
+  address: Scalars['String'];
+  contractServiceItems: Array<ContractServiceItem>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  details: Scalars['JSON'];
+  fileUrl: Scalars['String'];
+  hireDate: Scalars['DateTime'];
+  hireEndDate: Scalars['DateTime'];
+  id: Scalars['ID'];
+  status: ContractStatus;
+  totalPrice: Scalars['Float'];
+  type: ContractType;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  user: User;
+  userId: Scalars['ID'];
+};
+
+export type ContractServiceItem = {
+  amount: Scalars['Float'];
+  contract: Contract;
+  contractId: Scalars['ID'];
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id: Scalars['ID'];
+  serviceItem: ServiceItem;
+  serviceItemId: Scalars['ID'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
 export type DeleteFileDto = {
   url: Scalars['String'];
 };
+
+export type Event = {
+  createdAt?: Maybe<Scalars['DateTime']>;
+  description: Scalars['String'];
+  detail: Scalars['String'];
+  id: Scalars['ID'];
+  isPublic: Scalars['Boolean'];
+  name: Scalars['String'];
+  thumbnail?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type EventRequest = {
+  createdAt?: Maybe<Scalars['DateTime']>;
+  event: Event;
+  eventId: Scalars['ID'];
+  eventRequestDetail: EventRequestDetail;
+  id: Scalars['ID'];
+  status: Scalars['String'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  user: User;
+  userId: Scalars['ID'];
+};
+
+export type EventRequestDetail = {
+  address?: Maybe<Scalars['String']>;
+  amountAttendee: Scalars['Float'];
+  createdAt?: Maybe<Scalars['DateTime']>;
+  customerName?: Maybe<Scalars['String']>;
+  endHireDate: Scalars['DateTime'];
+  eventRequest: EventRequest;
+  eventRequestId: Scalars['ID'];
+  id: Scalars['ID'];
+  isAcceptedComboService: Scalars['Boolean'];
+  phoneNumber?: Maybe<Scalars['String']>;
+  startHireDate: Scalars['DateTime'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type EventRequestDetailInput = {
+  address?: InputMaybe<Scalars['String']>;
+  amountAttendee?: InputMaybe<Scalars['Float']>;
+  customerName?: InputMaybe<Scalars['String']>;
+  endHireDate?: InputMaybe<Scalars['DateTime']>;
+  isAcceptedComboService?: InputMaybe<Scalars['Boolean']>;
+  phoneNumber?: InputMaybe<Scalars['String']>;
+  startHireDate?: InputMaybe<Scalars['DateTime']>;
+};
+
+export enum EventRequestStatus {
+  Accepted = 'ACCEPTED',
+  Draft = 'DRAFT',
+  Submitted = 'SUBMITTED'
+}
 
 export type FilterDto = {
   data?: InputMaybe<Scalars['String']>;
@@ -36,13 +161,63 @@ export type FilterDto = {
   operator: QueryOperator;
 };
 
+export type ICart = {
+  cartItems?: Maybe<Array<CartItem>>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id: Scalars['ID'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  user: User;
+  userId: Scalars['ID'];
+};
+
+export type IContract = {
+  address: Scalars['String'];
+  contractServiceItems: Array<ContractServiceItem>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  details: Scalars['JSON'];
+  fileUrl: Scalars['String'];
+  hireDate: Scalars['DateTime'];
+  hireEndDate: Scalars['DateTime'];
+  id: Scalars['ID'];
+  status: ContractStatus;
+  totalPrice: Scalars['Float'];
+  type: ContractType;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  user: User;
+  userId: Scalars['ID'];
+};
+
+export type IContracts = {
+  items: Array<IContract>;
+  meta: MetaPaginationInterface;
+};
+
 export type IEvent = {
   createdAt?: Maybe<Scalars['DateTime']>;
   description: Scalars['String'];
+  detail: Scalars['String'];
   id: Scalars['ID'];
   isPublic: Scalars['Boolean'];
   name: Scalars['String'];
+  thumbnail?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type IEventRequest = {
+  createdAt?: Maybe<Scalars['DateTime']>;
+  event: Event;
+  eventId: Scalars['ID'];
+  eventRequestDetail: EventRequestDetail;
+  id: Scalars['ID'];
+  status: Scalars['String'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  user: User;
+  userId: Scalars['ID'];
+};
+
+export type IEventRequests = {
+  items: Array<IEventRequest>;
+  meta: MetaPaginationInterface;
 };
 
 export type IEvents = {
@@ -116,18 +291,27 @@ export type MetaPaginationInterface = {
 };
 
 export type Mutation = {
+  addItemToCart: ResponseMessageBase;
   changePassword: ResponseMessageBase;
   deleteFileS3: Scalars['String'];
   presignedUrlS3: IPreSignUrl;
   presignedUrlS3Public: IPreSignUrl;
   refreshToken: RefreshResponse;
+  requestCreateContract: IContract;
   signIn: LoginResponse;
   signOut: ResponseMessageBase;
   signUp: ResponseMessageBase;
+  updateEventRequestStatusByAdmin: IEventRequest;
   updateMe: IUser;
   upsertEvent: IEvent;
+  upsertEventRequest: IEventRequest;
   upsertService: IService;
   verifyCode: LoginResponse;
+};
+
+
+export type MutationAddItemToCartArgs = {
+  input: AddItemToCartDto;
 };
 
 
@@ -156,6 +340,11 @@ export type MutationRefreshTokenArgs = {
 };
 
 
+export type MutationRequestCreateContractArgs = {
+  input: RequestContractDto;
+};
+
+
 export type MutationSignInArgs = {
   input: SignInDto;
 };
@@ -171,6 +360,11 @@ export type MutationSignUpArgs = {
 };
 
 
+export type MutationUpdateEventRequestStatusByAdminArgs = {
+  input: UpdateEventRequestStatusByAdminInput;
+};
+
+
 export type MutationUpdateMeArgs = {
   input: UserUpdateInput;
 };
@@ -178,6 +372,11 @@ export type MutationUpdateMeArgs = {
 
 export type MutationUpsertEventArgs = {
   input: UpsertEventDto;
+};
+
+
+export type MutationUpsertEventRequestArgs = {
+  input: UpsertEventRequestInput;
 };
 
 
@@ -212,9 +411,15 @@ export enum QueryOperator {
 }
 
 export type Query = {
+  getContract: IContract;
+  getContracts: IContracts;
   getEvent: IEvent;
+  getEventRequest: IEventRequest;
+  getEventRequests: IEventRequests;
   getEvents: IEvents;
   getMe: IUser;
+  getMyCart: ICart;
+  getMyContracts: IContracts;
   getRole: IRole;
   getRoles: IRoles;
   getService: IService;
@@ -223,12 +428,37 @@ export type Query = {
 };
 
 
+export type QueryGetContractArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryGetContractsArgs = {
+  queryParams: QueryFilterDto;
+};
+
+
 export type QueryGetEventArgs = {
   id: Scalars['ID'];
 };
 
 
+export type QueryGetEventRequestArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryGetEventRequestsArgs = {
+  queryParams: QueryFilterDto;
+};
+
+
 export type QueryGetEventsArgs = {
+  queryParams: QueryFilterDto;
+};
+
+
+export type QueryGetMyContractsArgs = {
   queryParams: QueryFilterDto;
 };
 
@@ -301,6 +531,11 @@ export type RefreshTokenDto = {
   refreshToken: Scalars['String'];
 };
 
+export type RequestContractDto = {
+  address: Scalars['String'];
+  cartItemIds: Array<Scalars['ID']>;
+};
+
 export type ResponseMessageBase = {
   message?: Maybe<Scalars['String']>;
   success?: Maybe<Scalars['Boolean']>;
@@ -363,11 +598,25 @@ export type SignUpDto = {
   phoneNumber: Scalars['String'];
 };
 
+export type UpdateEventRequestStatusByAdminInput = {
+  id?: InputMaybe<Scalars['ID']>;
+  status?: InputMaybe<EventRequestStatus>;
+};
+
 export type UpsertEventDto = {
   description?: InputMaybe<Scalars['String']>;
+  detail?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['ID']>;
   isPublic?: InputMaybe<Scalars['Boolean']>;
   name?: InputMaybe<Scalars['String']>;
+  thumbnail?: InputMaybe<Scalars['String']>;
+};
+
+export type UpsertEventRequestInput = {
+  eventId?: InputMaybe<Scalars['ID']>;
+  eventRequestDetail?: InputMaybe<EventRequestDetailInput>;
+  id?: InputMaybe<Scalars['ID']>;
+  status?: InputMaybe<EventRequestStatus>;
 };
 
 export type UpsertServiceDto = {
@@ -385,6 +634,21 @@ export type UpsertServiceItemDto = {
   name: Scalars['String'];
   price: Scalars['Float'];
   totalQuantity?: InputMaybe<Scalars['Float']>;
+};
+
+export type User = {
+  avatar?: Maybe<Scalars['String']>;
+  cart?: Maybe<Cart>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  email: Scalars['String'];
+  firstName: Scalars['String'];
+  id: Scalars['ID'];
+  lastName: Scalars['String'];
+  password: Scalars['String'];
+  phoneNumber?: Maybe<Scalars['String']>;
+  role: Role;
+  roleId: Scalars['ID'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type UserUpdateInput = {
@@ -690,6 +954,54 @@ export function useVerifyCodeMutation(baseOptions?: Apollo.MutationHookOptions<V
 export type VerifyCodeMutationHookResult = ReturnType<typeof useVerifyCodeMutation>;
 export type VerifyCodeMutationResult = Apollo.MutationResult<VerifyCodeMutation>;
 export type VerifyCodeMutationOptions = Apollo.BaseMutationOptions<VerifyCodeMutation, VerifyCodeMutationVariables>;
+export const GetEventsDocument = gql`
+    query getEvents($queryParams: QueryFilterDto!) {
+  getEvents(queryParams: $queryParams) {
+    meta {
+      ...MetaFragment
+    }
+    items {
+      id
+      name
+      description
+      detail
+      thumbnail
+      updatedAt
+    }
+  }
+}
+    ${MetaFragmentFragmentDoc}`;
+
+/**
+ * __useGetEventsQuery__
+ *
+ * To run a query within a React component, call `useGetEventsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetEventsQuery({
+ *   variables: {
+ *      queryParams: // value for 'queryParams'
+ *   },
+ * });
+ */
+export function useGetEventsQuery(baseOptions: Apollo.QueryHookOptions<GetEventsQuery, GetEventsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetEventsQuery, GetEventsQueryVariables>(GetEventsDocument, options);
+      }
+export function useGetEventsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetEventsQuery, GetEventsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetEventsQuery, GetEventsQueryVariables>(GetEventsDocument, options);
+        }
+export type GetEventsQueryHookResult = ReturnType<typeof useGetEventsQuery>;
+export type GetEventsLazyQueryHookResult = ReturnType<typeof useGetEventsLazyQuery>;
+export type GetEventsQueryResult = Apollo.QueryResult<GetEventsQuery, GetEventsQueryVariables>;
+export function refetchGetEventsQuery(variables: GetEventsQueryVariables) {
+      return { query: GetEventsDocument, variables: variables }
+    }
 export const GetMeDocument = gql`
     query getMe {
   getMe {
@@ -905,6 +1217,13 @@ export type VerifyCodeMutationVariables = Exact<{
 
 
 export type VerifyCodeMutation = { verifyCode: { token: string, refreshToken: string, id: string } };
+
+export type GetEventsQueryVariables = Exact<{
+  queryParams: QueryFilterDto;
+}>;
+
+
+export type GetEventsQuery = { getEvents: { meta: { totalItems: number, itemCount: number, itemsPerPage: number, totalPages: number, currentPage: number }, items: Array<{ id: string, name: string, description: string, detail: string, thumbnail?: string | null, updatedAt?: any | null }> } };
 
 export type GetMeQueryVariables = Exact<{ [key: string]: never; }>;
 

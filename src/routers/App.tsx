@@ -6,12 +6,14 @@ import GuardRoute from './GuardRoute';
 import { VerifyCode } from '#/pages/Client/VerifyCode';
 import { DevicePage } from '#/pages/Device';
 import { HumanPage } from '#/pages/Human';
+import { EventPage } from '#/pages/Client/event';
+import HomePage from '#/pages/Home';
 
 const App = () => {
   const routes = useRoutes([
     {
       path: '/',
-      element: <ClientLayout children={<>Hello</>} />,
+      element: <ClientLayout children={<HomePage></HomePage>} />,
     },
     {
       path: '/sign-in',
@@ -28,6 +30,10 @@ const App = () => {
     {
       path: '/verify-code',
       element: <VerifyCode />,
+    },
+    {
+      path: '/event',
+      element: <ClientLayout children={<EventPage />} />,
     },
     {
       path: '/device',

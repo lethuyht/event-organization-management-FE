@@ -1,0 +1,15 @@
+query getEvents($queryParams: QueryFilterDto!) {
+  getEvents(queryParams: $queryParams) {
+    meta {
+      ...MetaFragment
+    }
+    items {
+      id
+      name
+      description
+      detail     
+      thumbnail 
+      updatedAt        
+    }
+  }
+}
