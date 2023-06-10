@@ -64,7 +64,7 @@ const routes: MenuItem[] = [
   {
     href: `/device`,
     title: 'Thiết bị sự kiện',
-    activeHrefs: ['device-service'],
+    activeHrefs: ['device'],
   },
   {
     href: `/human-event`,
