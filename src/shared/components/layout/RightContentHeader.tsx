@@ -1,10 +1,8 @@
 import { userVar } from '#/graphql/cache';
-
 import { USER_DEFAULT_IMAGE } from '#/shared/utils/constant';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { useReactiveVar } from '@apollo/client';
 import { Avatar, Button, Dropdown, Menu } from 'antd';
-import { useNavigate } from 'react-router-dom';
 
 interface Props {
   logout: () => void;
@@ -13,13 +11,7 @@ interface Props {
 }
 
 function RightContentHeader({ logout, setCollapse, isCollapsed }: Props) {
-  const navigate = useNavigate();
-
   const user = useReactiveVar(userVar);
-
-  const redirectToInfoPage = () => {
-    navigate('/employer/company');
-  };
 
   const menu = (
     <Menu>
@@ -28,7 +20,7 @@ function RightContentHeader({ logout, setCollapse, isCollapsed }: Props) {
         key="logout"
         className="px-4 py-2 text-lg text-black"
       >
-        {'Đăng xuất'}
+        Đăng xuất
       </Menu.Item>
     </Menu>
   );
@@ -52,9 +44,6 @@ function RightContentHeader({ logout, setCollapse, isCollapsed }: Props) {
       <div className="flex">
         <Dropdown overlay={menu}>
           <div className="flex items-center">
-            <div className="mr-2 flex flex-col items-end leading-tight text-black">
-              {`${user?.firstName} ${user?.lastName}` ?? ''}
-            </div>
             <Avatar size="large" src={user?.avatar ?? USER_DEFAULT_IMAGE} />
           </div>
         </Dropdown>

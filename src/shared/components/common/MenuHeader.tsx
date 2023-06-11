@@ -17,12 +17,16 @@ export const MenuHeader: React.FC<MenuHeaderProps> = ({ logo, title }) => {
 
 interface MenuSidebarItemProps {
   path?: string;
-  dom: ReactNode;
+  dom: React.ReactNode;
 }
 
 export const MenuSidebarItem: React.FC<MenuSidebarItemProps> = ({
   path,
   dom,
 }) => {
-  return <Link to={path !== undefined ? path : '/'}>{dom}</Link>;
+  return (
+    <Link to={path !== undefined ? path : '/'}>
+      <div>{dom}</div>
+    </Link>
+  );
 };

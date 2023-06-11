@@ -38,7 +38,8 @@
 @gradient-primary: linear-gradient(95.76deg, #e2104c 13.68%, #e23f10 98.08%);
 @gradient-btn: linear-gradient(93.26deg, #f91b5a 1.8%, #712bff 98.01%);
 @reverse-gradient-btn: linear-gradient(93.26deg, #712bff 1.8%, #f91b5a 98.01%);
-@outline-gradient: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)) padding-box,
+@outline-gradient: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75))
+    padding-box,
   linear-gradient(to right, #f91b5a, #712bff) border-box;
 @checkbox-border-radius: 3px;
 
@@ -287,11 +288,11 @@ input[data-autocompleted] {
     border: 1px solid #fff;
     background-color: transparent !important;
 
-    .ant-input-prefix>.anticon>svg {
+    .ant-input-prefix > .anticon > svg {
       color: white !important;
     }
 
-    .ant-input-suffix>.anticon>svg {
+    .ant-input-suffix > .anticon > svg {
       color: white !important;
     }
 
@@ -335,7 +336,6 @@ input[data-autocompleted] {
 }
 
 .ant-select {
-
   // transform: translateY(-0.5px);
   &-clear {
     background: none;
@@ -383,18 +383,18 @@ input[data-autocompleted] {
 .ant-table {
   background: none;
 
-  &-container table>thead>tr:first-child th:last-child {
+  &-container table > thead > tr:first-child th:last-child {
     border-top-right-radius: 0.625rem;
     border-bottom-right-radius: 0.625rem;
   }
 
-  &-container table>thead>tr:first-child th:first-child {
+  &-container table > thead > tr:first-child th:first-child {
     border-top-left-radius: 0.625rem;
     border-bottom-left-radius: 0.625rem;
   }
 
   &-thead {
-    &>tr>th {
+    & > tr > th {
       border: none;
       margin-bottom: 1rem;
     }
@@ -411,7 +411,7 @@ input[data-autocompleted] {
       background: none !important;
     }
 
-    tr>td {
+    tr > td {
       border: none;
       background: none !important;
       vertical-align: baseline;
@@ -488,7 +488,7 @@ input[data-autocompleted] {
     color: black !important;
   }
 
-  .ant-form-item-label>label {
+  .ant-form-item-label > label {
     color: black !important;
     font-size: 16px !important;
   }
@@ -502,7 +502,7 @@ input[data-autocompleted] {
   & .ant-btn-dangerous {
     background-color: red !important;
 
-    &>span {
+    & > span {
       color: #ffffff !important;
     }
   }
@@ -517,13 +517,13 @@ input[data-autocompleted] {
     display: block;
   }
 
-  & .ant-form-item-label>label,
-  & .ant-form-item-control-input-content>input {
+  & .ant-form-item-label > label,
+  & .ant-form-item-control-input-content > input {
     color: #000 !important;
   }
 
   & .ant-form-item-control-input-content {
-    &>.ant-btn-ghost {
+    & > .ant-btn-ghost {
       background-color: red !important;
       border: none;
 
@@ -532,7 +532,7 @@ input[data-autocompleted] {
       }
     }
 
-    &>.ant-btn-primary {
+    & > .ant-btn-primary {
       background-color: rgb(34 197 94) !important;
       border: none;
     }
@@ -561,7 +561,8 @@ input[data-autocompleted] {
   }
 
   & .ant-select-selector {
-    & .ant-select-item.ant-select-item-option.ant-select-item-option-selected:hover {
+    &
+      .ant-select-item.ant-select-item-option.ant-select-item-option-selected:hover {
       opacity: 50%;
     }
 
@@ -608,7 +609,7 @@ input[data-autocompleted] {
 }
 
 .ant-picker-input {
-  &>input {
+  & > input {
     color: #000 !important;
   }
 }
@@ -635,7 +636,7 @@ input[data-autocompleted] {
   }
 }
 
-.ant-table-tbody tr>td {
+.ant-table-tbody tr > td {
   vertical-align: middle !important;
 }
 
@@ -695,7 +696,7 @@ input[data-autocompleted] {
   justify-content: center;
 }
 
-.ant-form-item-label>label {
+.ant-form-item-label > label {
   color: white !important;
   font-size: 16px !important;
 }
@@ -714,5 +715,77 @@ input[data-autocompleted] {
 .ant-empty {
   .ant-empty-description {
     color: black !important;
+  }
+}
+
+.ant-layout-sider {
+  .ant-pro-base-menu-inline-item-icon {
+    height: 100%;
+  }
+  .ant-menu-item {
+    .ant-pro-base-menu-inline-item-title {
+      color: black;
+      display: flex;
+      padding: 25px 0;
+
+      .ant-pro-base-menu-inline-item-text {
+        font-size: 18px;
+      }
+    }
+    &.ant-menu-item-selected {
+      .ant-pro-base-menu-inline-item-title {
+        color: unset;
+      }
+    }
+
+    .ant-pro-menu-item-title {
+      font-size: 18px !important;
+      font-weight: 500 !important;
+    }
+  }
+  .ant-menu-submenu {
+    .ant-menu-submenu-title {
+      color: black !important;
+      font-size: 18px;
+
+      &:hover {
+        color: unset !important;
+      }
+
+      .ant-pro-base-menu-inline-item-text {
+        font-size: 18px;
+      }
+    }
+
+    &.ant-menu-submenu-selected {
+      .ant-menu-submenu-title {
+        color: unset !important;
+      }
+    }
+  }
+
+  .anticon {
+    font-size: 25px !important;
+  }
+
+  .ant-pro-base-menu-inline-item-icon {
+    margin-right: 10px;
+  }
+}
+
+.ant-dropdown-menu-title-content:hover {
+  color: @primary-color !important;
+}
+
+.ant-menu-submenu-popup {
+  .ant-pro-menu-item {
+    color: black;
+  }
+
+  .ant-menu-item-active,
+  .ant-menu-item-selected {
+    .ant-pro-menu-item {
+      color: unset !important;
+    }
   }
 }

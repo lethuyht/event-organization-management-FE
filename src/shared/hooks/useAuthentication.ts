@@ -16,11 +16,8 @@ const useAuthentication = () => {
       setToken(res.signIn.token);
       setRefreshToken(res.signIn.refreshToken);
       setUserId(res.signIn.id);
-      if (res.signIn.role?.name === ROLE.EMPLOYER) {
-        navigate('/employer/company');
-        window.location.reload();
-      } else if (res.signIn.role?.name === ROLE.ADMIN) {
-        navigate('/admin/user-management');
+      if (res.signIn.role?.name === ROLE.ADMIN) {
+        navigate('/admin/contract-management');
         window.location.reload();
       } else {
         navigate('/');

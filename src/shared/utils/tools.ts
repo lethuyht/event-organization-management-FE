@@ -222,3 +222,45 @@ export const getPopupContainer = (node: any, queries?: any) => {
   return document.body as HTMLElement;
 };
 
+import { useState, useMemo } from 'react';
+
+interface TableData<T> {
+  pageSize: number;
+  onChange: (params: { current?: number; pageSize?: number }) => void;
+  setPageSize: React.Dispatch<React.SetStateAction<number>>;
+  currentPage: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  formatData: T[];
+}
+
+export function useTable<T>(
+  data: T[] = [],
+  defaultPageSize = 10,
+): TableData<T> {
+  const [pageSize, setPageSize] = useState(defaultPageSize);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const formatData = useMemo(() => {
+    return data.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+  }, [data, pageSize, currentPage]);
+
+  const onChange = ({
+    current,
+    pageSize,
+  }: {
+    current?: number;
+    pageSize?: number;
+  }) => {
+    setCurrentPage(current != null ? current : 1);
+    setPageSize(pageSize != null ? pageSize : 10);
+  };
+
+  return {
+    pageSize,
+    onChange,
+    setPageSize,
+    currentPage,
+    setCurrentPage,
+    formatData,
+  };
+}

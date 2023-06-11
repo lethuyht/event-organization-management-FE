@@ -1,16 +1,12 @@
-import { Avatar, Dropdown, Menu, Skeleton, Typography } from 'antd';
-
+import { Avatar, Dropdown, Menu, Skeleton } from 'antd';
 import { ArrowDownSVG, LogoutSVG, UserAccountSVG } from '#/assets/svg';
 import { useGetMeQuery } from '#/generated/schemas';
-
 import { userVar } from '#/graphql/cache';
-
+import { USER_DEFAULT_IMAGE } from '#/shared/utils/constant';
 import { clearLocalStorage } from '#/shared/utils/token';
 import { ROLE } from '#/shared/utils/type';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { USER_DEFAULT_IMAGE } from '#/shared/utils/constant';
-import { ShoppingCartOutlined } from '@ant-design/icons';
 import CartIcon from './Cart';
 
 type MenuType = {
@@ -68,10 +64,10 @@ const adminMenus: MenuType[] = [
   },
   {
     key: 'admin-dashboard',
-    to: '/admin/user-management',
+    to: '/admin/contract-management',
     icon: <UserAccountSVG width={20} height={20} />,
     title: 'Vào trang quản trị',
-    href: ['/admin'],
+    href: ['/admin/contract-management'],
   },
   {
     key: 'logout',
@@ -85,7 +81,6 @@ function AccountInfo() {
   const navigate = useNavigate();
 
   const [menus, setMenus] = useState<MenuType[]>(userMenus);
-  const [showName, setShowName] = useState('');
 
   const logout = () => {
     clearLocalStorage();
@@ -96,7 +91,6 @@ function AccountInfo() {
   const { data, loading } = useGetMeQuery({
     onCompleted(data) {
       userVar(data?.getMe);
-      setShowName(`${data?.getMe?.firstName} ${data?.getMe?.lastName}` ?? '');
     },
   });
 

@@ -1,14 +1,16 @@
+import { AdminPage } from '#/pages/Admin';
 import SignIn from '#/pages/Client/SignIn';
 import SignUp from '#/pages/Client/SignUp';
+import { VerifyCode } from '#/pages/Client/VerifyCode';
+import { EventPage } from '#/pages/Client/event';
+import { EventDetailPage } from '#/pages/Client/event/EventDetail';
+import HomePage from '#/pages/Home';
 import ClientLayout from '#/shared/components/layout/ClientLayout';
+import { ROLE } from '#/shared/utils/type';
 import { useRoutes } from 'react-router-dom';
 import GuardRoute from './GuardRoute';
-import { VerifyCode } from '#/pages/Client/VerifyCode';
-import { DevicePage } from '#/pages/Device';
-import { HumanPage } from '#/pages/Human';
-import { EventPage } from '#/pages/Client/event';
-import HomePage from '#/pages/Home';
-import { EventDetailPage } from '#/pages/Client/event/EventDetail';
+import { DevicePage } from '#/pages/Client/Device';
+import { HumanPage } from '#/pages/Client/Human';
 
 const App = () => {
   const routes = useRoutes([
@@ -47,7 +49,17 @@ const App = () => {
     {
       path: '/human-event',
       element: <ClientLayout children={<HumanPage />} />,
-    }
+    },
+    {
+      path: '/admin/*',
+      element: (
+        <GuardRoute
+          roles={[ROLE.ADMIN]}
+          isPrivate={true}
+          children={<AdminPage />}
+        />
+      ),
+    },
   ]);
 
   return routes;

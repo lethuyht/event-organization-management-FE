@@ -1,13 +1,10 @@
-import { LogoShortSVG, LogoSVG } from '#/assets/svg';
-
-import ProLayout from '@ant-design/pro-layout';
 import { Route } from '@ant-design/pro-layout/lib/typings';
-
-import { Alert } from 'antd';
+import { Alert, Image } from 'antd';
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { MenuSidebarItem } from '../common/MenuHeader';
 import RightContentHeader from './RightContentHeader';
-
+import ProLayout from '@ant-design/pro-layout';
 interface Props {
   logout: () => void;
   routes: Route;
@@ -20,12 +17,14 @@ function PrivateLayout({
 }: React.PropsWithChildren<Props>) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+
   const settings = {
-    colorWeak: false,
     headerHeight: 60,
     title: '',
     fixedHeader: true,
     fixSiderbar: true,
+    siderWidth: 280,
     navTheme: 'light' as any,
   };
 
@@ -35,16 +34,23 @@ function PrivateLayout({
         route={routes}
         logo={
           isCollapsed ? (
-            <LogoShortSVG className="text-[black]" width={32} height={28} />
+            <div className="w-[40px]"></div>
           ) : (
-            <LogoSVG className="text-[black]" width={170} height={70} />
+            <Image
+              src="../../logo.png"
+              height={100}
+              width={240}
+              preview={false}
+              onClick={() => navigate('/')}
+            />
           )
         }
         location={{
           pathname,
         }}
-        // menuHeaderRender={MenuHeader}
-        // menuItemRender={MenuSidebarItem}
+        menuItemRender={(path, dom) => (
+          <MenuSidebarItem path={path.path} dom={dom} />
+        )}
         rightContentRender={() => (
           <RightContentHeader
             logout={logout}
