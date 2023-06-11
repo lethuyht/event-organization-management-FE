@@ -138,7 +138,7 @@ const HomePage = () => {
                 </Col>
             </Row>
 
-            <Row className=" w-full  py-8 bg-[url('../src/assets/images/why_us_background.jpg')]">
+            <Row className=" w-full  py-8 bg-[url('https://polaris-event.s3.ap-southeast-1.amazonaws.com/static/why_us_background.jpg')]">
                 <Typography.Title level={2} className="w-full text-center text-red-500">
                     VÌ SAO CHỌN CHÚNG TÔI
                 </Typography.Title>
