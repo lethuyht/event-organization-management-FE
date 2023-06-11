@@ -1,0 +1,11 @@
+query getEvent ($input: ID!) {
+  getEvent(id: $input) {
+    id
+    name
+    description
+    isPublic
+    detail
+    thumbnail 
+    updatedAt
+  }
+}

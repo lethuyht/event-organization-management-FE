@@ -57,7 +57,7 @@ const HomePage = () => {
                         >
                             <Card
                                 onClick={() => {
-                                    window.location.href = `/device`;
+                                    window.location.href = `/event`;
                                 }}
                                 hoverable
                                 cover={
@@ -172,7 +172,7 @@ const HomePage = () => {
                             xxl={8}
                         >
                             <Image
-                                src="../src/assets/images/nguon-luc-event-1.png" preview={false}
+                                src="../src/assets/images/dich-vu-su-kien-chat-luong.png" preview={false}
                             />
                             <Typography.Title
                                 className="mt-3 w-full py-3 text-2xl text-center text-red-500"
@@ -191,7 +191,7 @@ const HomePage = () => {
                             xxl={8}
                         >
                             <Image
-                                src="../src/assets/images/nguon-luc-event-1.png" preview={false}
+                                src="../src/assets/images/co-so-vat-chat-hien-dai.png" preview={false}
                             />
                             <Typography.Title
                                 className="mt-3 w-full py-3 text-2xl text-center text-red-500"
