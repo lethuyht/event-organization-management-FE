@@ -66,6 +66,10 @@ export function EventPage() {
                         field: 'Event.name',
                         data: search,
                         operator: QueryOperator.Like,
+                    }, {
+                        field: 'Event.is_public',
+                        data: "true",
+                        operator: QueryOperator.Eq
                     }
                 ],
                 limit: pageSize,

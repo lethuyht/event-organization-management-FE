@@ -8,6 +8,7 @@ import { DevicePage } from '#/pages/Device';
 import { HumanPage } from '#/pages/Human';
 import { EventPage } from '#/pages/Client/event';
 import HomePage from '#/pages/Home';
+import { EventDetailPage } from '#/pages/Client/event/EventDetail';
 
 const App = () => {
   const routes = useRoutes([
@@ -36,13 +37,17 @@ const App = () => {
       element: <ClientLayout children={<EventPage />} />,
     },
     {
+      path: '/event/:id',
+      element: <ClientLayout children={<EventDetailPage />} />,
+    },
+    {
       path: '/device',
       element: <ClientLayout children={<DevicePage />} />,
     },
     {
       path: '/human-event',
       element: <ClientLayout children={<HumanPage />} />,
-    },
+    }
   ]);
 
   return routes;

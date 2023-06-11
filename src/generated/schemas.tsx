@@ -954,6 +954,50 @@ export function useVerifyCodeMutation(baseOptions?: Apollo.MutationHookOptions<V
 export type VerifyCodeMutationHookResult = ReturnType<typeof useVerifyCodeMutation>;
 export type VerifyCodeMutationResult = Apollo.MutationResult<VerifyCodeMutation>;
 export type VerifyCodeMutationOptions = Apollo.BaseMutationOptions<VerifyCodeMutation, VerifyCodeMutationVariables>;
+export const GetEventDocument = gql`
+    query getEvent($input: ID!) {
+  getEvent(id: $input) {
+    id
+    name
+    description
+    isPublic
+    detail
+    thumbnail
+    updatedAt
+  }
+}
+    `;
+
+/**
+ * __useGetEventQuery__
+ *
+ * To run a query within a React component, call `useGetEventQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetEventQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetEventQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useGetEventQuery(baseOptions: Apollo.QueryHookOptions<GetEventQuery, GetEventQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetEventQuery, GetEventQueryVariables>(GetEventDocument, options);
+      }
+export function useGetEventLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetEventQuery, GetEventQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetEventQuery, GetEventQueryVariables>(GetEventDocument, options);
+        }
+export type GetEventQueryHookResult = ReturnType<typeof useGetEventQuery>;
+export type GetEventLazyQueryHookResult = ReturnType<typeof useGetEventLazyQuery>;
+export type GetEventQueryResult = Apollo.QueryResult<GetEventQuery, GetEventQueryVariables>;
+export function refetchGetEventQuery(variables: GetEventQueryVariables) {
+      return { query: GetEventDocument, variables: variables }
+    }
 export const GetEventsDocument = gql`
     query getEvents($queryParams: QueryFilterDto!) {
   getEvents(queryParams: $queryParams) {
@@ -965,6 +1009,7 @@ export const GetEventsDocument = gql`
       name
       description
       detail
+      isPublic
       thumbnail
       updatedAt
     }
@@ -1218,12 +1263,19 @@ export type VerifyCodeMutationVariables = Exact<{
 
 export type VerifyCodeMutation = { verifyCode: { token: string, refreshToken: string, id: string } };
 
+export type GetEventQueryVariables = Exact<{
+  input: Scalars['ID'];
+}>;
+
+
+export type GetEventQuery = { getEvent: { id: string, name: string, description: string, isPublic: boolean, detail: string, thumbnail?: string | null, updatedAt?: any | null } };
+
 export type GetEventsQueryVariables = Exact<{
   queryParams: QueryFilterDto;
 }>;
 
 
-export type GetEventsQuery = { getEvents: { meta: { totalItems: number, itemCount: number, itemsPerPage: number, totalPages: number, currentPage: number }, items: Array<{ id: string, name: string, description: string, detail: string, thumbnail?: string | null, updatedAt?: any | null }> } };
+export type GetEventsQuery = { getEvents: { meta: { totalItems: number, itemCount: number, itemsPerPage: number, totalPages: number, currentPage: number }, items: Array<{ id: string, name: string, description: string, detail: string, isPublic: boolean, thumbnail?: string | null, updatedAt?: any | null }> } };
 
 export type GetMeQueryVariables = Exact<{ [key: string]: never; }>;
 
