@@ -153,7 +153,7 @@ const HomePage = () => {
                             xxl={8}
                         >
                             <Image
-                                src="../src/assets/images/nguon-luc-event-1.png" preview={false}
+                                src="https://polaris-event.s3.ap-southeast-1.amazonaws.com/static/nguon-luc-event-1.png" preview={false}
                             />
                             <Typography.Title
                                 className="mt-3 w-full py-3 text-2xl text-center text-red-500"
@@ -172,7 +172,7 @@ const HomePage = () => {
                             xxl={8}
                         >
                             <Image
-                                src="../src/assets/images/dich-vu-su-kien-chat-luong.png" preview={false}
+                                src="https://polaris-event.s3.ap-southeast-1.amazonaws.com/static/dich-vu-su-kien-chat-luong.png" preview={false}
                             />
                             <Typography.Title
                                 className="mt-3 w-full py-3 text-2xl text-center text-red-500"
@@ -191,7 +191,7 @@ const HomePage = () => {
                             xxl={8}
                         >
                             <Image
-                                src="../src/assets/images/co-so-vat-chat-hien-dai.png" preview={false}
+                                src="https://polaris-event.s3.ap-southeast-1.amazonaws.com/static/co-so-vat-chat-hien-dai.png" preview={false}
                             />
                             <Typography.Title
                                 className="mt-3 w-full py-3 text-2xl text-center text-red-500"

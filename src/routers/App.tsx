@@ -9,7 +9,6 @@ import { HumanPage } from '#/pages/Human';
 import { EventPage } from '#/pages/Client/event';
 import HomePage from '#/pages/Home';
 import { EventDetailPage } from '#/pages/Client/event/EventDetail';
-import { DeviceDetailPage } from '#/pages/Device/DeviceDetail';
 
 const App = () => {
   const routes = useRoutes([
