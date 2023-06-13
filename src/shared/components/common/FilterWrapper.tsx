@@ -32,8 +32,8 @@ function FilterWrapper<Type>({
             {children}
           </Row>
         </Col>
-        <Col xs={24} md={24} xl={7}>
-          <Space size="middle" className="flex justify-end">
+        <Col xs={24} md={24} xl={7} className="flex items-center justify-end">
+          <Space size="middle">
             <Form.Item>
               <Button type="primary" htmlType="submit">
                 Tìm kiếm

@@ -79,6 +79,7 @@ const adminMenus: MenuType[] = [
 function AccountInfo() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const user = userVar();
 
   const [menus, setMenus] = useState<MenuType[]>(userMenus);
 
@@ -100,8 +101,9 @@ function AccountInfo() {
     }
   }, [data]);
   return (
-    <div className="flex justify-between">
-      <CartIcon itemCount={1} />
+    <div className="flex justify-end">
+      {user?.role?.name === ROLE.USER && <CartIcon itemCount={1} />}
+
       <Dropdown
         overlay={
           <Skeleton loading={loading}>

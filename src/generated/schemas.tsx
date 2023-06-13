@@ -919,6 +919,45 @@ export function useUpdateMeMutation(baseOptions?: Apollo.MutationHookOptions<Upd
 export type UpdateMeMutationHookResult = ReturnType<typeof useUpdateMeMutation>;
 export type UpdateMeMutationResult = Apollo.MutationResult<UpdateMeMutation>;
 export type UpdateMeMutationOptions = Apollo.BaseMutationOptions<UpdateMeMutation, UpdateMeMutationVariables>;
+export const UpsertEventDocument = gql`
+    mutation upsertEvent($input: UpsertEventDto!) {
+  upsertEvent(input: $input) {
+    id
+    name
+    description
+    isPublic
+    detail
+    thumbnail
+    updatedAt
+  }
+}
+    `;
+export type UpsertEventMutationFn = Apollo.MutationFunction<UpsertEventMutation, UpsertEventMutationVariables>;
+
+/**
+ * __useUpsertEventMutation__
+ *
+ * To run a mutation, you first call `useUpsertEventMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpsertEventMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [upsertEventMutation, { data, loading, error }] = useUpsertEventMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpsertEventMutation(baseOptions?: Apollo.MutationHookOptions<UpsertEventMutation, UpsertEventMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpsertEventMutation, UpsertEventMutationVariables>(UpsertEventDocument, options);
+      }
+export type UpsertEventMutationHookResult = ReturnType<typeof useUpsertEventMutation>;
+export type UpsertEventMutationResult = Apollo.MutationResult<UpsertEventMutation>;
+export type UpsertEventMutationOptions = Apollo.BaseMutationOptions<UpsertEventMutation, UpsertEventMutationVariables>;
 export const VerifyCodeDocument = gql`
     mutation verifyCode($input: CodeVerifyDto!) {
   verifyCode(input: $input) {
@@ -1255,6 +1294,13 @@ export type UpdateMeMutationVariables = Exact<{
 
 
 export type UpdateMeMutation = { updateMe: { avatar?: string | null, email: string, firstName: string, lastName: string, id: string, phoneNumber?: string | null, role: { name: string } } };
+
+export type UpsertEventMutationVariables = Exact<{
+  input: UpsertEventDto;
+}>;
+
+
+export type UpsertEventMutation = { upsertEvent: { id: string, name: string, description: string, isPublic: boolean, detail: string, thumbnail?: string | null, updatedAt?: any | null } };
 
 export type VerifyCodeMutationVariables = Exact<{
   input: CodeVerifyDto;

@@ -1,0 +1,11 @@
+mutation upsertEvent($input: UpsertEventDto!) {
+  upsertEvent(input: $input) {
+    id
+    name
+    description
+    isPublic
+    detail
+    thumbnail
+    updatedAt
+  }
+}

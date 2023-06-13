@@ -1,11 +1,11 @@
 import '#/configs/theme/index.less';
 import '#/shared/utils/style.css';
 import { ApolloProvider } from '@apollo/client';
-
 import * as Sentry from '@sentry/react';
 import { ConfigProvider } from 'antd';
 import enUS from 'antd/es/locale/en_US';
 import 'antd/dist/antd.css';
+
 import { createRoot } from 'react-dom/client';
 import { I18nextProvider } from 'react-i18next';
 import { BrowserRouter } from 'react-router-dom';

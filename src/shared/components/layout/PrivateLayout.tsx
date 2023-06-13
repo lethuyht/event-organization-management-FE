@@ -37,7 +37,7 @@ function PrivateLayout({
             <div className="w-[40px]"></div>
           ) : (
             <Image
-              src="../../logo.png"
+              src="https://polaris-event.s3.ap-southeast-1.amazonaws.com/static/logo.png"
               height={100}
               width={240}
               preview={false}

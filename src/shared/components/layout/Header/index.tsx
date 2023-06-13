@@ -99,7 +99,11 @@ function Header({ authenticated }: HeaderProps) {
       >
         <Col className="px-[40px]">
           <Link to="/">
-            <Image src="logo.png" preview={false} width={150} />
+            <Image
+              src="https://polaris-event.s3.ap-southeast-1.amazonaws.com/static/logo.png"
+              preview={false}
+              width={150}
+            />
           </Link>
         </Col>
         <>

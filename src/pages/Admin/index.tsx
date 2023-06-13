@@ -8,6 +8,9 @@ import {
 import { useRoutes } from 'react-router-dom';
 import NotFoundPage from '../404Page';
 import { Route } from '@ant-design/pro-layout/lib/typings';
+import { EventManagement } from './EventManagement';
+import { EventDetail } from './EventManagement/EventDetail';
+import { UpsertEvent } from './EventManagement/UpsertEvent';
 
 export function AdminPage() {
   const { handleLogout } = useAuthentication();
@@ -57,7 +60,25 @@ export function AdminPage() {
   const routes = useRoutes([
     {
       path: '/event-management',
-      element: <div>Event Management Product</div>,
+
+      children: [
+        {
+          index: true,
+          element: <EventManagement />,
+        },
+        {
+          path: ':id',
+          element: <EventDetail />,
+        },
+        {
+          path: 'create',
+          element: <UpsertEvent />,
+        },
+        {
+          path: 'edit/:id',
+          element: <UpsertEvent />,
+        },
+      ],
     },
     {
       path: '/event-request-management',
