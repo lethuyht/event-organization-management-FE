@@ -1,0 +1,6 @@
+mutation addItemToCart($input: AddItemToCartDto!) {
+  addItemToCart(input: $input) {
+    message
+    success
+  }
+}

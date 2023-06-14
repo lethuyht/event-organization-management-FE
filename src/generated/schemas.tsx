@@ -25,6 +25,8 @@ export type AddItemToCartDto = {
 };
 
 export enum ContractStatus {
+  AdminCancel = 'AdminCancel',
+  Cancel = 'Cancel',
   Completed = 'Completed',
   DepositPaid = 'DepositPaid',
   Draft = 'Draft',
@@ -86,6 +88,12 @@ export type Contract = {
   userId: Scalars['ID'];
 };
 
+export type ContractDetailDto = {
+  contractCreatedDate?: InputMaybe<Scalars['DateTime']>;
+  contractName: Scalars['String'];
+  customerInfo: CustomerInfoDto;
+};
+
 export type ContractServiceItem = {
   amount: Scalars['Float'];
   contract: Contract;
@@ -95,6 +103,14 @@ export type ContractServiceItem = {
   serviceItem: ServiceItem;
   serviceItemId: Scalars['ID'];
   updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type CustomerInfoDto = {
+  address: Scalars['String'];
+  name: Scalars['String'];
+  phoneNumber: Scalars['String'];
+  representative?: InputMaybe<Scalars['String']>;
+  type: Scalars['String'];
 };
 
 export type DeleteFileDto = {
@@ -248,6 +264,7 @@ export type IService = {
   description?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   images: Array<Scalars['String']>;
+  isPublished: Scalars['Boolean'];
   name: Scalars['String'];
   serviceItems?: Maybe<Array<ServiceItem>>;
   type: ServiceType;
@@ -296,6 +313,7 @@ export type Mutation = {
   deleteFileS3: Scalars['String'];
   presignedUrlS3: IPreSignUrl;
   presignedUrlS3Public: IPreSignUrl;
+  publishService: IService;
   refreshToken: RefreshResponse;
   requestCreateContract: IContract;
   signIn: LoginResponse;
@@ -332,6 +350,11 @@ export type MutationPresignedUrlS3Args = {
 
 export type MutationPresignedUrlS3PublicArgs = {
   presignedUrlDto: PresignedUrlDto;
+};
+
+
+export type MutationPublishServiceArgs = {
+  input: PublishServiceDto;
 };
 
 
@@ -393,6 +416,17 @@ export type PresignedUrlDto = {
   fileName: Scalars['String'];
   fileType: Scalars['String'];
   pathType: S3UploadType;
+};
+
+export type PublishServiceDto = {
+  id: Scalars['ID'];
+  isPublished?: Scalars['Boolean'];
+  serviceItems: Array<PublishServiceItemDto>;
+};
+
+export type PublishServiceItemDto = {
+  id: Scalars['ID'];
+  isPublished?: Scalars['Boolean'];
 };
 
 export enum QueryOperator {
@@ -534,6 +568,7 @@ export type RefreshTokenDto = {
 export type RequestContractDto = {
   address: Scalars['String'];
   cartItemIds: Array<Scalars['ID']>;
+  details: ContractDetailDto;
 };
 
 export type ResponseMessageBase = {
@@ -558,6 +593,7 @@ export type Service = {
   description?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   images: Array<Scalars['String']>;
+  isPublished: Scalars['Boolean'];
   name: Scalars['String'];
   serviceItems?: Maybe<Array<ServiceItem>>;
   type: ServiceType;
@@ -568,6 +604,7 @@ export type ServiceItem = {
   createdAt?: Maybe<Scalars['DateTime']>;
   description: Scalars['String'];
   id: Scalars['ID'];
+  isPublished: Scalars['Boolean'];
   name: Scalars['String'];
   price: Scalars['Float'];
   service: Service;
@@ -667,6 +704,40 @@ export const MetaFragmentFragmentDoc = gql`
   currentPage
 }
     `;
+export const AddItemToCartDocument = gql`
+    mutation addItemToCart($input: AddItemToCartDto!) {
+  addItemToCart(input: $input) {
+    message
+    success
+  }
+}
+    `;
+export type AddItemToCartMutationFn = Apollo.MutationFunction<AddItemToCartMutation, AddItemToCartMutationVariables>;
+
+/**
+ * __useAddItemToCartMutation__
+ *
+ * To run a mutation, you first call `useAddItemToCartMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddItemToCartMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addItemToCartMutation, { data, loading, error }] = useAddItemToCartMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAddItemToCartMutation(baseOptions?: Apollo.MutationHookOptions<AddItemToCartMutation, AddItemToCartMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddItemToCartMutation, AddItemToCartMutationVariables>(AddItemToCartDocument, options);
+      }
+export type AddItemToCartMutationHookResult = ReturnType<typeof useAddItemToCartMutation>;
+export type AddItemToCartMutationResult = Apollo.MutationResult<AddItemToCartMutation>;
+export type AddItemToCartMutationOptions = Apollo.BaseMutationOptions<AddItemToCartMutation, AddItemToCartMutationVariables>;
 export const ChangePasswordDocument = gql`
     mutation changePassword($changePasswordInput: ChangePasswordInput!) {
   changePassword(changePasswordInput: $changePasswordInput) {
@@ -1245,6 +1316,13 @@ export function refetchGetServicesQuery(variables: GetServicesQueryVariables) {
       return { query: GetServicesDocument, variables: variables }
     }
 export type MetaFragmentFragment = { totalItems: number, itemCount: number, itemsPerPage: number, totalPages: number, currentPage: number };
+
+export type AddItemToCartMutationVariables = Exact<{
+  input: AddItemToCartDto;
+}>;
+
+
+export type AddItemToCartMutation = { addItemToCart: { message?: string | null, success?: boolean | null } };
 
 export type ChangePasswordMutationVariables = Exact<{
   changePasswordInput: ChangePasswordInput;

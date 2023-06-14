@@ -1,22 +1,24 @@
-import { AdminPage } from '#/pages/Admin';
-import SignIn from '#/pages/Client/SignIn';
-import SignUp from '#/pages/Client/SignUp';
-import { VerifyCode } from '#/pages/Client/VerifyCode';
-import { EventPage } from '#/pages/Client/event';
-import { EventDetailPage } from '#/pages/Client/event/EventDetail';
-import HomePage from '#/pages/Home';
-import ClientLayout from '#/shared/components/layout/ClientLayout';
-import { ROLE } from '#/shared/utils/type';
-import { useRoutes } from 'react-router-dom';
-import GuardRoute from './GuardRoute';
-import { DevicePage } from '#/pages/Client/Device';
-import { HumanPage } from '#/pages/Client/Human';
+import HomePage from "#/pages/Home";
+import ClientLayout from "#/shared/components/layout/ClientLayout";
+import { useRoutes } from "react-router";
+import GuardRoute from "./GuardRoute";
+import SignIn from "#/pages/Client/SignIn";
+import SignUp from "#/pages/Client/SignUp";
+import { VerifyCode } from "#/pages/Client/VerifyCode";
+import { EventPage } from "#/pages/Client/event";
+import { EventDetailPage } from "#/pages/Client/event/EventDetail";
+import { DevicePage } from "#/pages/Client/Device";
+import { DeviceDetailPage } from "#/pages/Client/Device/DeviceDetail";
+import { HumanPage } from "#/pages/Client/Human";
+import { ROLE } from "#/shared/utils/type";
+import { AdminPage } from "#/pages/Admin";
+
 
 const App = () => {
   const routes = useRoutes([
     {
       path: '/',
-      element: <ClientLayout children={<HomePage></HomePage>} />,
+      element: <ClientLayout children={<HomePage />} />,
     },
     {
       path: '/sign-in',
@@ -45,6 +47,10 @@ const App = () => {
     {
       path: '/device',
       element: <ClientLayout children={<DevicePage />} />,
+    },
+    {
+      path: '/device/:id',
+      element: <ClientLayout children={<DeviceDetailPage />} />,
     },
     {
       path: '/human-event',
