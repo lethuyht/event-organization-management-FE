@@ -25,6 +25,8 @@ export type AddItemToCartDto = {
 };
 
 export enum ContractStatus {
+  AdminCancel = 'AdminCancel',
+  Cancel = 'Cancel',
   Completed = 'Completed',
   DepositPaid = 'DepositPaid',
   Draft = 'Draft',
@@ -86,6 +88,12 @@ export type Contract = {
   userId: Scalars['ID'];
 };
 
+export type ContractDetailDto = {
+  contractCreatedDate?: InputMaybe<Scalars['DateTime']>;
+  contractName: Scalars['String'];
+  customerInfo: CustomerInfoDto;
+};
+
 export type ContractServiceItem = {
   amount: Scalars['Float'];
   contract: Contract;
@@ -95,6 +103,14 @@ export type ContractServiceItem = {
   serviceItem: ServiceItem;
   serviceItemId: Scalars['ID'];
   updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type CustomerInfoDto = {
+  address: Scalars['String'];
+  name: Scalars['String'];
+  phoneNumber: Scalars['String'];
+  representative?: InputMaybe<Scalars['String']>;
+  type: Scalars['String'];
 };
 
 export type DeleteFileDto = {
@@ -246,8 +262,10 @@ export type IRoles = {
 export type IService = {
   createdAt?: Maybe<Scalars['DateTime']>;
   description?: Maybe<Scalars['String']>;
+  detail: Scalars['String'];
   id: Scalars['ID'];
   images: Array<Scalars['String']>;
+  isPublished: Scalars['Boolean'];
   name: Scalars['String'];
   serviceItems?: Maybe<Array<ServiceItem>>;
   type: ServiceType;
@@ -296,6 +314,7 @@ export type Mutation = {
   deleteFileS3: Scalars['String'];
   presignedUrlS3: IPreSignUrl;
   presignedUrlS3Public: IPreSignUrl;
+  publishService: IService;
   refreshToken: RefreshResponse;
   requestCreateContract: IContract;
   signIn: LoginResponse;
@@ -332,6 +351,11 @@ export type MutationPresignedUrlS3Args = {
 
 export type MutationPresignedUrlS3PublicArgs = {
   presignedUrlDto: PresignedUrlDto;
+};
+
+
+export type MutationPublishServiceArgs = {
+  input: PublishServiceDto;
 };
 
 
@@ -393,6 +417,17 @@ export type PresignedUrlDto = {
   fileName: Scalars['String'];
   fileType: Scalars['String'];
   pathType: S3UploadType;
+};
+
+export type PublishServiceDto = {
+  id: Scalars['ID'];
+  isPublished?: Scalars['Boolean'];
+  serviceItems: Array<PublishServiceItemDto>;
+};
+
+export type PublishServiceItemDto = {
+  id: Scalars['ID'];
+  isPublished?: Scalars['Boolean'];
 };
 
 export enum QueryOperator {
@@ -534,6 +569,7 @@ export type RefreshTokenDto = {
 export type RequestContractDto = {
   address: Scalars['String'];
   cartItemIds: Array<Scalars['ID']>;
+  details: ContractDetailDto;
 };
 
 export type ResponseMessageBase = {
@@ -556,8 +592,10 @@ export enum S3UploadType {
 export type Service = {
   createdAt?: Maybe<Scalars['DateTime']>;
   description?: Maybe<Scalars['String']>;
+  detail: Scalars['String'];
   id: Scalars['ID'];
   images: Array<Scalars['String']>;
+  isPublished: Scalars['Boolean'];
   name: Scalars['String'];
   serviceItems?: Maybe<Array<ServiceItem>>;
   type: ServiceType;
@@ -568,6 +606,7 @@ export type ServiceItem = {
   createdAt?: Maybe<Scalars['DateTime']>;
   description: Scalars['String'];
   id: Scalars['ID'];
+  isPublished: Scalars['Boolean'];
   name: Scalars['String'];
   price: Scalars['Float'];
   service: Service;
@@ -620,19 +659,22 @@ export type UpsertEventRequestInput = {
 };
 
 export type UpsertServiceDto = {
-  description: Scalars['String'];
+  description?: InputMaybe<Scalars['String']>;
+  detail?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['ID']>;
-  images: Array<Scalars['String']>;
-  name: Scalars['String'];
+  images?: InputMaybe<Array<Scalars['String']>>;
+  isPublished?: InputMaybe<Scalars['Boolean']>;
+  name?: InputMaybe<Scalars['String']>;
   serviceItems?: InputMaybe<Array<UpsertServiceItemDto>>;
-  type: ServiceType;
+  type?: InputMaybe<ServiceType>;
 };
 
 export type UpsertServiceItemDto = {
-  description: Scalars['String'];
+  description?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['ID']>;
-  name: Scalars['String'];
-  price: Scalars['Float'];
+  isPublished?: InputMaybe<Scalars['Boolean']>;
+  name?: InputMaybe<Scalars['String']>;
+  price?: InputMaybe<Scalars['Float']>;
   totalQuantity?: InputMaybe<Scalars['Float']>;
 };
 
@@ -958,6 +1000,58 @@ export function useUpsertEventMutation(baseOptions?: Apollo.MutationHookOptions<
 export type UpsertEventMutationHookResult = ReturnType<typeof useUpsertEventMutation>;
 export type UpsertEventMutationResult = Apollo.MutationResult<UpsertEventMutation>;
 export type UpsertEventMutationOptions = Apollo.BaseMutationOptions<UpsertEventMutation, UpsertEventMutationVariables>;
+export const UpsertServiceDocument = gql`
+    mutation upsertService($input: UpsertServiceDto!) {
+  upsertService(input: $input) {
+    id
+    name
+    description
+    images
+    type
+    detail
+    isPublished
+    createdAt
+    updatedAt
+    serviceItems {
+      id
+      name
+      price
+      isPublished
+      serviceId
+      description
+      totalQuantity
+      updatedAt
+      createdAt
+    }
+  }
+}
+    `;
+export type UpsertServiceMutationFn = Apollo.MutationFunction<UpsertServiceMutation, UpsertServiceMutationVariables>;
+
+/**
+ * __useUpsertServiceMutation__
+ *
+ * To run a mutation, you first call `useUpsertServiceMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpsertServiceMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [upsertServiceMutation, { data, loading, error }] = useUpsertServiceMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpsertServiceMutation(baseOptions?: Apollo.MutationHookOptions<UpsertServiceMutation, UpsertServiceMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpsertServiceMutation, UpsertServiceMutationVariables>(UpsertServiceDocument, options);
+      }
+export type UpsertServiceMutationHookResult = ReturnType<typeof useUpsertServiceMutation>;
+export type UpsertServiceMutationResult = Apollo.MutationResult<UpsertServiceMutation>;
+export type UpsertServiceMutationOptions = Apollo.BaseMutationOptions<UpsertServiceMutation, UpsertServiceMutationVariables>;
 export const VerifyCodeDocument = gql`
     mutation verifyCode($input: CodeVerifyDto!) {
   verifyCode(input: $input) {
@@ -1139,12 +1233,15 @@ export const GetServiceDocument = gql`
     description
     images
     type
+    detail
+    isPublished
     createdAt
     updatedAt
     serviceItems {
       id
       name
       price
+      isPublished
       serviceId
       description
       totalQuantity
@@ -1197,12 +1294,15 @@ export const GetServicesDocument = gql`
       description
       images
       type
+      detail
+      isPublished
       createdAt
       updatedAt
       serviceItems {
         id
         name
         price
+        isPublished
         serviceId
         description
         totalQuantity
@@ -1302,6 +1402,13 @@ export type UpsertEventMutationVariables = Exact<{
 
 export type UpsertEventMutation = { upsertEvent: { id: string, name: string, description: string, isPublic: boolean, detail: string, thumbnail?: string | null, updatedAt?: any | null } };
 
+export type UpsertServiceMutationVariables = Exact<{
+  input: UpsertServiceDto;
+}>;
+
+
+export type UpsertServiceMutation = { upsertService: { id: string, name: string, description?: string | null, images: Array<string>, type: ServiceType, detail: string, isPublished: boolean, createdAt?: any | null, updatedAt?: any | null, serviceItems?: Array<{ id: string, name: string, price: number, isPublished: boolean, serviceId: string, description: string, totalQuantity: number, updatedAt?: any | null, createdAt?: any | null }> | null } };
+
 export type VerifyCodeMutationVariables = Exact<{
   input: CodeVerifyDto;
 }>;
@@ -1333,11 +1440,11 @@ export type GetServiceQueryVariables = Exact<{
 }>;
 
 
-export type GetServiceQuery = { getService: { id: string, name: string, description?: string | null, images: Array<string>, type: ServiceType, createdAt?: any | null, updatedAt?: any | null, serviceItems?: Array<{ id: string, name: string, price: number, serviceId: string, description: string, totalQuantity: number, updatedAt?: any | null, createdAt?: any | null }> | null } };
+export type GetServiceQuery = { getService: { id: string, name: string, description?: string | null, images: Array<string>, type: ServiceType, detail: string, isPublished: boolean, createdAt?: any | null, updatedAt?: any | null, serviceItems?: Array<{ id: string, name: string, price: number, isPublished: boolean, serviceId: string, description: string, totalQuantity: number, updatedAt?: any | null, createdAt?: any | null }> | null } };
 
 export type GetServicesQueryVariables = Exact<{
   query: QueryFilterDto;
 }>;
 
 
-export type GetServicesQuery = { getServices: { meta: { totalItems: number, itemCount: number, itemsPerPage: number, totalPages: number, currentPage: number }, items: Array<{ id: string, name: string, description?: string | null, images: Array<string>, type: ServiceType, createdAt?: any | null, updatedAt?: any | null, serviceItems?: Array<{ id: string, name: string, price: number, serviceId: string, description: string, totalQuantity: number, updatedAt?: any | null, createdAt?: any | null }> | null }> } };
+export type GetServicesQuery = { getServices: { meta: { totalItems: number, itemCount: number, itemsPerPage: number, totalPages: number, currentPage: number }, items: Array<{ id: string, name: string, description?: string | null, images: Array<string>, type: ServiceType, detail: string, isPublished: boolean, createdAt?: any | null, updatedAt?: any | null, serviceItems?: Array<{ id: string, name: string, price: number, isPublished: boolean, serviceId: string, description: string, totalQuantity: number, updatedAt?: any | null, createdAt?: any | null }> | null }> } };

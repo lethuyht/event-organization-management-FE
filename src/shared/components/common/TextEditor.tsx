@@ -30,7 +30,7 @@ export const TextEditor = ({ initialValue, onChange }: MyEditorProps) => {
   return (
     <div className="text-editor">
       <Editor
-        placeholder="Nhập nội dung chi tiết của sự kiện"
+        placeholder="Nhập nội dung chi tiết "
         editorState={editorState}
         onEditorStateChange={handleEditorChange}
         wrapperClassName="wrapper-class"

@@ -1,3 +1,4 @@
+import { ServiceType } from '#/generated/schemas';
 import PrivateLayout from '#/shared/components/layout/PrivateLayout';
 import useAuthentication from '#/shared/hooks/useAuthentication';
 import {
@@ -5,12 +6,15 @@ import {
   SettingOutlined,
   SolutionOutlined,
 } from '@ant-design/icons';
+import { Route } from '@ant-design/pro-layout/lib/typings';
 import { useRoutes } from 'react-router-dom';
 import NotFoundPage from '../404Page';
-import { Route } from '@ant-design/pro-layout/lib/typings';
 import { EventManagement } from './EventManagement';
 import { EventDetail } from './EventManagement/EventDetail';
 import { UpsertEvent } from './EventManagement/UpsertEvent';
+import { ServiceManagement } from './ServiceManagement';
+import { ServiceDetail } from './ServiceManagement/Detail';
+import { UpsertService } from './ServiceManagement/Upsert';
 
 export function AdminPage() {
   const { handleLogout } = useAuthentication();
@@ -85,15 +89,44 @@ export function AdminPage() {
       element: <div>Event Management Product</div>,
     },
     {
-      path: '/service-management',
+      path: '/service-management/human',
       children: [
         {
-          path: '/service-management/device',
-          element: <div>Device Management</div>,
+          index: true,
+          element: <ServiceManagement type={ServiceType.HumanResource} />,
         },
         {
-          path: '/service-management/human',
-          element: <div>Human Management</div>,
+          path: ':id',
+          element: <ServiceDetail type={ServiceType.HumanResource} />,
+        },
+        {
+          path: 'create',
+          element: <UpsertService type={ServiceType.HumanResource} />,
+        },
+        {
+          path: 'edit/:id',
+          element: <UpsertService type={ServiceType.HumanResource} />,
+        },
+      ],
+    },
+    {
+      path: '/service-management/device',
+      children: [
+        {
+          index: true,
+          element: <ServiceManagement type={ServiceType.Device} />,
+        },
+        {
+          path: ':id',
+          element: <ServiceDetail type={ServiceType.Device} />,
+        },
+        {
+          path: 'create',
+          element: <UpsertService type={ServiceType.Device} />,
+        },
+        {
+          path: 'edit/:id',
+          element: <UpsertService type={ServiceType.Device} />,
         },
       ],
     },

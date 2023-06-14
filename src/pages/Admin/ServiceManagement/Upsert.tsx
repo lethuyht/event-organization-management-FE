@@ -1,4 +1,10 @@
-import { useGetEventQuery, useUpsertEventMutation } from '#/generated/schemas';
+import {
+  useGetEventQuery,
+  useGetServiceQuery,
+  useUpsertEventMutation,
+  useUpsertServiceMutation,
+} from '#/generated/schemas';
+import DynamicField from '#/shared/components/common/DynamicField';
 import { TextEditor } from '#/shared/components/common/TextEditor';
 import UploadImage from '#/shared/components/common/UploadImage';
 import { showError, showSuccess } from '#/shared/utils/tools';
@@ -16,6 +22,8 @@ import {
 } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import { useParams } from 'react-router-dom';
+import { ServiceProps } from '.';
+import { DynamicServiceItem } from './DynamicServiceItem';
 
 const UpserEventStyles = styled.div`
   .ant-form-item-label {
@@ -49,34 +57,39 @@ const UpserEventStyles = styled.div`
     }
     display: flex !important;
   }
+
+  .dynamic-item {
+    display: flex !important;
+    border: solid 1px #ccc !important;
+    border-radius: 0.5rem !important;
+    margin-bottom: 1rem !important;
+  }
 `;
-export function UpsertEvent() {
+export function UpsertService({ type }: ServiceProps) {
   const { id } = useParams<{ id: string }>();
   const [form] = Form.useForm();
 
-  const [upsertEvent, { loading: upsertLoading }] = useUpsertEventMutation({
+  const [upsertService, { loading: upsertLoading }] = useUpsertServiceMutation({
     onCompleted: () => {
       showSuccess(
-        id ? 'Cập nhật sự kiện thành công' : 'Thêm mới sự kiện thành công',
+        id ? 'Cập nhật dịch thành công' : 'Thêm mới dịch vụ thành công',
       );
     },
     onError: error => showError(error),
   });
 
-  const { data, loading } = useGetEventQuery({
+  const { data, loading } = useGetServiceQuery({
     variables: {
-      input: String(id),
+      id: String(id),
     },
   });
 
-  const hanleUpsertEvent = (values: any) => {
-    upsertEvent({
+  const hanleUpsertService = (values: any) => {
+    upsertService({
       variables: {
         input: {
           ...values,
-          detail: values.detail || data?.getEvent?.detail,
-          isPublic: values.isPublic || false,
-          id: data ? data.getEvent?.id : undefined,
+          type,
         },
       },
     });
@@ -91,20 +104,20 @@ export function UpsertEvent() {
         <Row className="mb-4">
           <Col span={24}>
             <Typography.Title level={3}>
-              {data ? 'Cập nhật sự kiện' : 'Thêm mới sự kiện'}
+              {data ? 'Cập nhật dịch vụ' : 'Thêm mới dịch vụ'}
             </Typography.Title>
           </Col>
         </Row>
-        <Form form={form} onFinish={hanleUpsertEvent}>
+        <Form form={form} onFinish={hanleUpsertService}>
           <Row gutter={[16, 16]} className="form-header">
             <Form.Item
-              name="isPublic"
+              name="isPublished"
               label="Công khai"
               required
               valuePropName="checked"
-              initialValue={data?.getEvent?.isPublic ?? false}
+              initialValue={data?.getService?.isPublished}
             >
-              <Switch />
+              {data ? <Switch /> : <Switch />}
             </Form.Item>
 
             <Form.Item className="mx-4">
@@ -121,18 +134,31 @@ export function UpsertEvent() {
 
           <Form.Item
             label="Hình ảnh"
-            name="thumbnail"
-            required
-            initialValue={data?.getEvent?.thumbnail}
-            valuePropName="src"
+            name="images"
+            rules={[
+              {
+                required: true,
+                validator: async (_, value) => {
+                  if (!value || value.length === 0) {
+                    return Promise.reject(new Error('Vui lòng nhập hình ảnh'));
+                  }
+                },
+              },
+            ]}
           >
-            <UploadImage />
+            <DynamicField
+              name="images"
+              childrenItem={<UploadImage />}
+              initialValues={data?.getService.images ?? []}
+              valuePropName="src"
+            />
           </Form.Item>
+
           <Form.Item
             label="Tên sự kiện"
             required
             name="name"
-            initialValue={data?.getEvent?.name}
+            initialValue={data?.getService?.name}
           >
             <Input />
           </Form.Item>
@@ -140,14 +166,34 @@ export function UpsertEvent() {
             label="Mô tả"
             required
             name="description"
-            initialValue={data?.getEvent?.description}
+            initialValue={data?.getService?.description}
           >
             <TextArea />
           </Form.Item>
           <Form.Item label="Nội dung chi tiết" required name="detail">
             <TextEditor
               onChange={handleEditorChange}
-              initialValue={data?.getEvent?.detail}
+              initialValue={data?.getService?.detail}
+            />
+          </Form.Item>
+
+          <Form.Item
+            label="Các sản phẩm"
+            name="serviceItems"
+            rules={[
+              {
+                required: true,
+                validator: async (_, value) => {
+                  if (!value || value.length === 0) {
+                    return Promise.reject(new Error('Vui lòng nhập sản phẩm'));
+                  }
+                },
+              },
+            ]}
+          >
+            <DynamicServiceItem
+              initialValues={data?.getService?.serviceItems ?? []}
+              form={form}
             />
           </Form.Item>
         </Form>

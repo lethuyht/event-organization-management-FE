@@ -9,12 +9,15 @@ query getServices($query: QueryFilterDto!) {
       description
       images
       type
+      detail
+      isPublished
       createdAt
       updatedAt
       serviceItems {
         id
         name
         price
+        isPublished
         serviceId
         description
         totalQuantity

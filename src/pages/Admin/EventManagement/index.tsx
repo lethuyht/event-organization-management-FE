@@ -7,7 +7,7 @@ import {
 } from '#/generated/schemas';
 import { FilterWrapper } from '#/shared/components/common';
 import { showError, showSuccess, useTable } from '#/shared/utils/tools';
-import { EyeOutlined, PlusOutlined } from '@ant-design/icons';
+import { EditOutlined, EyeOutlined, PlusOutlined } from '@ant-design/icons';
 import styled from '@emotion/styled';
 import {
   Button,
@@ -39,7 +39,9 @@ interface UpdateEventProps {
 }
 
 const EventManagementStyle = styled.div`
-  .anticon.anticon-eye {
+  .anticon.anticon-eye,
+  .anticon-edit {
+    padding: 0 10px;
     svg {
       font-size: 25px;
       cursor: pointer;
@@ -150,6 +152,7 @@ export function EventManagement() {
         return (
           <Row>
             <EyeOutlined onClick={() => navigate(`${event.id}`)} />
+            <EditOutlined onClick={() => navigate(`edit/${event.id}`)} />
           </Row>
         );
       },

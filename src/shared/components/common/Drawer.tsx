@@ -12,7 +12,7 @@ function Drawer({ visible, onClose, title, children }: Props) {
     <DrawerAndt
       title={title}
       onClose={onClose}
-      visible={visible}
+      open={visible}
       width="560"
       destroyOnClose
     >

@@ -15,3 +15,6 @@ export const DEVICE_SERVICE_DEFAULT =
   'https://polaris-event.s3.ap-southeast-1.amazonaws.com/static/device_service_default.jpeg';
 export const EVENT_DEFAULT =
   'https://polaris-event.s3.ap-southeast-1.amazonaws.com/static/DEFAULT_EVENT.jpg';
+
+export const NO_IMAGE =
+  'https://polaris-event.s3.ap-southeast-1.amazonaws.com/static/no_image.png';

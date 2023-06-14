@@ -13,7 +13,7 @@ function ForbiddenModal({
       title={<Typography.Title level={3}>Sorry</Typography.Title>}
       onOk={() => setOpen(false)}
       onCancel={() => setOpen(false)}
-      visible={open}
+      open={open}
     >
       <Typography.Text className=" text-black hover:text-red-600">
         This feature is not available for account registered with your role.

@@ -1,5 +1,5 @@
-query getService($id: String!) {
-  getService(id: $id) {
+mutation upsertService($input: UpsertServiceDto!) {
+  upsertService(input: $input) {
     id
     name
     description
