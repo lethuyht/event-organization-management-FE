@@ -163,7 +163,7 @@ export function AddToCartModal({ serviceItem, onChange }: Props) {
           cancelText="Hủy"
           onOk={() => navigate('/sign-in')}
         >
-          <Typography.Text>
+          <Typography.Text className="text-black">
             Bạn chưa đăng nhập. Hãy đăng nhập để thực hiện hành động này.
           </Typography.Text>
         </Modal>

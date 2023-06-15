@@ -173,7 +173,7 @@ export function UpsertService({ type }: ServiceProps) {
           <Form.Item label="Nội dung chi tiết" required name="detail">
             <TextEditor
               onChange={handleEditorChange}
-              initialValue={data?.getService?.detail}
+              initialValue={data?.getService?.detail || ''}
             />
           </Form.Item>
 
