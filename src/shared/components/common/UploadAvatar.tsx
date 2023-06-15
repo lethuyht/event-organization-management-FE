@@ -46,9 +46,8 @@ function UploadAvatar({
         pathType: S3UploadType.Public,
       });
       const uploadUrl = data?.presignedUrlS3?.uploadUrl;
-      const url = `${import.meta.env.VITE_IMAGE_URL}/${
-        data?.presignedUrlS3?.pathFile
-      }`;
+      const url = `${import.meta.env.VITE_IMAGE_URL}/${data?.presignedUrlS3?.pathFile
+        }`;
 
       if (uploadUrl) {
         const response = await uploadFile({
@@ -85,7 +84,7 @@ function UploadAvatar({
         <div className="absolute z-10 h-full w-full overflow-hidden rounded-full">
           <div className="relative flex h-full w-full items-end">
             <div className="h-3/6 w-full bg-black opacity-40" />
-            <div className="absolute flex h-3/6 w-full items-center justify-center text-base font-medium">
+            <div className="absolute flex h-3/6 w-full items-center text-center justify-center text-xs font-medium">
               {'Click để tải lên ảnh'}
             </div>
           </div>
