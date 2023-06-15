@@ -709,6 +709,40 @@ export const MetaFragmentFragmentDoc = gql`
   currentPage
 }
     `;
+export const AddItemToCartDocument = gql`
+    mutation addItemToCart($input: AddItemToCartDto!) {
+  addItemToCart(input: $input) {
+    message
+    success
+  }
+}
+    `;
+export type AddItemToCartMutationFn = Apollo.MutationFunction<AddItemToCartMutation, AddItemToCartMutationVariables>;
+
+/**
+ * __useAddItemToCartMutation__
+ *
+ * To run a mutation, you first call `useAddItemToCartMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddItemToCartMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addItemToCartMutation, { data, loading, error }] = useAddItemToCartMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAddItemToCartMutation(baseOptions?: Apollo.MutationHookOptions<AddItemToCartMutation, AddItemToCartMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddItemToCartMutation, AddItemToCartMutationVariables>(AddItemToCartDocument, options);
+      }
+export type AddItemToCartMutationHookResult = ReturnType<typeof useAddItemToCartMutation>;
+export type AddItemToCartMutationResult = Apollo.MutationResult<AddItemToCartMutation>;
+export type AddItemToCartMutationOptions = Apollo.BaseMutationOptions<AddItemToCartMutation, AddItemToCartMutationVariables>;
 export const ChangePasswordDocument = gql`
     mutation changePassword($changePasswordInput: ChangePasswordInput!) {
   changePassword(changePasswordInput: $changePasswordInput) {
@@ -1345,6 +1379,13 @@ export function refetchGetServicesQuery(variables: GetServicesQueryVariables) {
       return { query: GetServicesDocument, variables: variables }
     }
 export type MetaFragmentFragment = { totalItems: number, itemCount: number, itemsPerPage: number, totalPages: number, currentPage: number };
+
+export type AddItemToCartMutationVariables = Exact<{
+  input: AddItemToCartDto;
+}>;
+
+
+export type AddItemToCartMutation = { addItemToCart: { message?: string | null, success?: boolean | null } };
 
 export type ChangePasswordMutationVariables = Exact<{
   changePasswordInput: ChangePasswordInput;
