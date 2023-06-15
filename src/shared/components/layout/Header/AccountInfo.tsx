@@ -102,7 +102,7 @@ function AccountInfo() {
   }, [data]);
   return (
     <div className="flex justify-end">
-      {user?.role?.name === ROLE.USER && <CartIcon itemCount={1} />}
+      {user?.role?.name === ROLE.USER && <CartIcon />}
 
       <Dropdown
         overlay={

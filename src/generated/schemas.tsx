@@ -66,9 +66,20 @@ export type ChangePasswordInput = {
   password: Scalars['String'];
 };
 
+export type CheckoutStripeResponse = {
+  cancelUrl: Scalars['String'];
+  checkoutUrl: Scalars['String'];
+  successUrl: Scalars['String'];
+};
+
 export type CodeVerifyDto = {
   code: Scalars['String'];
   email: Scalars['String'];
+};
+
+export type ConfirmContractDeposit = {
+  contractId: Scalars['ID'];
+  isApproved?: Scalars['Boolean'];
 };
 
 export type Contract = {
@@ -80,6 +91,7 @@ export type Contract = {
   hireDate: Scalars['DateTime'];
   hireEndDate: Scalars['DateTime'];
   id: Scalars['ID'];
+  paymentIntentId: Scalars['String'];
   status: ContractStatus;
   totalPrice: Scalars['Float'];
   type: ContractType;
@@ -115,6 +127,12 @@ export type CustomerInfoDto = {
 
 export type DeleteFileDto = {
   url: Scalars['String'];
+};
+
+export type DepositContractDto = {
+  cancelUrl: Scalars['String'];
+  contractId: Scalars['ID'];
+  successUrl: Scalars['String'];
 };
 
 export type Event = {
@@ -195,6 +213,7 @@ export type IContract = {
   hireDate: Scalars['DateTime'];
   hireEndDate: Scalars['DateTime'];
   id: Scalars['ID'];
+  paymentIntentId: Scalars['String'];
   status: ContractStatus;
   totalPrice: Scalars['Float'];
   type: ContractType;
@@ -262,9 +281,9 @@ export type IRoles = {
 export type IService = {
   createdAt?: Maybe<Scalars['DateTime']>;
   description?: Maybe<Scalars['String']>;
-  detail: Scalars['String'];
+  detail?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
-  images: Array<Scalars['String']>;
+  images?: Maybe<Array<Scalars['String']>>;
   isPublished: Scalars['Boolean'];
   name: Scalars['String'];
   serviceItems?: Maybe<Array<ServiceItem>>;
@@ -311,6 +330,7 @@ export type MetaPaginationInterface = {
 export type Mutation = {
   addItemToCart: ResponseMessageBase;
   changePassword: ResponseMessageBase;
+  confirmContractDeposit: IContract;
   deleteFileS3: Scalars['String'];
   presignedUrlS3: IPreSignUrl;
   presignedUrlS3Public: IPreSignUrl;
@@ -322,6 +342,7 @@ export type Mutation = {
   signUp: ResponseMessageBase;
   updateEventRequestStatusByAdmin: IEventRequest;
   updateMe: IUser;
+  updateStatusContract: IContract;
   upsertEvent: IEvent;
   upsertEventRequest: IEventRequest;
   upsertService: IService;
@@ -336,6 +357,11 @@ export type MutationAddItemToCartArgs = {
 
 export type MutationChangePasswordArgs = {
   changePasswordInput: ChangePasswordInput;
+};
+
+
+export type MutationConfirmContractDepositArgs = {
+  input: ConfirmContractDeposit;
 };
 
 
@@ -394,6 +420,11 @@ export type MutationUpdateMeArgs = {
 };
 
 
+export type MutationUpdateStatusContractArgs = {
+  input: UpdateContractStatusDto;
+};
+
+
 export type MutationUpsertEventArgs = {
   input: UpsertEventDto;
 };
@@ -446,6 +477,7 @@ export enum QueryOperator {
 }
 
 export type Query = {
+  depositContract: CheckoutStripeResponse;
   getContract: IContract;
   getContracts: IContracts;
   getEvent: IEvent;
@@ -460,6 +492,11 @@ export type Query = {
   getService: IService;
   getServices: IServices;
   testQuery: Scalars['String'];
+};
+
+
+export type QueryDepositContractArgs = {
+  input: DepositContractDto;
 };
 
 
@@ -592,9 +629,9 @@ export enum S3UploadType {
 export type Service = {
   createdAt?: Maybe<Scalars['DateTime']>;
   description?: Maybe<Scalars['String']>;
-  detail: Scalars['String'];
+  detail?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
-  images: Array<Scalars['String']>;
+  images?: Maybe<Array<Scalars['String']>>;
   isPublished: Scalars['Boolean'];
   name: Scalars['String'];
   serviceItems?: Maybe<Array<ServiceItem>>;
@@ -604,14 +641,15 @@ export type Service = {
 
 export type ServiceItem = {
   createdAt?: Maybe<Scalars['DateTime']>;
-  description: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
+  images: Array<Scalars['String']>;
   isPublished: Scalars['Boolean'];
   name: Scalars['String'];
-  price: Scalars['Float'];
+  price?: Maybe<Scalars['Float']>;
   service: Service;
   serviceId: Scalars['ID'];
-  totalQuantity: Scalars['Float'];
+  totalQuantity?: Maybe<Scalars['Float']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
@@ -635,6 +673,11 @@ export type SignUpDto = {
   lastName: Scalars['String'];
   password: Scalars['String'];
   phoneNumber: Scalars['String'];
+};
+
+export type UpdateContractStatusDto = {
+  contractId: Scalars['ID'];
+  status: ContractStatus;
 };
 
 export type UpdateEventRequestStatusByAdminInput = {
@@ -1259,6 +1302,64 @@ export type GetMeQueryResult = Apollo.QueryResult<GetMeQuery, GetMeQueryVariable
 export function refetchGetMeQuery(variables?: GetMeQueryVariables) {
       return { query: GetMeDocument, variables: variables }
     }
+export const GetMyCartDocument = gql`
+    query getMyCart {
+  getMyCart {
+    id
+    userId
+    cartItems {
+      id
+      serviceItemId
+      hireDate
+      hireEndDate
+      amount
+      serviceItem {
+        id
+        name
+        price
+        isPublished
+        serviceId
+        description
+        totalQuantity
+        updatedAt
+        createdAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetMyCartQuery__
+ *
+ * To run a query within a React component, call `useGetMyCartQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMyCartQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMyCartQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetMyCartQuery(baseOptions?: Apollo.QueryHookOptions<GetMyCartQuery, GetMyCartQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMyCartQuery, GetMyCartQueryVariables>(GetMyCartDocument, options);
+      }
+export function useGetMyCartLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMyCartQuery, GetMyCartQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMyCartQuery, GetMyCartQueryVariables>(GetMyCartDocument, options);
+        }
+export type GetMyCartQueryHookResult = ReturnType<typeof useGetMyCartQuery>;
+export type GetMyCartLazyQueryHookResult = ReturnType<typeof useGetMyCartLazyQuery>;
+export type GetMyCartQueryResult = Apollo.QueryResult<GetMyCartQuery, GetMyCartQueryVariables>;
+export function refetchGetMyCartQuery(variables?: GetMyCartQueryVariables) {
+      return { query: GetMyCartDocument, variables: variables }
+    }
 export const GetServiceDocument = gql`
     query getService($id: String!) {
   getService(id: $id) {
@@ -1448,7 +1549,7 @@ export type UpsertServiceMutationVariables = Exact<{
 }>;
 
 
-export type UpsertServiceMutation = { upsertService: { id: string, name: string, description?: string | null, images: Array<string>, type: ServiceType, detail: string, isPublished: boolean, createdAt?: any | null, updatedAt?: any | null, serviceItems?: Array<{ id: string, name: string, price: number, isPublished: boolean, serviceId: string, description: string, totalQuantity: number, updatedAt?: any | null, createdAt?: any | null }> | null } };
+export type UpsertServiceMutation = { upsertService: { id: string, name: string, description?: string | null, images?: Array<string> | null, type: ServiceType, detail?: string | null, isPublished: boolean, createdAt?: any | null, updatedAt?: any | null, serviceItems?: Array<{ id: string, name: string, price?: number | null, isPublished: boolean, serviceId: string, description?: string | null, totalQuantity?: number | null, updatedAt?: any | null, createdAt?: any | null }> | null } };
 
 export type VerifyCodeMutationVariables = Exact<{
   input: CodeVerifyDto;
@@ -1476,16 +1577,21 @@ export type GetMeQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetMeQuery = { getMe: { avatar?: string | null, email: string, firstName: string, lastName: string, id: string, phoneNumber?: string | null, role: { name: string } } };
 
+export type GetMyCartQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMyCartQuery = { getMyCart: { id: string, userId: string, cartItems?: Array<{ id: string, serviceItemId: string, hireDate: any, hireEndDate: any, amount: number, createdAt?: any | null, updatedAt?: any | null, serviceItem: { id: string, name: string, price?: number | null, isPublished: boolean, serviceId: string, description?: string | null, totalQuantity?: number | null, updatedAt?: any | null, createdAt?: any | null } }> | null } };
+
 export type GetServiceQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type GetServiceQuery = { getService: { id: string, name: string, description?: string | null, images: Array<string>, type: ServiceType, detail: string, isPublished: boolean, createdAt?: any | null, updatedAt?: any | null, serviceItems?: Array<{ id: string, name: string, price: number, isPublished: boolean, serviceId: string, description: string, totalQuantity: number, updatedAt?: any | null, createdAt?: any | null }> | null } };
+export type GetServiceQuery = { getService: { id: string, name: string, description?: string | null, images?: Array<string> | null, type: ServiceType, detail?: string | null, isPublished: boolean, createdAt?: any | null, updatedAt?: any | null, serviceItems?: Array<{ id: string, name: string, price?: number | null, isPublished: boolean, serviceId: string, description?: string | null, totalQuantity?: number | null, updatedAt?: any | null, createdAt?: any | null }> | null } };
 
 export type GetServicesQueryVariables = Exact<{
   query: QueryFilterDto;
 }>;
 
 
-export type GetServicesQuery = { getServices: { meta: { totalItems: number, itemCount: number, itemsPerPage: number, totalPages: number, currentPage: number }, items: Array<{ id: string, name: string, description?: string | null, images: Array<string>, type: ServiceType, detail: string, isPublished: boolean, createdAt?: any | null, updatedAt?: any | null, serviceItems?: Array<{ id: string, name: string, price: number, isPublished: boolean, serviceId: string, description: string, totalQuantity: number, updatedAt?: any | null, createdAt?: any | null }> | null }> } };
+export type GetServicesQuery = { getServices: { meta: { totalItems: number, itemCount: number, itemsPerPage: number, totalPages: number, currentPage: number }, items: Array<{ id: string, name: string, description?: string | null, images?: Array<string> | null, type: ServiceType, detail?: string | null, isPublished: boolean, createdAt?: any | null, updatedAt?: any | null, serviceItems?: Array<{ id: string, name: string, price?: number | null, isPublished: boolean, serviceId: string, description?: string | null, totalQuantity?: number | null, updatedAt?: any | null, createdAt?: any | null }> | null }> } };

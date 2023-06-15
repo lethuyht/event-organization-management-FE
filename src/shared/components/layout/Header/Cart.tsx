@@ -1,9 +1,7 @@
+import { useGetMyCartQuery } from '#/generated/schemas';
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import styled from '@emotion/styled';
-
-interface Props {
-  itemCount: number;
-}
+import { useNavigate } from 'react-router-dom';
 
 const CartStyles = styled.div`
   padding: 0 20px;
@@ -26,12 +24,22 @@ const CartStyles = styled.div`
   }
 `;
 
-export const CartIcon = ({ itemCount }: Props) => {
+export const CartIcon = () => {
+  const { data } = useGetMyCartQuery();
+  const navigate = useNavigate();
+
   return (
     <CartStyles>
       <div className="cart-icon-container">
-        <ShoppingCartOutlined className="cart-icon" />
-        {itemCount > 0 && <div className="cart-item-count">{itemCount}</div>}
+        <ShoppingCartOutlined
+          className="cart-icon"
+          onClick={() => navigate('/cart')}
+        />
+        {data?.getMyCart.cartItems && data.getMyCart.cartItems.length > 0 && (
+          <div className="cart-item-count">
+            {data.getMyCart.cartItems.length}
+          </div>
+        )}
       </div>
     </CartStyles>
   );

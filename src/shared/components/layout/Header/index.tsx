@@ -92,7 +92,7 @@ function Header({ authenticated }: HeaderProps) {
       )}
 
       <Row
-        className="backdrop-filter-header flex items-center justify-between bg-[#00081e] py-[30px]"
+        className="backdrop-filter-header fixed z-[1000] flex w-full items-center justify-between bg-[#00081e] py-[30px]"
         justify="space-between"
         align="middle"
         gutter={[16, 32]}

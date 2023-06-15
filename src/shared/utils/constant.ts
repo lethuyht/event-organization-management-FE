@@ -18,3 +18,31 @@ export const EVENT_DEFAULT =
 
 export const NO_IMAGE =
   'https://polaris-event.s3.ap-southeast-1.amazonaws.com/static/no_image.png';
+
+export const LOGO_DEFAULT = `https://polaris-event.s3.ap-southeast-1.amazonaws.com/static/logo.jpg`;
+
+export const LOGO_SECONDARY = `https://polaris-event.s3.ap-southeast-1.amazonaws.com/static/logo.png`;
+
+export const ABOUT_US_IMAGE = `https://polaris-event.s3.ap-southeast-1.amazonaws.com/static/about_us_background.png`;
+
+export const SLIDER_IMAGES = {
+  HomePage: [
+    'https://polaris-event.s3.ap-southeast-1.amazonaws.com/static/Slideshow/home_slideshow.jpg',
+    'https://polaris-event.s3.ap-southeast-1.amazonaws.com/static/Slideshow/home_slideshow1.jpg',
+    'https://polaris-event.s3.ap-southeast-1.amazonaws.com/static/Slideshow/home_slideshow3.jpg',
+  ],
+  Device: [
+    'https://polaris-event.s3.ap-southeast-1.amazonaws.com/static/device_default_1.jpeg',
+    'https://polaris-event.s3.ap-southeast-1.amazonaws.com/static/device_default_2.jpeg',
+    'https://polaris-event.s3.ap-southeast-1.amazonaws.com/static/device_default_3.jpeg',
+    'https://polaris-event.s3.ap-southeast-1.amazonaws.com/static/device_default_4.jpeg',
+    'https://polaris-event.s3.ap-southeast-1.amazonaws.com/static/device_default_5.jpeg',
+    'https://polaris-event.s3.ap-southeast-1.amazonaws.com/static/device_default_6.jpeg',
+  ],
+  HumanResource: [
+    'https://polaris-event.s3.ap-southeast-1.amazonaws.com/static/human_default_1.jpg',
+    'https://polaris-event.s3.ap-southeast-1.amazonaws.com/static/human_default_2.jpg',
+    'https://polaris-event.s3.ap-southeast-1.amazonaws.com/static/human_default_3.jpg',
+    'https://polaris-event.s3.ap-southeast-1.amazonaws.com/static/human_default_4.jpg',
+  ],
+};

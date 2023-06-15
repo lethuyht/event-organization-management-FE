@@ -444,6 +444,62 @@ input[data-autocompleted] {
   &-content {
     background: @color-white-blur;
     backdrop-filter: blur(10px);
+
+    .ant-modal-title {
+      color: #000;
+      font-weight: bold;
+    }
+
+    .ant-modal-body {
+      .ant-form {
+        .ant-row {
+          display: block;
+
+          .ant-form-item-control-input {
+            input {
+              color: black;
+              border: solid 1px #ccc;
+              padding: 10px;
+              border-radius: 0.5rem;
+              width: 100%;
+
+              &:focus {
+                border-color: @primary-color !important;
+              }
+              &:focus-visible {
+                outline: unset;
+              }
+            }
+          }
+
+          // .ant-input-number {
+          //   width: 100%;
+          //   border: unset;
+          //   &-focused {
+          //     border: unset !important;
+          //     outline: unset !important;
+          //     &:focus-visible {
+          //       outline: unset !important;
+          //     }
+          //   }
+          //   &:focus {
+          //     border: unset;
+          //   }
+          //   &:focus-visible {
+          //     outline: unset;
+          //   }
+          // }
+          .ant-picker-range {
+            width: 100% !important;
+            border: unset;
+          }
+
+          .ant-picker-focused {
+            box-shadow: unset !important;
+          }
+        }
+      }
+    }
   }
 
   .ant-btn-default {

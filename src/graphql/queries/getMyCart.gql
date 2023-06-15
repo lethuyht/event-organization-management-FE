@@ -1,0 +1,26 @@
+query getMyCart {
+  getMyCart {
+    id
+    userId
+    cartItems {
+      id
+      serviceItemId
+      hireDate
+      hireEndDate
+      amount
+      serviceItem {
+        id
+        name
+        price
+        isPublished
+        serviceId
+        description
+        totalQuantity
+        updatedAt
+        createdAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+}

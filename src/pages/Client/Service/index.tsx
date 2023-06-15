@@ -5,10 +5,7 @@ import {
 } from '#/generated/schemas';
 import Pagination from '#/shared/components/Styled/Pagination';
 import usePagination from '#/shared/hooks/usePagination';
-import {
-  DEVICE_ITEM_DEFAULT,
-  DEVICE_SERVICE_DEFAULT,
-} from '#/shared/utils/constant';
+import { DEVICE_ITEM_DEFAULT } from '#/shared/utils/constant';
 import { scrollToTop, showError } from '#/shared/utils/tools';
 import { SearchOutlined } from '@ant-design/icons';
 import styled from '@emotion/styled';
@@ -58,7 +55,11 @@ const DevicePageStyles = styled.div`
   }
 `;
 
-export function HumanPage() {
+export interface Props {
+  type: ServiceType;
+}
+
+export function Service({ type }: Props) {
   const [search, setSearch] = useState<string>('');
   const [inputValue, setInputValue] = useState<string>('');
   const { currentPage, pageSize, setCurrentPage } = usePagination();
@@ -68,7 +69,7 @@ export function HumanPage() {
         filters: [
           {
             field: 'Service.type',
-            data: ServiceType.HumanResource,
+            data: type,
             operator: QueryOperator.Eq,
           },
           {
@@ -90,13 +91,13 @@ export function HumanPage() {
   return (
     <DevicePageStyles className="content ">
       <div
-        className={`thumbnail  bg-[url('../../assets/images/human_service_default.jpeg')]`}
+        className={`thumbnail  bg-[url('../../assets/images/device_service_default.jpeg')]`}
       >
         <Input
           value={inputValue}
           className="w-1/2 text-center "
           prefix={<SearchOutlined />}
-          placeholder="Nhập loại hình nhân sự cần tìm....."
+          placeholder="Nhập tên dịch vụ cần tìm....."
           onChange={(value: any) => {
             setInputValue(value.target.value);
           }}
@@ -107,9 +108,9 @@ export function HumanPage() {
           }}
         />
       </div>
-      <Row className="mx-auto min-h-[1000px]  w-full max-w-container py-8 ">
+      <Row className="mx-auto min-h-[1000px]  w-full max-w-container p-8 ">
         <Typography.Title level={1} className="w-full text-center text-red-500">
-          Nhân sự Event
+          {type === ServiceType.Device ? 'Thiết bị sự kiện' : 'Nhân sự sự kiện'}
         </Typography.Title>
         <Col span={24} className="py-8">
           <Skeleton loading={loading}>
@@ -118,9 +119,9 @@ export function HumanPage() {
                 devices?.getServices?.items?.map(device => (
                   <Col
                     xs={24}
-                    sm={12}
-                    md={8}
-                    lg={6}
+                    sm={24}
+                    md={12}
+                    lg={8}
                     xl={6}
                     xxl={6}
                     key={device.id}
