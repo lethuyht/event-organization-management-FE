@@ -11,6 +11,7 @@ import { useRoutes } from 'react-router-dom';
 import GuardRoute from './GuardRoute';
 import { DevicePage } from '#/pages/Client/Device';
 import { HumanPage } from '#/pages/Client/Human';
+import UpdateProfile from '#/pages/Client/Profile/UpdateProfile';
 
 const App = () => {
   const routes = useRoutes([
@@ -33,6 +34,10 @@ const App = () => {
     {
       path: '/verify-code',
       element: <VerifyCode />,
+    },
+    {
+      path: '/profile',
+      element: <ClientLayout children={<UpdateProfile />} />,
     },
     {
       path: '/event',
