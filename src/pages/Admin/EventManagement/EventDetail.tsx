@@ -117,7 +117,7 @@ export function EventDetail() {
         <Col span={24}>
           <div
             dangerouslySetInnerHTML={{ __html: data?.getEvent.detail || '' }}
-            className="px-4"
+            className="px-4 text-black"
           ></div>
         </Col>
       </Row>

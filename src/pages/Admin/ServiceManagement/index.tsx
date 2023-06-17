@@ -173,6 +173,7 @@ export function ServiceManagement({ type }: ServiceProps) {
     {
       title: 'Thao tác',
       key: 'action',
+      width: 200,
       render: (service: IService) => {
         return (
           <Row>
@@ -185,7 +186,6 @@ export function ServiceManagement({ type }: ServiceProps) {
   ];
 
   const onFilter = ({ description, isPublished, name }: ManagementFilter) => {
-    console.log({ description, isPublished, name });
     const newFilters: FilterDto[] = [];
     if (name && name.trim()) {
       newFilters.push({

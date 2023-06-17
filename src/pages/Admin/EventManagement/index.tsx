@@ -148,6 +148,7 @@ export function EventManagement() {
     {
       title: 'Thao tác',
       key: 'action',
+      width: 200,
       render: (event: IEvent) => {
         return (
           <Row>

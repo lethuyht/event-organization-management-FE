@@ -1,7 +1,5 @@
 import {
-  useGetEventQuery,
   useGetServiceQuery,
-  useUpsertEventMutation,
   useUpsertServiceMutation,
 } from '#/generated/schemas';
 import DynamicField from '#/shared/components/common/DynamicField';
@@ -24,6 +22,7 @@ import TextArea from 'antd/lib/input/TextArea';
 import { useParams } from 'react-router-dom';
 import { ServiceProps } from '.';
 import { DynamicServiceItem } from './DynamicServiceItem';
+import _ from 'lodash';
 
 const UpserEventStyles = styled.div`
   .ant-form-item-label {
@@ -57,13 +56,6 @@ const UpserEventStyles = styled.div`
     }
     display: flex !important;
   }
-
-  .dynamic-item {
-    display: flex !important;
-    border: solid 1px #ccc !important;
-    border-radius: 0.5rem !important;
-    margin-bottom: 1rem !important;
-  }
 `;
 export function UpsertService({ type }: ServiceProps) {
   const { id } = useParams<{ id: string }>();
@@ -82,12 +74,18 @@ export function UpsertService({ type }: ServiceProps) {
     variables: {
       id: String(id),
     },
+    onCompleted: data => {
+      if (data && data.getService.description) {
+        form.setFieldsValue({ detail: data?.getService?.detail });
+      }
+    },
   });
 
   const hanleUpsertService = (values: any) => {
     upsertService({
       variables: {
         input: {
+          id: data?.getService?.id,
           ...values,
           type,
         },
@@ -139,7 +137,11 @@ export function UpsertService({ type }: ServiceProps) {
               {
                 required: true,
                 validator: async (_, value) => {
-                  if (!value || value.length === 0) {
+                  if (
+                    !value ||
+                    value.length === 0 ||
+                    value.some((v: { src: any }) => !v || v.src)
+                  ) {
                     return Promise.reject(new Error('Vui lòng nhập hình ảnh'));
                   }
                 },
@@ -149,16 +151,22 @@ export function UpsertService({ type }: ServiceProps) {
             <DynamicField
               name="images"
               childrenItem={<UploadImage />}
-              initialValues={data?.getService.images ?? []}
+              initialValues={data?.getService.images ?? ['']}
               valuePropName="src"
             />
           </Form.Item>
 
           <Form.Item
-            label="Tên sự kiện"
+            label="Tên dịch vụ"
             required
             name="name"
             initialValue={data?.getService?.name}
+            rules={[
+              {
+                required: true,
+                message: 'Vui lòng nhập tên dịch vụ',
+              },
+            ]}
           >
             <Input />
           </Form.Item>
@@ -167,10 +175,32 @@ export function UpsertService({ type }: ServiceProps) {
             required
             name="description"
             initialValue={data?.getService?.description}
+            rules={[
+              {
+                required: true,
+                message: 'Vui lòng nhập mô tả',
+              },
+            ]}
           >
             <TextArea />
           </Form.Item>
-          <Form.Item label="Nội dung chi tiết" required name="detail">
+          <Form.Item
+            label="Nội dung chi tiết"
+            required
+            name="detail"
+            rules={[
+              {
+                required: true,
+                validator: async (_, value) => {
+                  if (!value || value == '' || value.trim() == '<p></p>') {
+                    return Promise.reject(
+                      new Error('Vui lòng nhập nội dung chi tiết'),
+                    );
+                  }
+                },
+              },
+            ]}
+          >
             <TextEditor
               onChange={handleEditorChange}
               initialValue={data?.getService?.detail || ''}
@@ -192,7 +222,18 @@ export function UpsertService({ type }: ServiceProps) {
             ]}
           >
             <DynamicServiceItem
-              initialValues={data?.getService?.serviceItems ?? []}
+              initialValues={
+                data?.getService?.serviceItems?.map(item =>
+                  _.pick(item, [
+                    'id',
+                    'name',
+                    'description',
+                    'isPublished',
+                    'price',
+                    'totalQuantity',
+                  ]),
+                ) ?? []
+              }
               form={form}
             />
           </Form.Item>

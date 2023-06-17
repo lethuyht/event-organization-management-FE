@@ -125,6 +125,16 @@ export function UpsertEvent() {
             required
             initialValue={data?.getEvent?.thumbnail}
             valuePropName="src"
+            rules={[
+              {
+                required: true,
+                validator: async (_, value) => {
+                  if (!value || value.src === '') {
+                    return Promise.reject(new Error('Vui lòng chọn hình ảnh'));
+                  }
+                },
+              },
+            ]}
           >
             <UploadImage />
           </Form.Item>
@@ -133,6 +143,12 @@ export function UpsertEvent() {
             required
             name="name"
             initialValue={data?.getEvent?.name}
+            rules={[
+              {
+                required: true,
+                message: 'Vui lòng nhập tên sự kiện',
+              },
+            ]}
           >
             <Input />
           </Form.Item>
@@ -141,10 +157,32 @@ export function UpsertEvent() {
             required
             name="description"
             initialValue={data?.getEvent?.description}
+            rules={[
+              {
+                required: true,
+                message: 'Vui lòng nhập mô tả',
+              },
+            ]}
           >
             <TextArea />
           </Form.Item>
-          <Form.Item label="Nội dung chi tiết" required name="detail">
+          <Form.Item
+            label="Nội dung chi tiết"
+            required
+            name="detail"
+            rules={[
+              {
+                required: true,
+                validator: async (_, value) => {
+                  if (!value || value == '' || value.trim() == '<p></p>') {
+                    return Promise.reject(
+                      new Error('Vui lòng nhập nội dung chi tiết'),
+                    );
+                  }
+                },
+              },
+            ]}
+          >
             <TextEditor
               onChange={handleEditorChange}
               initialValue={data?.getEvent?.detail}

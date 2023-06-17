@@ -40,14 +40,6 @@ const userMenus: MenuType[] = [
     href: ['/user/contract-management'],
   },
   {
-    key: 'user-event-request',
-    to: '/event-request',
-    icon: <UserAccountSVG width={20} height={20} />,
-    title: 'Quản lý yêu cầu sự kiện ',
-    href: ['/user/event-request'],
-  },
-
-  {
     key: 'logout',
     icon: <LogoutSVG width={20} height={20} />,
     title: 'Đăng xuất',

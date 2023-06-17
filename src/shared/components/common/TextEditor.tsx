@@ -1,10 +1,10 @@
-import { EditorState, convertToRaw } from 'draft-js';
+import { ContentState, EditorState, convertToRaw } from 'draft-js';
 import 'draft-js/dist/Draft.css';
 import draftToHtml from 'draftjs-to-html';
+import htmlToDraft from 'html-to-draftjs';
 import { useState } from 'react';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import { stateFromHTML } from 'draft-js-import-html';
 
 interface MyEditorProps {
   initialValue?: string;
@@ -13,7 +13,10 @@ interface MyEditorProps {
 export const TextEditor = ({ initialValue, onChange }: MyEditorProps) => {
   const [editorState, setEditorState] = useState(() => {
     if (initialValue) {
-      const contentState = stateFromHTML(initialValue);
+      const contentBlock = htmlToDraft(initialValue);
+      const contentState = ContentState.createFromBlockArray(
+        contentBlock.contentBlocks,
+      );
 
       return EditorState.createWithContent(contentState);
     }

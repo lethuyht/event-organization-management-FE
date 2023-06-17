@@ -28,12 +28,6 @@ export function AdminPage() {
         key: '/admin/contract-management',
       },
       {
-        path: '/admin/event-request-management',
-        name: 'Quản lý yêu cầu sự kiện',
-        icon: <SolutionOutlined />,
-        key: '/admin/event-request-management',
-      },
-      {
         path: '/admin/event-management',
         name: 'Quản lý sự kiện',
         icon: <SettingOutlined />,
@@ -83,10 +77,6 @@ export function AdminPage() {
           element: <UpsertEvent />,
         },
       ],
-    },
-    {
-      path: '/event-request-management',
-      element: <div>Event Management Product</div>,
     },
     {
       path: '/service-management/human',

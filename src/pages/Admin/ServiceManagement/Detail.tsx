@@ -147,7 +147,7 @@ export function ServiceDetail({ type }: ServiceProps) {
         <Col span={24}>
           <div
             dangerouslySetInnerHTML={{ __html: data?.getService.detail || '' }}
-            className="px-4"
+            className="px-4 text-black"
           ></div>
         </Col>
       </Row>

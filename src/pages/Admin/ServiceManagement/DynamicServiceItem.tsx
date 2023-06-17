@@ -17,7 +17,7 @@ import {
 import { FormInstance } from 'antd/es/form/Form';
 
 interface Props {
-  initialValues: DeepPartial<ServiceItem[]>;
+  initialValues: DeepPartial<ServiceItem>[];
   form: FormInstance<any>;
 }
 
@@ -161,7 +161,19 @@ export function DynamicServiceItem({ initialValues, form }: Props) {
                       rules={[
                         {
                           required: true,
-                          message: 'Vui lòng nhập chi tiết sản phẩm dịch vụ',
+                          validator: async (_, value) => {
+                            if (
+                              !value ||
+                              value == '' ||
+                              value.trim() == '<p></p>'
+                            ) {
+                              return Promise.reject(
+                                new Error(
+                                  'Vui lòng nhập chi tiết sản phẩm dịch vụ',
+                                ),
+                              );
+                            }
+                          },
                         },
                       ]}
                     >

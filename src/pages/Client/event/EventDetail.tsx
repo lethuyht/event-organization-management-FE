@@ -56,7 +56,7 @@ export function EventDetailPage() {
                 <text className='text-xl text-black pb-8'>Polaris Event – với hơn 10 năm xây dựng và phát triển với những thành tựu nhất định trong việc tổ chức nhiều sự kiện thành công cho các cơ quan, đơn vị và doanh nghiệp trên toàn quốc. Polaris Event luôn tự tin là một trong những công ty tổ chức sự kiện hàng đầu tại Việt Nam. Đơn vị chuyên hỗ trợ, tư vấn, cung cấp dịch vụ {event?.getEvent.name} trọn gói từ Bắc – Nam với mức giá cạnh tranh, hợp lý nhất.</text>
                 <Image src={`${event?.getEvent.thumbnail ?? EVENT_DEFAULT
                     }`} preview={false} />
-                <div dangerouslySetInnerHTML={{ __html: event?.getEvent.detail || '' }} className='py-8' />
+                <div dangerouslySetInnerHTML={{ __html: event?.getEvent.detail || '' }} className='py-8 text-black' />
             </Row>
         </EventDetailPageStyles>
     );

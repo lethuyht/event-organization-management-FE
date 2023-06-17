@@ -32,7 +32,7 @@ export function AddToCartModal({ serviceItem, onChange }: Props) {
   const [dates, setDates] = useState<RangeValue>(null);
 
   const disabledDate = (current: Dayjs) => {
-    return current && current < dayjs().add(5, 'day');
+    return current && current < dayjs().add(1, 'week');
   };
 
   const [upsertAddToCart] = useAddItemToCartMutation({
@@ -135,7 +135,6 @@ export function AddToCartModal({ serviceItem, onChange }: Props) {
                 {
                   required: true,
                   validator: async (_, value) => {
-                    console.log('first', value);
                     if (!dates) {
                       return Promise.reject(
                         new Error('Thời gian thuê không được để trống'),

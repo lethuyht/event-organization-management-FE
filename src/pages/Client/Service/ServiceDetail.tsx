@@ -177,7 +177,8 @@ export function ServiceDetailPage({ type }: Props) {
               dangerouslySetInnerHTML={{
                 __html: service?.getService?.detail || '',
               }}
-            ></div>
+              className="w-full text-black"
+            />
           </Row>
         </Col>
 
