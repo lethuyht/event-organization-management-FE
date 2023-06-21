@@ -84,6 +84,7 @@ export type ConfirmContractDeposit = {
 
 export type Contract = {
   address: Scalars['String'];
+  contractEvent?: Maybe<ContractEvent>;
   contractServiceItems: Array<ContractServiceItem>;
   createdAt?: Maybe<Scalars['DateTime']>;
   details: Scalars['JSON'];
@@ -106,11 +107,35 @@ export type ContractDetailDto = {
   customerInfo: CustomerInfoDto;
 };
 
+export type ContractEvent = {
+  contract: Contract;
+  contractEventServiceItems: Array<ContractEventServiceItem>;
+  contractId: Scalars['ID'];
+  createdAt?: Maybe<Scalars['DateTime']>;
+  event: Event;
+  eventId: Scalars['ID'];
+  id: Scalars['ID'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type ContractEventServiceItem = {
+  amount: Scalars['Int'];
+  contractEvent: ContractEvent;
+  contractEventId: Scalars['ID'];
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id: Scalars['ID'];
+  serviceItem: ServiceItem;
+  serviceItemId: Scalars['ID'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
 export type ContractServiceItem = {
   amount: Scalars['Float'];
   contract: Contract;
   contractId: Scalars['ID'];
   createdAt?: Maybe<Scalars['DateTime']>;
+  hireDate: Scalars['DateTime'];
+  hireEndDate: Scalars['DateTime'];
   id: Scalars['ID'];
   serviceItem: ServiceItem;
   serviceItemId: Scalars['ID'];
@@ -123,6 +148,11 @@ export type CustomerInfoDto = {
   phoneNumber: Scalars['String'];
   representative?: InputMaybe<Scalars['String']>;
   type: Scalars['String'];
+};
+
+export type CustomizedEventServiceItemInput = {
+  amount?: InputMaybe<Scalars['Float']>;
+  serviceItemId?: InputMaybe<Scalars['ID']>;
 };
 
 export type DeleteFileDto = {
@@ -139,6 +169,7 @@ export type Event = {
   createdAt?: Maybe<Scalars['DateTime']>;
   description: Scalars['String'];
   detail: Scalars['String'];
+  eventServiceItems?: Maybe<Array<EventServiceItem>>;
   id: Scalars['ID'];
   isPublic: Scalars['Boolean'];
   name: Scalars['String'];
@@ -146,48 +177,32 @@ export type Event = {
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
-export type EventRequest = {
+export type EventRequestInput = {
+  address: Scalars['String'];
+  customizedServiceItems?: InputMaybe<Array<CustomizedEventServiceItemInput>>;
+  details: ContractDetailDto;
+  eventId: Scalars['ID'];
+  hireDate: Scalars['DateTime'];
+  hireEndDate: Scalars['DateTime'];
+  isCustomized?: Scalars['Boolean'];
+};
+
+export type EventServiceItem = {
+  amount: Scalars['Int'];
   createdAt?: Maybe<Scalars['DateTime']>;
   event: Event;
   eventId: Scalars['ID'];
-  eventRequestDetail: EventRequestDetail;
   id: Scalars['ID'];
-  status: Scalars['String'];
-  updatedAt?: Maybe<Scalars['DateTime']>;
-  user: User;
-  userId: Scalars['ID'];
-};
-
-export type EventRequestDetail = {
-  address?: Maybe<Scalars['String']>;
-  amountAttendee: Scalars['Float'];
-  createdAt?: Maybe<Scalars['DateTime']>;
-  customerName?: Maybe<Scalars['String']>;
-  endHireDate: Scalars['DateTime'];
-  eventRequest: EventRequest;
-  eventRequestId: Scalars['ID'];
-  id: Scalars['ID'];
-  isAcceptedComboService: Scalars['Boolean'];
-  phoneNumber?: Maybe<Scalars['String']>;
-  startHireDate: Scalars['DateTime'];
+  serviceItem: ServiceItem;
+  serviceItemId: Scalars['ID'];
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
-export type EventRequestDetailInput = {
-  address?: InputMaybe<Scalars['String']>;
-  amountAttendee?: InputMaybe<Scalars['Float']>;
-  customerName?: InputMaybe<Scalars['String']>;
-  endHireDate?: InputMaybe<Scalars['DateTime']>;
-  isAcceptedComboService?: InputMaybe<Scalars['Boolean']>;
-  phoneNumber?: InputMaybe<Scalars['String']>;
-  startHireDate?: InputMaybe<Scalars['DateTime']>;
+export type EventServiceItemInput = {
+  amount?: InputMaybe<Scalars['Float']>;
+  id?: InputMaybe<Scalars['ID']>;
+  serviceItemId?: InputMaybe<Scalars['ID']>;
 };
-
-export enum EventRequestStatus {
-  Accepted = 'ACCEPTED',
-  Draft = 'DRAFT',
-  Submitted = 'SUBMITTED'
-}
 
 export type FilterDto = {
   data?: InputMaybe<Scalars['String']>;
@@ -206,6 +221,7 @@ export type ICart = {
 
 export type IContract = {
   address: Scalars['String'];
+  contractEvent?: Maybe<ContractEvent>;
   contractServiceItems: Array<ContractServiceItem>;
   createdAt?: Maybe<Scalars['DateTime']>;
   details: Scalars['JSON'];
@@ -231,28 +247,12 @@ export type IEvent = {
   createdAt?: Maybe<Scalars['DateTime']>;
   description: Scalars['String'];
   detail: Scalars['String'];
+  eventServiceItems?: Maybe<Array<EventServiceItem>>;
   id: Scalars['ID'];
   isPublic: Scalars['Boolean'];
   name: Scalars['String'];
   thumbnail?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
-};
-
-export type IEventRequest = {
-  createdAt?: Maybe<Scalars['DateTime']>;
-  event: Event;
-  eventId: Scalars['ID'];
-  eventRequestDetail: EventRequestDetail;
-  id: Scalars['ID'];
-  status: Scalars['String'];
-  updatedAt?: Maybe<Scalars['DateTime']>;
-  user: User;
-  userId: Scalars['ID'];
-};
-
-export type IEventRequests = {
-  items: Array<IEventRequest>;
-  meta: MetaPaginationInterface;
 };
 
 export type IEvents = {
@@ -331,20 +331,20 @@ export type Mutation = {
   addItemToCart: ResponseMessageBase;
   changePassword: ResponseMessageBase;
   confirmContractDeposit: IContract;
+  createEventRequest: ResponseMessageBase;
   deleteFileS3: Scalars['String'];
   presignedUrlS3: IPreSignUrl;
   presignedUrlS3Public: IPreSignUrl;
   publishService: IService;
   refreshToken: RefreshResponse;
+  removeCartItem: ResponseMessageBase;
   requestCreateContract: IContract;
   signIn: LoginResponse;
   signOut: ResponseMessageBase;
   signUp: ResponseMessageBase;
-  updateEventRequestStatusByAdmin: IEventRequest;
   updateMe: IUser;
   updateStatusContract: IContract;
   upsertEvent: IEvent;
-  upsertEventRequest: IEventRequest;
   upsertService: IService;
   verifyCode: LoginResponse;
 };
@@ -362,6 +362,11 @@ export type MutationChangePasswordArgs = {
 
 export type MutationConfirmContractDepositArgs = {
   input: ConfirmContractDeposit;
+};
+
+
+export type MutationCreateEventRequestArgs = {
+  input: EventRequestInput;
 };
 
 
@@ -390,6 +395,11 @@ export type MutationRefreshTokenArgs = {
 };
 
 
+export type MutationRemoveCartItemArgs = {
+  cartItemId: Scalars['String'];
+};
+
+
 export type MutationRequestCreateContractArgs = {
   input: RequestContractDto;
 };
@@ -410,11 +420,6 @@ export type MutationSignUpArgs = {
 };
 
 
-export type MutationUpdateEventRequestStatusByAdminArgs = {
-  input: UpdateEventRequestStatusByAdminInput;
-};
-
-
 export type MutationUpdateMeArgs = {
   input: UserUpdateInput;
 };
@@ -427,11 +432,6 @@ export type MutationUpdateStatusContractArgs = {
 
 export type MutationUpsertEventArgs = {
   input: UpsertEventDto;
-};
-
-
-export type MutationUpsertEventRequestArgs = {
-  input: UpsertEventRequestInput;
 };
 
 
@@ -477,12 +477,11 @@ export enum QueryOperator {
 }
 
 export type Query = {
+  checkoutRemainBillingContract: CheckoutStripeResponse;
   depositContract: CheckoutStripeResponse;
   getContract: IContract;
   getContracts: IContracts;
   getEvent: IEvent;
-  getEventRequest: IEventRequest;
-  getEventRequests: IEventRequests;
   getEvents: IEvents;
   getMe: IUser;
   getMyCart: ICart;
@@ -492,6 +491,11 @@ export type Query = {
   getService: IService;
   getServices: IServices;
   testQuery: Scalars['String'];
+};
+
+
+export type QueryCheckoutRemainBillingContractArgs = {
+  input: DepositContractDto;
 };
 
 
@@ -512,16 +516,6 @@ export type QueryGetContractsArgs = {
 
 export type QueryGetEventArgs = {
   id: Scalars['ID'];
-};
-
-
-export type QueryGetEventRequestArgs = {
-  id: Scalars['ID'];
-};
-
-
-export type QueryGetEventRequestsArgs = {
-  queryParams: QueryFilterDto;
 };
 
 
@@ -642,6 +636,7 @@ export type Service = {
 export type ServiceItem = {
   createdAt?: Maybe<Scalars['DateTime']>;
   description?: Maybe<Scalars['String']>;
+  eventServiceItems?: Maybe<Array<EventServiceItem>>;
   id: Scalars['ID'];
   images: Array<Scalars['String']>;
   isPublished: Scalars['Boolean'];
@@ -680,25 +675,14 @@ export type UpdateContractStatusDto = {
   status: ContractStatus;
 };
 
-export type UpdateEventRequestStatusByAdminInput = {
-  id?: InputMaybe<Scalars['ID']>;
-  status?: InputMaybe<EventRequestStatus>;
-};
-
 export type UpsertEventDto = {
   description?: InputMaybe<Scalars['String']>;
   detail?: InputMaybe<Scalars['String']>;
+  eventServiceItems?: InputMaybe<Array<EventServiceItemInput>>;
   id?: InputMaybe<Scalars['ID']>;
   isPublic?: InputMaybe<Scalars['Boolean']>;
   name?: InputMaybe<Scalars['String']>;
   thumbnail?: InputMaybe<Scalars['String']>;
-};
-
-export type UpsertEventRequestInput = {
-  eventId?: InputMaybe<Scalars['ID']>;
-  eventRequestDetail?: InputMaybe<EventRequestDetailInput>;
-  id?: InputMaybe<Scalars['ID']>;
-  status?: InputMaybe<EventRequestStatus>;
 };
 
 export type UpsertServiceDto = {
@@ -923,6 +907,40 @@ export function useRefreshTokenMutation(baseOptions?: Apollo.MutationHookOptions
 export type RefreshTokenMutationHookResult = ReturnType<typeof useRefreshTokenMutation>;
 export type RefreshTokenMutationResult = Apollo.MutationResult<RefreshTokenMutation>;
 export type RefreshTokenMutationOptions = Apollo.BaseMutationOptions<RefreshTokenMutation, RefreshTokenMutationVariables>;
+export const RemoveCartItemDocument = gql`
+    mutation removeCartItem($cartItemId: String!) {
+  removeCartItem(cartItemId: $cartItemId) {
+    message
+    success
+  }
+}
+    `;
+export type RemoveCartItemMutationFn = Apollo.MutationFunction<RemoveCartItemMutation, RemoveCartItemMutationVariables>;
+
+/**
+ * __useRemoveCartItemMutation__
+ *
+ * To run a mutation, you first call `useRemoveCartItemMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveCartItemMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeCartItemMutation, { data, loading, error }] = useRemoveCartItemMutation({
+ *   variables: {
+ *      cartItemId: // value for 'cartItemId'
+ *   },
+ * });
+ */
+export function useRemoveCartItemMutation(baseOptions?: Apollo.MutationHookOptions<RemoveCartItemMutation, RemoveCartItemMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RemoveCartItemMutation, RemoveCartItemMutationVariables>(RemoveCartItemDocument, options);
+      }
+export type RemoveCartItemMutationHookResult = ReturnType<typeof useRemoveCartItemMutation>;
+export type RemoveCartItemMutationResult = Apollo.MutationResult<RemoveCartItemMutation>;
+export type RemoveCartItemMutationOptions = Apollo.BaseMutationOptions<RemoveCartItemMutation, RemoveCartItemMutationVariables>;
 export const SignInDocument = gql`
     mutation signIn($input: SignInDto!) {
   signIn(input: $input) {
@@ -1323,6 +1341,11 @@ export const GetMyCartDocument = gql`
         totalQuantity
         updatedAt
         createdAt
+        service {
+          id
+          images
+          type
+        }
       }
       createdAt
       updatedAt
@@ -1516,6 +1539,13 @@ export type RefreshTokenMutationVariables = Exact<{
 
 export type RefreshTokenMutation = { refreshToken: { accessToken: string } };
 
+export type RemoveCartItemMutationVariables = Exact<{
+  cartItemId: Scalars['String'];
+}>;
+
+
+export type RemoveCartItemMutation = { removeCartItem: { message?: string | null, success?: boolean | null } };
+
 export type SignInMutationVariables = Exact<{
   input: SignInDto;
 }>;
@@ -1580,7 +1610,7 @@ export type GetMeQuery = { getMe: { avatar?: string | null, email: string, first
 export type GetMyCartQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMyCartQuery = { getMyCart: { id: string, userId: string, cartItems?: Array<{ id: string, serviceItemId: string, hireDate: any, hireEndDate: any, amount: number, createdAt?: any | null, updatedAt?: any | null, serviceItem: { id: string, name: string, price?: number | null, isPublished: boolean, serviceId: string, description?: string | null, totalQuantity?: number | null, updatedAt?: any | null, createdAt?: any | null } }> | null } };
+export type GetMyCartQuery = { getMyCart: { id: string, userId: string, cartItems?: Array<{ id: string, serviceItemId: string, hireDate: any, hireEndDate: any, amount: number, createdAt?: any | null, updatedAt?: any | null, serviceItem: { id: string, name: string, price?: number | null, isPublished: boolean, serviceId: string, description?: string | null, totalQuantity?: number | null, updatedAt?: any | null, createdAt?: any | null, service: { id: string, images?: Array<string> | null, type: ServiceType } } }> | null } };
 
 export type GetServiceQueryVariables = Exact<{
   id: Scalars['String'];

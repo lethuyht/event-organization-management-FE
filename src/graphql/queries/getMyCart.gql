@@ -18,6 +18,11 @@ query getMyCart {
         totalQuantity
         updatedAt
         createdAt
+        service {
+          id
+          images
+          type
+        }
       }
       createdAt
       updatedAt

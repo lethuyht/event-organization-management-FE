@@ -1,0 +1,6 @@
+mutation removeCartItem($cartItemId: String!) {
+  removeCartItem(cartItemId: $cartItemId) {
+    message
+    success
+  }
+}

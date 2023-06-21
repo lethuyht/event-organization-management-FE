@@ -13,6 +13,7 @@ import ClientLayout from '#/shared/components/layout/ClientLayout';
 import { ROLE } from '#/shared/utils/type';
 import { useRoutes } from 'react-router';
 import GuardRoute from './GuardRoute';
+import { Cart } from '#/pages/Client/Cart';
 
 const App = () => {
   const routes = useRoutes([
@@ -38,7 +39,13 @@ const App = () => {
     },
     {
       path: '/profile',
-      element: <ClientLayout children={<UpdateProfile />} />,
+      element: (
+        <GuardRoute
+          roles={[ROLE.ADMIN, ROLE.USER]}
+          isPrivate={true}
+          children={<ClientLayout children={<UpdateProfile />} />}
+        />
+      ),
     },
     {
       path: '/event',
@@ -73,6 +80,16 @@ const App = () => {
       element: (
         <ClientLayout
           children={<ServiceDetailPage type={ServiceType.HumanResource} />}
+        />
+      ),
+    },
+    {
+      path: 'cart',
+      element: (
+        <GuardRoute
+          roles={[ROLE.USER]}
+          isPrivate={true}
+          children={<ClientLayout children={<Cart />} />}
         />
       ),
     },

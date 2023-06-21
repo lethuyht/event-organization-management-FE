@@ -1,5 +1,4 @@
 import { getToken } from '#/shared/utils/token';
-import { useEffect } from 'react';
 import Container from '../common/Container';
 
 import { FooterComponent } from './Footer';
