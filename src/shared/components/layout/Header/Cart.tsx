@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 const CartStyles = styled.div`
   padding: 0 20px;
+
   .cart-icon-container {
     font-size: 40px;
     position: relative;
@@ -35,9 +36,9 @@ export const CartIcon = () => {
           className="cart-icon"
           onClick={() => navigate('/cart')}
         />
-        {data?.getMyCart.cartItems && data.getMyCart.cartItems.length > 0 && (
+        {data?.getMyCart.cartItems && data.getMyCart.cartItems?.length > 0 && (
           <div className="cart-item-count">
-            {data.getMyCart.cartItems.length}
+            {data.getMyCart.cartItems?.length}
           </div>
         )}
       </div>

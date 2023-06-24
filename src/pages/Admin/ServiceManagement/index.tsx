@@ -47,6 +47,7 @@ const ServiceManagementStyle = styled.div`
   .anticon.anticon-eye,
   .anticon-edit {
     padding: 0 10px;
+
     svg {
       font-size: 25px;
       cursor: pointer;
@@ -228,7 +229,13 @@ export function ServiceManagement({ type }: ServiceProps) {
             <Button
               type="primary"
               icon={<PlusOutlined />}
-              onClick={() => navigate(`/admin/service-management/human/create`)}
+              onClick={() =>
+                navigate(
+                  `/admin/service-management/${
+                    type === ServiceType.Device ? 'device' : 'human'
+                  }/create`,
+                )
+              }
             >
               Thêm mới
             </Button>

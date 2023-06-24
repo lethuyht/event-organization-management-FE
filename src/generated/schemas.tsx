@@ -55,6 +55,7 @@ export type CartItem = {
   hireDate: Scalars['DateTime'];
   hireEndDate: Scalars['DateTime'];
   id: Scalars['ID'];
+  isAvailable: Scalars['Boolean'];
   serviceItem: ServiceItem;
   serviceItemId: Scalars['ID'];
   updatedAt?: Maybe<Scalars['DateTime']>;
@@ -87,7 +88,7 @@ export type Contract = {
   contractServiceItems: Array<ContractServiceItem>;
   createdAt?: Maybe<Scalars['DateTime']>;
   details: ContractDetail;
-  fileUrl: Scalars['String'];
+  fileUrl?: Maybe<Scalars['String']>;
   hireDate: Scalars['DateTime'];
   hireEndDate: Scalars['DateTime'];
   id: Scalars['ID'];
@@ -239,7 +240,7 @@ export type IContract = {
   contractServiceItems: Array<ContractServiceItem>;
   createdAt?: Maybe<Scalars['DateTime']>;
   details: ContractDetail;
-  fileUrl: Scalars['String'];
+  fileUrl?: Maybe<Scalars['String']>;
   hireDate: Scalars['DateTime'];
   hireEndDate: Scalars['DateTime'];
   id: Scalars['ID'];
@@ -354,7 +355,7 @@ export type Mutation = {
   publishService: IService;
   refreshToken: RefreshResponse;
   removeCartItem: ResponseMessageBase;
-  requestCreateContract: IContract;
+  requestCreateContract: ResponseMessageBase;
   signIn: LoginResponse;
   signOut: ResponseMessageBase;
   signUp: ResponseMessageBase;
@@ -500,6 +501,7 @@ export enum QueryOperator {
 export type Query = {
   checkoutRemainBillingContract: CheckoutStripeResponse;
   depositContract: CheckoutStripeResponse;
+  generatePDF: ResponseMessageBase;
   getContract: IContract;
   getContracts: IContracts;
   getEvent: IEvent;
@@ -828,75 +830,8 @@ export type ChangePasswordMutationOptions = Apollo.BaseMutationOptions<ChangePas
 export const CreateContractDocument = gql`
     mutation createContract($input: RequestContractDto!) {
   requestCreateContract(input: $input) {
-    id
-    address
-    fileUrl
-    hireDate
-    hireEndDate
-    paymentIntentId
-    status
-    totalPrice
-    userId
-    user {
-      avatar
-      firstName
-      lastName
-      phoneNumber
-      email
-    }
-    details {
-      contractCreatedDate
-      contractName
-      customerInfo {
-        address
-        name
-        phoneNumber
-        representative
-        type
-      }
-    }
-    contractEvent {
-      id
-      contractId
-      eventId
-      event {
-        id
-        name
-        thumbnail
-        description
-        detail
-      }
-      createdAt
-      updatedAt
-    }
-    contractServiceItems {
-      id
-      contractId
-      amount
-      hireDate
-      hireEndDate
-      serviceItemId
-      serviceItem {
-        id
-        name
-        price
-        description
-        totalQuantity
-        serviceId
-        service {
-          id
-          name
-          images
-          description
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-    createdAt
-    updatedAt
+    message
+    success
   }
 }
     `;
@@ -1696,7 +1631,7 @@ export type CreateContractMutationVariables = Exact<{
 }>;
 
 
-export type CreateContractMutation = { requestCreateContract: { id: string, address: string, fileUrl: string, hireDate: any, hireEndDate: any, paymentIntentId: string, status: ContractStatus, totalPrice: number, userId: string, createdAt?: any | null, updatedAt?: any | null, user: { avatar?: string | null, firstName: string, lastName: string, phoneNumber?: string | null, email: string }, details: { contractCreatedDate?: any | null, contractName: string, customerInfo: { address: string, name: string, phoneNumber: string, representative?: string | null, type: string } }, contractEvent?: { id: string, contractId: string, eventId: string, createdAt?: any | null, updatedAt?: any | null, event: { id: string, name: string, thumbnail?: string | null, description: string, detail: string } } | null, contractServiceItems: Array<{ id: string, contractId: string, amount: number, hireDate: any, hireEndDate: any, serviceItemId: string, createdAt?: any | null, updatedAt?: any | null, serviceItem: { id: string, name: string, price?: number | null, description?: string | null, totalQuantity?: number | null, serviceId: string, createdAt?: any | null, updatedAt?: any | null, service: { id: string, name: string, images?: Array<string> | null, description?: string | null } } }> } };
+export type CreateContractMutation = { requestCreateContract: { message?: string | null, success?: boolean | null } };
 
 export type PresignedUrlS3MutationVariables = Exact<{
   presignedUrlDto: PresignedUrlDto;

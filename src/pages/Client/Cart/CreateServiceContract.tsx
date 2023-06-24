@@ -141,6 +141,9 @@ export function CreateServiceContract({
         },
       },
     });
+    setCreateContractVisible(false);
+    form.resetFields();
+    onChange();
   };
 
   const handleCreateCustomerAddress = (e: any) => {

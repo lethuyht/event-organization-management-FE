@@ -126,7 +126,7 @@ export function Cart() {
             bordered={true}
           >
             <Skeleton loading={loading || removeLoading}>
-              {cartItems.length > 0 ? (
+              {cartItems?.length > 0 ? (
                 <Row>
                   <Col span={24}>
                     <Row
