@@ -1,8 +1,7 @@
 import { useGetEventQuery } from '#/generated/schemas';
 import { showError } from '#/shared/utils/tools';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import styled from '@emotion/styled';
-import { Button, Col, Image, Row, Space, Switch, Typography } from 'antd';
+import { Button, Col, Image, Row, Typography } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom';
 import { UpdateEventStatus } from '.';
 
@@ -93,16 +92,18 @@ export function EventDetail() {
                 Cập nhật
               </Button>
             </Col>
-            <Col span={24} className="text-right">
-              <Button
-                block
-                icon={<DeleteOutlined />}
-                onClick={() => {}}
-                className=" w-32 font-bold text-red-500"
-              >
-                Xóa
-              </Button>
-            </Col>
+            {data?.getEvent?.isUsed === false && (
+              <Col span={24} className="text-right">
+                <Button
+                  block
+                  icon={<DeleteOutlined />}
+                  onClick={() => {}}
+                  className=" w-32 font-bold text-red-500"
+                >
+                  Xóa
+                </Button>
+              </Col>
+            )}
           </Row>
         </Col>
       </Row>

@@ -42,6 +42,7 @@ const DynamicServiceItemStyles = styled.div`
     }
   }
 `;
+
 export function DynamicServiceItem({ initialValues, form }: Props) {
   const hanleTextEditorChange = (value: string, index: number) => {
     form.setFieldsValue({
@@ -96,7 +97,7 @@ export function DynamicServiceItem({ initialValues, form }: Props) {
                       <Col span={12}>
                         <Form.Item
                           name={[index, 'price']}
-                          label="Giá tiền"
+                          label="Giá tiền (VNĐ)"
                           rules={[
                             {
                               required: true,

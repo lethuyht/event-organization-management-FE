@@ -36,6 +36,7 @@ const DevicePageStyles = styled.div`
 
     .anticon {
       margin-right: 10px !important;
+
       svg {
         color: black !important;
         font-size: 20px !important;
@@ -45,13 +46,22 @@ const DevicePageStyles = styled.div`
 
   .ant-card-meta-detail {
     width: 100%;
+
     .ant-card-meta-title {
       font-size: 16px;
       font-weight: bold;
     }
+
     .ant-card-meta-description .day {
       color: orange;
     }
+  }
+
+  .description {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
   }
 `;
 
@@ -147,12 +157,12 @@ export function Service({ type }: Props) {
                         className="w-full text-center"
                         title={device.name}
                         description={
-                          <>
-                            <p>{device.description}</p>
-                            <p className="day">
+                          <p className={'min-h-[120px] overflow-hidden'}>
+                            <p className="description">{device.description}</p>
+                            <span className="day my-2 block">
                               {dayjs(device.createdAt).format('YYYY-MM-DD')}
-                            </p>
-                          </>
+                            </span>
+                          </p>
                         }
                       />
                     </Card>

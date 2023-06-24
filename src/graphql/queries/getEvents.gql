@@ -1,16 +1,37 @@
 query getEvents($queryParams: QueryFilterDto!) {
-  getEvents(queryParams: $queryParams) {
-    meta {
-      ...MetaFragment
+    getEvents(queryParams: $queryParams) {
+        meta {
+            ...MetaFragment
+        }
+        items {
+            id
+            name
+            description
+            isPublic
+            detail
+            thumbnail
+            isUsed
+            eventServiceItems{
+                id
+                amount
+                eventId
+                serviceItemId
+                serviceItem{
+                    id
+                    name
+                    price
+                    serviceId
+                    totalQuantity
+                    description
+                    isPublished
+                    images
+
+                }
+                createdAt
+                updatedAt
+            }
+            updatedAt
+            createdAt
+        }
     }
-    items {
-      id
-      name
-      description
-      detail    
-      isPublic 
-      thumbnail 
-      updatedAt        
-    }
-  }
 }

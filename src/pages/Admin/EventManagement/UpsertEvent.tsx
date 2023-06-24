@@ -44,12 +44,15 @@ const UpserEventStyles = styled.div`
 
   .form-header.ant-row {
     justify-content: end !important;
+
     .ant-row {
       display: flex !important;
     }
+
     display: flex !important;
   }
 `;
+
 export function UpsertEvent() {
   const { id } = useParams<{ id: string }>();
   const [form] = Form.useForm();
@@ -188,6 +191,7 @@ export function UpsertEvent() {
               initialValue={data?.getEvent?.detail}
             />
           </Form.Item>
+          <Form.Item></Form.Item>
         </Form>
       </UpserEventStyles>
     </Skeleton>

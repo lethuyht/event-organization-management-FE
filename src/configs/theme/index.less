@@ -38,9 +38,8 @@
 @gradient-primary: linear-gradient(95.76deg, #e2104c 13.68%, #e23f10 98.08%);
 @gradient-btn: linear-gradient(93.26deg, #f91b5a 1.8%, #712bff 98.01%);
 @reverse-gradient-btn: linear-gradient(93.26deg, #712bff 1.8%, #f91b5a 98.01%);
-@outline-gradient: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75))
-    padding-box,
-  linear-gradient(to right, #f91b5a, #712bff) border-box;
+@outline-gradient: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)) padding-box,
+linear-gradient(to right, #f91b5a, #712bff) border-box;
 @checkbox-border-radius: 3px;
 
 * {
@@ -412,6 +411,7 @@ input[data-autocompleted] {
       color: #000;
       font-size: 16px;
     }
+
     .ant-table-cell-row-hover {
       background: none !important;
     }
@@ -457,15 +457,16 @@ input[data-autocompleted] {
 
           .ant-form-item-control-input {
             input {
-              color: black;
-              border: solid 1px #ccc;
-              padding: 10px;
-              border-radius: 0.5rem;
-              width: 100%;
+              color: black !important;
+              border: solid 1px #ccc !important;
+              padding: 10px !important;
+              border-radius: 0.5rem !important;
+              width: 100% !important;
 
               &:focus {
                 border-color: @primary-color !important;
               }
+
               &:focus-visible {
                 outline: unset;
               }
@@ -498,12 +499,57 @@ input[data-autocompleted] {
             box-shadow: unset !important;
           }
         }
+
+        .ant-radio-wrapper.ant-radio-wrapper-in-form-item {
+          color: black !important;
+        }
+
+
+        .ant-select {
+          color: black !important;
+          border: solid 1px #ccc !important;
+          border-radius: 0.5rem !important;
+
+          .ant-select-selection-item[title] {
+            font-size: 16px !important;
+
+          }
+
+        }
+
+
       }
     }
   }
 
   .ant-btn-default {
     color: #ccc;
+  }
+
+  .ant-image {
+    width: 100% !important;
+    height: 100px;
+    padding: 0 10px;
+    border-radius: 5px;
+
+    .ant-image-img {
+      border-radius: 0.5rem;
+    }
+  }
+
+  .ant-card {
+    border-radius: 0.5rem !important;
+  }
+
+  .contract-created-date {
+    border-radius: unset !important;
+    width: 100% !important;
+    border: unset !important;
+    background-color: unset !important;
+
+    input {
+      background-color: #f5f5f5 !important;
+    }
   }
 }
 
@@ -623,7 +669,7 @@ input[data-autocompleted] {
 
   & .ant-select-selector {
     &
-      .ant-select-item.ant-select-item-option.ant-select-item-option-selected:hover {
+    .ant-select-item.ant-select-item-option.ant-select-item-option-selected:hover {
       opacity: 50%;
     }
 
@@ -635,7 +681,7 @@ input[data-autocompleted] {
 
   & .ant-select-selection-search-input {
     color: #000 !important;
-    font: bold;
+    font-weight: bold;
   }
 
   & .ant-select:not(.ant-select-customize-input) .ant-select-selector {
@@ -753,7 +799,7 @@ input[data-autocompleted] {
 .cv-selector {
   & .ant-select-selection-search-input {
     color: #000 !important;
-    font: bold;
+    font-weight: bold;
   }
 }
 
@@ -792,6 +838,7 @@ input[data-autocompleted] {
   .ant-pro-base-menu-inline-item-icon {
     height: 100%;
   }
+
   .ant-menu-item {
     .ant-pro-base-menu-inline-item-title {
       color: black;
@@ -802,6 +849,7 @@ input[data-autocompleted] {
         font-size: 18px;
       }
     }
+
     &.ant-menu-item-selected {
       .ant-pro-base-menu-inline-item-title {
         color: unset;
@@ -813,6 +861,7 @@ input[data-autocompleted] {
       font-weight: 500 !important;
     }
   }
+
   .ant-menu-submenu {
     .ant-menu-submenu-title {
       color: black !important;
@@ -864,6 +913,7 @@ input[data-autocompleted] {
   border: 1px solid #ccc !important;
   border-radius: 0.5rem !important;
   color: #000 !important;
+
   .rdw-editor-toolbar {
     border-radius: 0.5rem !important;
     border: unset !important;
@@ -887,3 +937,4 @@ input[data-autocompleted] {
     padding: 2rem 1rem !important;
   }
 }
+

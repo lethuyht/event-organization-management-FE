@@ -14,7 +14,6 @@ export type Scalars = {
   Int: number;
   Float: number;
   DateTime: any;
-  JSON: any;
 };
 
 export type AddItemToCartDto = {
@@ -87,7 +86,7 @@ export type Contract = {
   contractEvent?: Maybe<ContractEvent>;
   contractServiceItems: Array<ContractServiceItem>;
   createdAt?: Maybe<Scalars['DateTime']>;
-  details: Scalars['JSON'];
+  details: ContractDetail;
   fileUrl: Scalars['String'];
   hireDate: Scalars['DateTime'];
   hireEndDate: Scalars['DateTime'];
@@ -99,6 +98,12 @@ export type Contract = {
   updatedAt?: Maybe<Scalars['DateTime']>;
   user: User;
   userId: Scalars['ID'];
+};
+
+export type ContractDetail = {
+  contractCreatedDate?: Maybe<Scalars['DateTime']>;
+  contractName: Scalars['String'];
+  customerInfo: CustomerInfo;
 };
 
 export type ContractDetailDto = {
@@ -142,6 +147,14 @@ export type ContractServiceItem = {
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
+export type CustomerInfo = {
+  address: Scalars['String'];
+  name: Scalars['String'];
+  phoneNumber: Scalars['String'];
+  representative?: Maybe<Scalars['String']>;
+  type: Scalars['String'];
+};
+
 export type CustomerInfoDto = {
   address: Scalars['String'];
   name: Scalars['String'];
@@ -172,6 +185,7 @@ export type Event = {
   eventServiceItems?: Maybe<Array<EventServiceItem>>;
   id: Scalars['ID'];
   isPublic: Scalars['Boolean'];
+  isUsed: Scalars['Boolean'];
   name: Scalars['String'];
   thumbnail?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
@@ -224,7 +238,7 @@ export type IContract = {
   contractEvent?: Maybe<ContractEvent>;
   contractServiceItems: Array<ContractServiceItem>;
   createdAt?: Maybe<Scalars['DateTime']>;
-  details: Scalars['JSON'];
+  details: ContractDetail;
   fileUrl: Scalars['String'];
   hireDate: Scalars['DateTime'];
   hireEndDate: Scalars['DateTime'];
@@ -250,6 +264,7 @@ export type IEvent = {
   eventServiceItems?: Maybe<Array<EventServiceItem>>;
   id: Scalars['ID'];
   isPublic: Scalars['Boolean'];
+  isUsed: Scalars['Boolean'];
   name: Scalars['String'];
   thumbnail?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
@@ -332,6 +347,7 @@ export type Mutation = {
   changePassword: ResponseMessageBase;
   confirmContractDeposit: IContract;
   createEventRequest: ResponseMessageBase;
+  deleteEvent: ResponseMessageBase;
   deleteFileS3: Scalars['String'];
   presignedUrlS3: IPreSignUrl;
   presignedUrlS3Public: IPreSignUrl;
@@ -367,6 +383,11 @@ export type MutationConfirmContractDepositArgs = {
 
 export type MutationCreateEventRequestArgs = {
   input: EventRequestInput;
+};
+
+
+export type MutationDeleteEventArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -638,7 +659,7 @@ export type ServiceItem = {
   description?: Maybe<Scalars['String']>;
   eventServiceItems?: Maybe<Array<EventServiceItem>>;
   id: Scalars['ID'];
-  images: Array<Scalars['String']>;
+  images?: Maybe<Array<Scalars['String']>>;
   isPublished: Scalars['Boolean'];
   name: Scalars['String'];
   price?: Maybe<Scalars['Float']>;
@@ -804,6 +825,107 @@ export function useChangePasswordMutation(baseOptions?: Apollo.MutationHookOptio
 export type ChangePasswordMutationHookResult = ReturnType<typeof useChangePasswordMutation>;
 export type ChangePasswordMutationResult = Apollo.MutationResult<ChangePasswordMutation>;
 export type ChangePasswordMutationOptions = Apollo.BaseMutationOptions<ChangePasswordMutation, ChangePasswordMutationVariables>;
+export const CreateContractDocument = gql`
+    mutation createContract($input: RequestContractDto!) {
+  requestCreateContract(input: $input) {
+    id
+    address
+    fileUrl
+    hireDate
+    hireEndDate
+    paymentIntentId
+    status
+    totalPrice
+    userId
+    user {
+      avatar
+      firstName
+      lastName
+      phoneNumber
+      email
+    }
+    details {
+      contractCreatedDate
+      contractName
+      customerInfo {
+        address
+        name
+        phoneNumber
+        representative
+        type
+      }
+    }
+    contractEvent {
+      id
+      contractId
+      eventId
+      event {
+        id
+        name
+        thumbnail
+        description
+        detail
+      }
+      createdAt
+      updatedAt
+    }
+    contractServiceItems {
+      id
+      contractId
+      amount
+      hireDate
+      hireEndDate
+      serviceItemId
+      serviceItem {
+        id
+        name
+        price
+        description
+        totalQuantity
+        serviceId
+        service {
+          id
+          name
+          images
+          description
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export type CreateContractMutationFn = Apollo.MutationFunction<CreateContractMutation, CreateContractMutationVariables>;
+
+/**
+ * __useCreateContractMutation__
+ *
+ * To run a mutation, you first call `useCreateContractMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateContractMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createContractMutation, { data, loading, error }] = useCreateContractMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateContractMutation(baseOptions?: Apollo.MutationHookOptions<CreateContractMutation, CreateContractMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateContractMutation, CreateContractMutationVariables>(CreateContractDocument, options);
+      }
+export type CreateContractMutationHookResult = ReturnType<typeof useCreateContractMutation>;
+export type CreateContractMutationResult = Apollo.MutationResult<CreateContractMutation>;
+export type CreateContractMutationOptions = Apollo.BaseMutationOptions<CreateContractMutation, CreateContractMutationVariables>;
 export const PresignedUrlS3Document = gql`
     mutation presignedUrlS3($presignedUrlDto: PresignedUrlDto!) {
   presignedUrlS3(presignedUrlDto: $presignedUrlDto) {
@@ -1066,6 +1188,13 @@ export const UpsertEventDocument = gql`
     detail
     thumbnail
     updatedAt
+    eventServiceItems {
+      amount
+      id
+      serviceItemId
+      createdAt
+      updatedAt
+    }
   }
 }
     `;
@@ -1191,7 +1320,31 @@ export const GetEventDocument = gql`
     isPublic
     detail
     thumbnail
+    isUsed
+    eventServiceItems {
+      id
+      amount
+      eventId
+      serviceItemId
+      serviceItem {
+        id
+        name
+        price
+        serviceId
+        totalQuantity
+        description
+        isPublished
+        images
+        service {
+          id
+          images
+        }
+      }
+      createdAt
+      updatedAt
+    }
     updatedAt
+    createdAt
   }
 }
     `;
@@ -1236,10 +1389,30 @@ export const GetEventsDocument = gql`
       id
       name
       description
-      detail
       isPublic
+      detail
       thumbnail
+      isUsed
+      eventServiceItems {
+        id
+        amount
+        eventId
+        serviceItemId
+        serviceItem {
+          id
+          name
+          price
+          serviceId
+          totalQuantity
+          description
+          isPublished
+          images
+        }
+        createdAt
+        updatedAt
+      }
       updatedAt
+      createdAt
     }
   }
 }
@@ -1518,6 +1691,13 @@ export type ChangePasswordMutationVariables = Exact<{
 
 export type ChangePasswordMutation = { changePassword: { message?: string | null, success?: boolean | null } };
 
+export type CreateContractMutationVariables = Exact<{
+  input: RequestContractDto;
+}>;
+
+
+export type CreateContractMutation = { requestCreateContract: { id: string, address: string, fileUrl: string, hireDate: any, hireEndDate: any, paymentIntentId: string, status: ContractStatus, totalPrice: number, userId: string, createdAt?: any | null, updatedAt?: any | null, user: { avatar?: string | null, firstName: string, lastName: string, phoneNumber?: string | null, email: string }, details: { contractCreatedDate?: any | null, contractName: string, customerInfo: { address: string, name: string, phoneNumber: string, representative?: string | null, type: string } }, contractEvent?: { id: string, contractId: string, eventId: string, createdAt?: any | null, updatedAt?: any | null, event: { id: string, name: string, thumbnail?: string | null, description: string, detail: string } } | null, contractServiceItems: Array<{ id: string, contractId: string, amount: number, hireDate: any, hireEndDate: any, serviceItemId: string, createdAt?: any | null, updatedAt?: any | null, serviceItem: { id: string, name: string, price?: number | null, description?: string | null, totalQuantity?: number | null, serviceId: string, createdAt?: any | null, updatedAt?: any | null, service: { id: string, name: string, images?: Array<string> | null, description?: string | null } } }> } };
+
 export type PresignedUrlS3MutationVariables = Exact<{
   presignedUrlDto: PresignedUrlDto;
 }>;
@@ -1572,7 +1752,7 @@ export type UpsertEventMutationVariables = Exact<{
 }>;
 
 
-export type UpsertEventMutation = { upsertEvent: { id: string, name: string, description: string, isPublic: boolean, detail: string, thumbnail?: string | null, updatedAt?: any | null } };
+export type UpsertEventMutation = { upsertEvent: { id: string, name: string, description: string, isPublic: boolean, detail: string, thumbnail?: string | null, updatedAt?: any | null, eventServiceItems?: Array<{ amount: number, id: string, serviceItemId: string, createdAt?: any | null, updatedAt?: any | null }> | null } };
 
 export type UpsertServiceMutationVariables = Exact<{
   input: UpsertServiceDto;
@@ -1593,14 +1773,14 @@ export type GetEventQueryVariables = Exact<{
 }>;
 
 
-export type GetEventQuery = { getEvent: { id: string, name: string, description: string, isPublic: boolean, detail: string, thumbnail?: string | null, updatedAt?: any | null } };
+export type GetEventQuery = { getEvent: { id: string, name: string, description: string, isPublic: boolean, detail: string, thumbnail?: string | null, isUsed: boolean, updatedAt?: any | null, createdAt?: any | null, eventServiceItems?: Array<{ id: string, amount: number, eventId: string, serviceItemId: string, createdAt?: any | null, updatedAt?: any | null, serviceItem: { id: string, name: string, price?: number | null, serviceId: string, totalQuantity?: number | null, description?: string | null, isPublished: boolean, images?: Array<string> | null, service: { id: string, images?: Array<string> | null } } }> | null } };
 
 export type GetEventsQueryVariables = Exact<{
   queryParams: QueryFilterDto;
 }>;
 
 
-export type GetEventsQuery = { getEvents: { meta: { totalItems: number, itemCount: number, itemsPerPage: number, totalPages: number, currentPage: number }, items: Array<{ id: string, name: string, description: string, detail: string, isPublic: boolean, thumbnail?: string | null, updatedAt?: any | null }> } };
+export type GetEventsQuery = { getEvents: { meta: { totalItems: number, itemCount: number, itemsPerPage: number, totalPages: number, currentPage: number }, items: Array<{ id: string, name: string, description: string, isPublic: boolean, detail: string, thumbnail?: string | null, isUsed: boolean, updatedAt?: any | null, createdAt?: any | null, eventServiceItems?: Array<{ id: string, amount: number, eventId: string, serviceItemId: string, createdAt?: any | null, updatedAt?: any | null, serviceItem: { id: string, name: string, price?: number | null, serviceId: string, totalQuantity?: number | null, description?: string | null, isPublished: boolean, images?: Array<string> | null } }> | null }> } };
 
 export type GetMeQueryVariables = Exact<{ [key: string]: never; }>;
 

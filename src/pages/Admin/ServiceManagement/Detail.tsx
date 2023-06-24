@@ -117,7 +117,7 @@ export function ServiceDetail({ type }: ServiceProps) {
                 htmlType="submit"
                 icon={<EditOutlined />}
                 onClick={() => {
-                  navigate(`/admin/event-management/edit/${id}`);
+                  navigate(`/admin/service-management/${type}/edit/${id}`);
                 }}
               >
                 Cập nhật

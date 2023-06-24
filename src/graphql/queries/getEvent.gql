@@ -1,11 +1,35 @@
 query getEvent ($input: ID!) {
-  getEvent(id: $input) {
-    id
-    name
-    description
-    isPublic
-    detail
-    thumbnail 
-    updatedAt
-  }
+    getEvent(id: $input) {
+        id
+        name
+        description
+        isPublic
+        detail
+        thumbnail
+        isUsed
+        eventServiceItems{
+            id
+            amount
+            eventId
+            serviceItemId
+            serviceItem{
+                id
+                name
+                price
+                serviceId
+                totalQuantity
+                description
+                isPublished
+                images
+                service{
+                    id
+                    images
+                }
+            }
+            createdAt
+            updatedAt
+        }
+        updatedAt
+        createdAt
+    }
 }
