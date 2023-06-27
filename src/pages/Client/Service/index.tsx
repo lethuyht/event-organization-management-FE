@@ -72,7 +72,10 @@ export interface Props {
 export function Service({ type }: Props) {
   const [search, setSearch] = useState<string>('');
   const [inputValue, setInputValue] = useState<string>('');
-  const { currentPage, pageSize, setCurrentPage } = usePagination();
+  const { currentPage, pageSize, setCurrentPage } = usePagination({
+    defaultPageSize: 12,
+  });
+
   const { data: devices, loading } = useGetServicesQuery({
     variables: {
       query: {
@@ -86,6 +89,11 @@ export function Service({ type }: Props) {
             field: 'Service.name',
             data: search,
             operator: QueryOperator.Like,
+          },
+          {
+            field: 'Service.is_published',
+            data: 'true',
+            operator: QueryOperator.Eq,
           },
         ],
         limit: pageSize,

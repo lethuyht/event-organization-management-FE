@@ -106,11 +106,11 @@ function AccountInfo() {
                 label: (
                   <span
                     onClick={menu.to ? () => navigate(`${menu.to}`) : logout}
-                    className={`flex items-center gap-3 ${
+                    className={`flex items-center gap-3  ${
                       menu?.href?.includes(pathname)
                         ? 'text-[rgb(249 115 22)]'
                         : ''
-                    } text-2xl`}
+                    } text-2xl `}
                   >
                     {menu?.href?.includes(pathname) && (
                       <div className="h-2 w-2 rounded-full" />
@@ -125,7 +125,7 @@ function AccountInfo() {
         }
         placement="bottomRight"
       >
-        <div className="flex items-center justify-end gap-2 pb-2">
+        <div className="flex items-center justify-end gap-2 pb-2 ">
           <Avatar
             className="bg-slate-100"
             size={45}

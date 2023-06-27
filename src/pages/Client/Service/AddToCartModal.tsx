@@ -1,6 +1,6 @@
 import {
-  ServiceItem,
   refetchGetMyCartQuery,
+  ServiceItem,
   useAddItemToCartMutation,
 } from '#/generated/schemas';
 import { userVar } from '#/graphql/cache';
@@ -32,7 +32,13 @@ export function AddToCartModal({ serviceItem, onChange }: Props) {
   const [dates, setDates] = useState<RangeValue>(null);
 
   const disabledDate = (current: Dayjs) => {
-    return current && current < dayjs().add(1, 'week');
+    if (!dates) {
+      return current < dayjs().add(1, 'week');
+    }
+
+    const tooLate = dates[0] && current.diff(dates[0], 'days') >= 14;
+    const tooEarly = dates[1] && dates[1].diff(current, 'days') >= 14;
+    return tooEarly || tooLate || current < dayjs().add(1, 'week');
   };
 
   const [upsertAddToCart] = useAddItemToCartMutation({

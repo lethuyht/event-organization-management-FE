@@ -1,6 +1,5 @@
 mutation createContract($input: RequestContractDto!){
     requestCreateContract(input: $input){
-        message
-        success
+        id
     }
 }

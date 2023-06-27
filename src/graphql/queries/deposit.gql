@@ -1,0 +1,7 @@
+query depositContract($input: DepositContractDto! ){
+    depositContract(input: $input){
+        checkoutUrl
+        cancelUrl
+        successUrl
+    }
+}

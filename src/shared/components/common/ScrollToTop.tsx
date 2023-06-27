@@ -12,7 +12,7 @@ const ScrollToTopStyle = styled.div`
     height: 40px;
     border: none;
     border-radius: 50%;
-    color: #fff;
+    color: #fff !important;
     font-size: 20px;
     text-align: center;
     cursor: pointer;
@@ -25,6 +25,10 @@ const ScrollToTopStyle = styled.div`
   .scroll-to-top-button.show {
     transform: translateY(0);
     opacity: 1;
+  }
+
+  svg {
+    color: #fff !important;
   }
 `;
 

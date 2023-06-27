@@ -64,7 +64,9 @@ const EventPageStyles = styled.div`
 export function EventPage() {
   const [search, setSearch] = useState<string>('');
   const [inputValue, setInputValue] = useState<string>('');
-  const { currentPage, pageSize, setCurrentPage } = usePagination();
+  const { currentPage, pageSize, setCurrentPage } = usePagination({
+    defaultPageSize: 12,
+  });
   const { data: events, loading } = useGetEventsQuery({
     variables: {
       queryParams: {

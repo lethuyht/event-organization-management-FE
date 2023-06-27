@@ -1,5 +1,8 @@
 import { notification } from 'antd';
 import axios from 'axios';
+import { get } from 'lodash';
+import { useMemo, useState } from 'react';
+import dayjs from 'dayjs';
 
 export const showSuccess = (message: string) =>
   notification.success({
@@ -178,9 +181,6 @@ export const omitDeepArrayWalk = function (arr: any[], key: string): any[] {
   });
 };
 
-import { get } from 'lodash';
-import { ReactNode } from 'react';
-
 export function convertDataToSelectOptions<T>(
   data: T[] | null,
   valueProp: string,
@@ -221,8 +221,6 @@ export const getPopupContainer = (node: any, queries?: any) => {
 
   return document.body as HTMLElement;
 };
-
-import { useState, useMemo } from 'react';
 
 interface TableData<T> {
   pageSize: number;
@@ -270,4 +268,8 @@ export const formatCurrency = (value: number) => {
     style: 'currency',
     currency: 'VND',
   }).format(value);
+};
+
+export const fomatDate = (date: string | Date) => {
+  return dayjs(date).format('DD/MM/YYYY');
 };

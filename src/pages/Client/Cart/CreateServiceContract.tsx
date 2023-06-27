@@ -19,6 +19,7 @@ import { NO_IMAGE } from '#/shared/utils/constant';
 import { showError, showSuccess } from '#/shared/utils/tools';
 import { DatePicker } from '#/shared/components/common/DatePicker';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   onChange: () => void;
@@ -50,11 +51,12 @@ export function CreateServiceContract({
     undefined,
   );
   const user = userVar();
+  const navigate = useNavigate();
 
   const [createContract] = useCreateContractMutation({
-    onCompleted: () => {
+    onCompleted: data => {
       showSuccess('Tạo hợp đồng thành công');
-      onChange();
+      navigate(`/contract-management/${data.requestCreateContract.id}`);
     },
     onError: error => {
       showError(error);
@@ -100,22 +102,21 @@ export function CreateServiceContract({
       if (hireEndDate.isAfter(maxHireEndDate)) {
         maxHireEndDate = hireEndDate;
       }
+    }
+    if (
+      mindHireDate &&
+      maxHireEndDate &&
+      maxHireEndDate.diff(mindHireDate, 'days') > 14
+    ) {
+      isValid = false;
+    }
 
-      if (
-        mindHireDate &&
-        maxHireEndDate &&
-        maxHireEndDate.diff(mindHireDate, 'days') > 14
-      ) {
-        isValid = false;
-      }
-
-      if (!isValid) {
-        setCreateContractVisible(false);
-        setNotCreateContractVisible(true);
-      } else {
-        setCreateContractVisible(true);
-        setNotCreateContractVisible(false);
-      }
+    if (!isValid) {
+      setCreateContractVisible(false);
+      setNotCreateContractVisible(true);
+    } else {
+      setCreateContractVisible(true);
+      setNotCreateContractVisible(false);
     }
   };
 
@@ -410,7 +411,7 @@ export function CreateServiceContract({
       <Modal
         open={notCreateContractVisible}
         title={
-          <Typography.Title level={3} className={'text-[#f97316]'}>
+          <Typography.Title level={4} className={'text-[#f97316]'}>
             <ExclamationCircleOutlined className={'mr-4'} />
             Thông báo
           </Typography.Title>

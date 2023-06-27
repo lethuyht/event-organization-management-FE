@@ -13,6 +13,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  Date: any;
   DateTime: any;
 };
 
@@ -84,6 +85,7 @@ export type ConfirmContractDeposit = {
 
 export type Contract = {
   address: Scalars['String'];
+  code?: Maybe<Scalars['String']>;
   contractEvent?: Maybe<ContractEvent>;
   contractServiceItems: Array<ContractServiceItem>;
   createdAt?: Maybe<Scalars['DateTime']>;
@@ -92,7 +94,7 @@ export type Contract = {
   hireDate: Scalars['DateTime'];
   hireEndDate: Scalars['DateTime'];
   id: Scalars['ID'];
-  paymentIntentId: Scalars['String'];
+  paymentIntentId?: Maybe<Scalars['String']>;
   status: ContractStatus;
   totalPrice: Scalars['Float'];
   type: ContractType;
@@ -102,7 +104,7 @@ export type Contract = {
 };
 
 export type ContractDetail = {
-  contractCreatedDate?: Maybe<Scalars['DateTime']>;
+  contractCreatedDate: Scalars['Date'];
   contractName: Scalars['String'];
   customerInfo: CustomerInfo;
 };
@@ -236,6 +238,7 @@ export type ICart = {
 
 export type IContract = {
   address: Scalars['String'];
+  code?: Maybe<Scalars['String']>;
   contractEvent?: Maybe<ContractEvent>;
   contractServiceItems: Array<ContractServiceItem>;
   createdAt?: Maybe<Scalars['DateTime']>;
@@ -244,7 +247,7 @@ export type IContract = {
   hireDate: Scalars['DateTime'];
   hireEndDate: Scalars['DateTime'];
   id: Scalars['ID'];
-  paymentIntentId: Scalars['String'];
+  paymentIntentId?: Maybe<Scalars['String']>;
   status: ContractStatus;
   totalPrice: Scalars['Float'];
   type: ContractType;
@@ -301,6 +304,7 @@ export type IService = {
   id: Scalars['ID'];
   images?: Maybe<Array<Scalars['String']>>;
   isPublished: Scalars['Boolean'];
+  isUsed: Scalars['Boolean'];
   name: Scalars['String'];
   serviceItems?: Maybe<Array<ServiceItem>>;
   type: ServiceType;
@@ -355,7 +359,7 @@ export type Mutation = {
   publishService: IService;
   refreshToken: RefreshResponse;
   removeCartItem: ResponseMessageBase;
-  requestCreateContract: ResponseMessageBase;
+  requestCreateContract: IContract;
   signIn: LoginResponse;
   signOut: ResponseMessageBase;
   signUp: ResponseMessageBase;
@@ -650,6 +654,7 @@ export type Service = {
   id: Scalars['ID'];
   images?: Maybe<Array<Scalars['String']>>;
   isPublished: Scalars['Boolean'];
+  isUsed: Scalars['Boolean'];
   name: Scalars['String'];
   serviceItems?: Maybe<Array<ServiceItem>>;
   type: ServiceType;
@@ -663,6 +668,7 @@ export type ServiceItem = {
   id: Scalars['ID'];
   images?: Maybe<Array<Scalars['String']>>;
   isPublished: Scalars['Boolean'];
+  isUsed: Scalars['Boolean'];
   name: Scalars['String'];
   price?: Maybe<Scalars['Float']>;
   service: Service;
@@ -830,8 +836,7 @@ export type ChangePasswordMutationOptions = Apollo.BaseMutationOptions<ChangePas
 export const CreateContractDocument = gql`
     mutation createContract($input: RequestContractDto!) {
   requestCreateContract(input: $input) {
-    message
-    success
+    id
   }
 }
     `;
@@ -861,6 +866,40 @@ export function useCreateContractMutation(baseOptions?: Apollo.MutationHookOptio
 export type CreateContractMutationHookResult = ReturnType<typeof useCreateContractMutation>;
 export type CreateContractMutationResult = Apollo.MutationResult<CreateContractMutation>;
 export type CreateContractMutationOptions = Apollo.BaseMutationOptions<CreateContractMutation, CreateContractMutationVariables>;
+export const ConfirmContractDepositDocument = gql`
+    mutation confirmContractDeposit($input: ConfirmContractDeposit!) {
+  confirmContractDeposit(input: $input) {
+    id
+    status
+  }
+}
+    `;
+export type ConfirmContractDepositMutationFn = Apollo.MutationFunction<ConfirmContractDepositMutation, ConfirmContractDepositMutationVariables>;
+
+/**
+ * __useConfirmContractDepositMutation__
+ *
+ * To run a mutation, you first call `useConfirmContractDepositMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useConfirmContractDepositMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [confirmContractDepositMutation, { data, loading, error }] = useConfirmContractDepositMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useConfirmContractDepositMutation(baseOptions?: Apollo.MutationHookOptions<ConfirmContractDepositMutation, ConfirmContractDepositMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ConfirmContractDepositMutation, ConfirmContractDepositMutationVariables>(ConfirmContractDepositDocument, options);
+      }
+export type ConfirmContractDepositMutationHookResult = ReturnType<typeof useConfirmContractDepositMutation>;
+export type ConfirmContractDepositMutationResult = Apollo.MutationResult<ConfirmContractDepositMutation>;
+export type ConfirmContractDepositMutationOptions = Apollo.BaseMutationOptions<ConfirmContractDepositMutation, ConfirmContractDepositMutationVariables>;
 export const PresignedUrlS3Document = gql`
     mutation presignedUrlS3($presignedUrlDto: PresignedUrlDto!) {
   presignedUrlS3(presignedUrlDto: $presignedUrlDto) {
@@ -1113,6 +1152,40 @@ export function useUpdateMeMutation(baseOptions?: Apollo.MutationHookOptions<Upd
 export type UpdateMeMutationHookResult = ReturnType<typeof useUpdateMeMutation>;
 export type UpdateMeMutationResult = Apollo.MutationResult<UpdateMeMutation>;
 export type UpdateMeMutationOptions = Apollo.BaseMutationOptions<UpdateMeMutation, UpdateMeMutationVariables>;
+export const UpdateContractStatusDocument = gql`
+    mutation updateContractStatus($input: UpdateContractStatusDto!) {
+  updateStatusContract(input: $input) {
+    id
+    status
+  }
+}
+    `;
+export type UpdateContractStatusMutationFn = Apollo.MutationFunction<UpdateContractStatusMutation, UpdateContractStatusMutationVariables>;
+
+/**
+ * __useUpdateContractStatusMutation__
+ *
+ * To run a mutation, you first call `useUpdateContractStatusMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateContractStatusMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateContractStatusMutation, { data, loading, error }] = useUpdateContractStatusMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateContractStatusMutation(baseOptions?: Apollo.MutationHookOptions<UpdateContractStatusMutation, UpdateContractStatusMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateContractStatusMutation, UpdateContractStatusMutationVariables>(UpdateContractStatusDocument, options);
+      }
+export type UpdateContractStatusMutationHookResult = ReturnType<typeof useUpdateContractStatusMutation>;
+export type UpdateContractStatusMutationResult = Apollo.MutationResult<UpdateContractStatusMutation>;
+export type UpdateContractStatusMutationOptions = Apollo.BaseMutationOptions<UpdateContractStatusMutation, UpdateContractStatusMutationVariables>;
 export const UpsertEventDocument = gql`
     mutation upsertEvent($input: UpsertEventDto!) {
   upsertEvent(input: $input) {
@@ -1246,6 +1319,260 @@ export function useVerifyCodeMutation(baseOptions?: Apollo.MutationHookOptions<V
 export type VerifyCodeMutationHookResult = ReturnType<typeof useVerifyCodeMutation>;
 export type VerifyCodeMutationResult = Apollo.MutationResult<VerifyCodeMutation>;
 export type VerifyCodeMutationOptions = Apollo.BaseMutationOptions<VerifyCodeMutation, VerifyCodeMutationVariables>;
+export const CheckoutRemainBillingContractDocument = gql`
+    query checkoutRemainBillingContract($input: DepositContractDto!) {
+  checkoutRemainBillingContract(input: $input) {
+    checkoutUrl
+    cancelUrl
+    successUrl
+  }
+}
+    `;
+
+/**
+ * __useCheckoutRemainBillingContractQuery__
+ *
+ * To run a query within a React component, call `useCheckoutRemainBillingContractQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCheckoutRemainBillingContractQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCheckoutRemainBillingContractQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCheckoutRemainBillingContractQuery(baseOptions: Apollo.QueryHookOptions<CheckoutRemainBillingContractQuery, CheckoutRemainBillingContractQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CheckoutRemainBillingContractQuery, CheckoutRemainBillingContractQueryVariables>(CheckoutRemainBillingContractDocument, options);
+      }
+export function useCheckoutRemainBillingContractLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CheckoutRemainBillingContractQuery, CheckoutRemainBillingContractQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CheckoutRemainBillingContractQuery, CheckoutRemainBillingContractQueryVariables>(CheckoutRemainBillingContractDocument, options);
+        }
+export type CheckoutRemainBillingContractQueryHookResult = ReturnType<typeof useCheckoutRemainBillingContractQuery>;
+export type CheckoutRemainBillingContractLazyQueryHookResult = ReturnType<typeof useCheckoutRemainBillingContractLazyQuery>;
+export type CheckoutRemainBillingContractQueryResult = Apollo.QueryResult<CheckoutRemainBillingContractQuery, CheckoutRemainBillingContractQueryVariables>;
+export function refetchCheckoutRemainBillingContractQuery(variables: CheckoutRemainBillingContractQueryVariables) {
+      return { query: CheckoutRemainBillingContractDocument, variables: variables }
+    }
+export const DepositContractDocument = gql`
+    query depositContract($input: DepositContractDto!) {
+  depositContract(input: $input) {
+    checkoutUrl
+    cancelUrl
+    successUrl
+  }
+}
+    `;
+
+/**
+ * __useDepositContractQuery__
+ *
+ * To run a query within a React component, call `useDepositContractQuery` and pass it any options that fit your needs.
+ * When your component renders, `useDepositContractQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useDepositContractQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useDepositContractQuery(baseOptions: Apollo.QueryHookOptions<DepositContractQuery, DepositContractQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<DepositContractQuery, DepositContractQueryVariables>(DepositContractDocument, options);
+      }
+export function useDepositContractLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<DepositContractQuery, DepositContractQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<DepositContractQuery, DepositContractQueryVariables>(DepositContractDocument, options);
+        }
+export type DepositContractQueryHookResult = ReturnType<typeof useDepositContractQuery>;
+export type DepositContractLazyQueryHookResult = ReturnType<typeof useDepositContractLazyQuery>;
+export type DepositContractQueryResult = Apollo.QueryResult<DepositContractQuery, DepositContractQueryVariables>;
+export function refetchDepositContractQuery(variables: DepositContractQueryVariables) {
+      return { query: DepositContractDocument, variables: variables }
+    }
+export const GetContractDocument = gql`
+    query getContract($id: String!) {
+  getContract(id: $id) {
+    id
+    address
+    code
+    details {
+      contractCreatedDate
+      contractName
+      customerInfo {
+        address
+        name
+        phoneNumber
+        representative
+        type
+      }
+    }
+    fileUrl
+    hireDate
+    hireEndDate
+    status
+    totalPrice
+    paymentIntentId
+    type
+    createdAt
+    updatedAt
+    contractEvent {
+      id
+      contractId
+      eventId
+      event {
+        id
+        isPublic
+        isUsed
+        detail
+        name
+        description
+        thumbnail
+      }
+      contractEventServiceItems {
+        amount
+        id
+        contractEventId
+        serviceItemId
+        serviceItem {
+          id
+          name
+          price
+          description
+          totalQuantity
+          service {
+            id
+            images
+          }
+        }
+      }
+    }
+    contractServiceItems {
+      id
+      amount
+      hireDate
+      hireEndDate
+      serviceItemId
+      serviceItem {
+        id
+        name
+        price
+        totalQuantity
+        description
+        service {
+          id
+          images
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetContractQuery__
+ *
+ * To run a query within a React component, call `useGetContractQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetContractQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetContractQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetContractQuery(baseOptions: Apollo.QueryHookOptions<GetContractQuery, GetContractQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetContractQuery, GetContractQueryVariables>(GetContractDocument, options);
+      }
+export function useGetContractLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetContractQuery, GetContractQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetContractQuery, GetContractQueryVariables>(GetContractDocument, options);
+        }
+export type GetContractQueryHookResult = ReturnType<typeof useGetContractQuery>;
+export type GetContractLazyQueryHookResult = ReturnType<typeof useGetContractLazyQuery>;
+export type GetContractQueryResult = Apollo.QueryResult<GetContractQuery, GetContractQueryVariables>;
+export function refetchGetContractQuery(variables: GetContractQueryVariables) {
+      return { query: GetContractDocument, variables: variables }
+    }
+export const GetContractsDocument = gql`
+    query getContracts($queryParams: QueryFilterDto!) {
+  getContracts(queryParams: $queryParams) {
+    meta {
+      ...MetaFragment
+    }
+    items {
+      id
+      address
+      code
+      details {
+        contractCreatedDate
+        contractName
+        customerInfo {
+          address
+          name
+          phoneNumber
+          representative
+          type
+        }
+      }
+      fileUrl
+      hireDate
+      hireEndDate
+      status
+      totalPrice
+      paymentIntentId
+      type
+      createdAt
+      updatedAt
+    }
+  }
+}
+    ${MetaFragmentFragmentDoc}`;
+
+/**
+ * __useGetContractsQuery__
+ *
+ * To run a query within a React component, call `useGetContractsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetContractsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetContractsQuery({
+ *   variables: {
+ *      queryParams: // value for 'queryParams'
+ *   },
+ * });
+ */
+export function useGetContractsQuery(baseOptions: Apollo.QueryHookOptions<GetContractsQuery, GetContractsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetContractsQuery, GetContractsQueryVariables>(GetContractsDocument, options);
+      }
+export function useGetContractsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetContractsQuery, GetContractsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetContractsQuery, GetContractsQueryVariables>(GetContractsDocument, options);
+        }
+export type GetContractsQueryHookResult = ReturnType<typeof useGetContractsQuery>;
+export type GetContractsLazyQueryHookResult = ReturnType<typeof useGetContractsLazyQuery>;
+export type GetContractsQueryResult = Apollo.QueryResult<GetContractsQuery, GetContractsQueryVariables>;
+export function refetchGetContractsQuery(variables: GetContractsQueryVariables) {
+      return { query: GetContractsDocument, variables: variables }
+    }
 export const GetEventDocument = gql`
     query getEvent($input: ID!) {
   getEvent(id: $input) {
@@ -1491,6 +1818,71 @@ export type GetMyCartQueryResult = Apollo.QueryResult<GetMyCartQuery, GetMyCartQ
 export function refetchGetMyCartQuery(variables?: GetMyCartQueryVariables) {
       return { query: GetMyCartDocument, variables: variables }
     }
+export const GetMyContractsDocument = gql`
+    query getMyContracts($queryParams: QueryFilterDto!) {
+  getMyContracts(queryParams: $queryParams) {
+    meta {
+      ...MetaFragment
+    }
+    items {
+      id
+      address
+      code
+      details {
+        contractCreatedDate
+        contractName
+        customerInfo {
+          address
+          name
+          phoneNumber
+          representative
+          type
+        }
+      }
+      fileUrl
+      hireDate
+      hireEndDate
+      status
+      totalPrice
+      paymentIntentId
+      type
+      createdAt
+      updatedAt
+    }
+  }
+}
+    ${MetaFragmentFragmentDoc}`;
+
+/**
+ * __useGetMyContractsQuery__
+ *
+ * To run a query within a React component, call `useGetMyContractsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMyContractsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMyContractsQuery({
+ *   variables: {
+ *      queryParams: // value for 'queryParams'
+ *   },
+ * });
+ */
+export function useGetMyContractsQuery(baseOptions: Apollo.QueryHookOptions<GetMyContractsQuery, GetMyContractsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMyContractsQuery, GetMyContractsQueryVariables>(GetMyContractsDocument, options);
+      }
+export function useGetMyContractsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMyContractsQuery, GetMyContractsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMyContractsQuery, GetMyContractsQueryVariables>(GetMyContractsDocument, options);
+        }
+export type GetMyContractsQueryHookResult = ReturnType<typeof useGetMyContractsQuery>;
+export type GetMyContractsLazyQueryHookResult = ReturnType<typeof useGetMyContractsLazyQuery>;
+export type GetMyContractsQueryResult = Apollo.QueryResult<GetMyContractsQuery, GetMyContractsQueryVariables>;
+export function refetchGetMyContractsQuery(variables: GetMyContractsQueryVariables) {
+      return { query: GetMyContractsDocument, variables: variables }
+    }
 export const GetServiceDocument = gql`
     query getService($id: String!) {
   getService(id: $id) {
@@ -1508,6 +1900,7 @@ export const GetServiceDocument = gql`
       name
       price
       isPublished
+      isUsed
       serviceId
       description
       totalQuantity
@@ -1568,6 +1961,7 @@ export const GetServicesDocument = gql`
         id
         name
         price
+        isUsed
         isPublished
         serviceId
         description
@@ -1631,7 +2025,14 @@ export type CreateContractMutationVariables = Exact<{
 }>;
 
 
-export type CreateContractMutation = { requestCreateContract: { message?: string | null, success?: boolean | null } };
+export type CreateContractMutation = { requestCreateContract: { id: string } };
+
+export type ConfirmContractDepositMutationVariables = Exact<{
+  input: ConfirmContractDeposit;
+}>;
+
+
+export type ConfirmContractDepositMutation = { confirmContractDeposit: { id: string, status: ContractStatus } };
 
 export type PresignedUrlS3MutationVariables = Exact<{
   presignedUrlDto: PresignedUrlDto;
@@ -1682,6 +2083,13 @@ export type UpdateMeMutationVariables = Exact<{
 
 export type UpdateMeMutation = { updateMe: { avatar?: string | null, email: string, firstName: string, lastName: string, id: string, phoneNumber?: string | null, role: { name: string } } };
 
+export type UpdateContractStatusMutationVariables = Exact<{
+  input: UpdateContractStatusDto;
+}>;
+
+
+export type UpdateContractStatusMutation = { updateStatusContract: { id: string, status: ContractStatus } };
+
 export type UpsertEventMutationVariables = Exact<{
   input: UpsertEventDto;
 }>;
@@ -1702,6 +2110,34 @@ export type VerifyCodeMutationVariables = Exact<{
 
 
 export type VerifyCodeMutation = { verifyCode: { token: string, refreshToken: string, id: string } };
+
+export type CheckoutRemainBillingContractQueryVariables = Exact<{
+  input: DepositContractDto;
+}>;
+
+
+export type CheckoutRemainBillingContractQuery = { checkoutRemainBillingContract: { checkoutUrl: string, cancelUrl: string, successUrl: string } };
+
+export type DepositContractQueryVariables = Exact<{
+  input: DepositContractDto;
+}>;
+
+
+export type DepositContractQuery = { depositContract: { checkoutUrl: string, cancelUrl: string, successUrl: string } };
+
+export type GetContractQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetContractQuery = { getContract: { id: string, address: string, code?: string | null, fileUrl?: string | null, hireDate: any, hireEndDate: any, status: ContractStatus, totalPrice: number, paymentIntentId?: string | null, type: ContractType, createdAt?: any | null, updatedAt?: any | null, details: { contractCreatedDate: any, contractName: string, customerInfo: { address: string, name: string, phoneNumber: string, representative?: string | null, type: string } }, contractEvent?: { id: string, contractId: string, eventId: string, event: { id: string, isPublic: boolean, isUsed: boolean, detail: string, name: string, description: string, thumbnail?: string | null }, contractEventServiceItems: Array<{ amount: number, id: string, contractEventId: string, serviceItemId: string, serviceItem: { id: string, name: string, price?: number | null, description?: string | null, totalQuantity?: number | null, service: { id: string, images?: Array<string> | null } } }> } | null, contractServiceItems: Array<{ id: string, amount: number, hireDate: any, hireEndDate: any, serviceItemId: string, serviceItem: { id: string, name: string, price?: number | null, totalQuantity?: number | null, description?: string | null, service: { id: string, images?: Array<string> | null } } }> } };
+
+export type GetContractsQueryVariables = Exact<{
+  queryParams: QueryFilterDto;
+}>;
+
+
+export type GetContractsQuery = { getContracts: { meta: { totalItems: number, itemCount: number, itemsPerPage: number, totalPages: number, currentPage: number }, items: Array<{ id: string, address: string, code?: string | null, fileUrl?: string | null, hireDate: any, hireEndDate: any, status: ContractStatus, totalPrice: number, paymentIntentId?: string | null, type: ContractType, createdAt?: any | null, updatedAt?: any | null, details: { contractCreatedDate: any, contractName: string, customerInfo: { address: string, name: string, phoneNumber: string, representative?: string | null, type: string } } }> } };
 
 export type GetEventQueryVariables = Exact<{
   input: Scalars['ID'];
@@ -1727,16 +2163,23 @@ export type GetMyCartQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetMyCartQuery = { getMyCart: { id: string, userId: string, cartItems?: Array<{ id: string, serviceItemId: string, hireDate: any, hireEndDate: any, amount: number, createdAt?: any | null, updatedAt?: any | null, serviceItem: { id: string, name: string, price?: number | null, isPublished: boolean, serviceId: string, description?: string | null, totalQuantity?: number | null, updatedAt?: any | null, createdAt?: any | null, service: { id: string, images?: Array<string> | null, type: ServiceType } } }> | null } };
 
+export type GetMyContractsQueryVariables = Exact<{
+  queryParams: QueryFilterDto;
+}>;
+
+
+export type GetMyContractsQuery = { getMyContracts: { meta: { totalItems: number, itemCount: number, itemsPerPage: number, totalPages: number, currentPage: number }, items: Array<{ id: string, address: string, code?: string | null, fileUrl?: string | null, hireDate: any, hireEndDate: any, status: ContractStatus, totalPrice: number, paymentIntentId?: string | null, type: ContractType, createdAt?: any | null, updatedAt?: any | null, details: { contractCreatedDate: any, contractName: string, customerInfo: { address: string, name: string, phoneNumber: string, representative?: string | null, type: string } } }> } };
+
 export type GetServiceQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type GetServiceQuery = { getService: { id: string, name: string, description?: string | null, images?: Array<string> | null, type: ServiceType, detail?: string | null, isPublished: boolean, createdAt?: any | null, updatedAt?: any | null, serviceItems?: Array<{ id: string, name: string, price?: number | null, isPublished: boolean, serviceId: string, description?: string | null, totalQuantity?: number | null, updatedAt?: any | null, createdAt?: any | null }> | null } };
+export type GetServiceQuery = { getService: { id: string, name: string, description?: string | null, images?: Array<string> | null, type: ServiceType, detail?: string | null, isPublished: boolean, createdAt?: any | null, updatedAt?: any | null, serviceItems?: Array<{ id: string, name: string, price?: number | null, isPublished: boolean, isUsed: boolean, serviceId: string, description?: string | null, totalQuantity?: number | null, updatedAt?: any | null, createdAt?: any | null }> | null } };
 
 export type GetServicesQueryVariables = Exact<{
   query: QueryFilterDto;
 }>;
 
 
-export type GetServicesQuery = { getServices: { meta: { totalItems: number, itemCount: number, itemsPerPage: number, totalPages: number, currentPage: number }, items: Array<{ id: string, name: string, description?: string | null, images?: Array<string> | null, type: ServiceType, detail?: string | null, isPublished: boolean, createdAt?: any | null, updatedAt?: any | null, serviceItems?: Array<{ id: string, name: string, price?: number | null, isPublished: boolean, serviceId: string, description?: string | null, totalQuantity?: number | null, updatedAt?: any | null, createdAt?: any | null }> | null }> } };
+export type GetServicesQuery = { getServices: { meta: { totalItems: number, itemCount: number, itemsPerPage: number, totalPages: number, currentPage: number }, items: Array<{ id: string, name: string, description?: string | null, images?: Array<string> | null, type: ServiceType, detail?: string | null, isPublished: boolean, createdAt?: any | null, updatedAt?: any | null, serviceItems?: Array<{ id: string, name: string, price?: number | null, isUsed: boolean, isPublished: boolean, serviceId: string, description?: string | null, totalQuantity?: number | null, updatedAt?: any | null, createdAt?: any | null }> | null }> } };

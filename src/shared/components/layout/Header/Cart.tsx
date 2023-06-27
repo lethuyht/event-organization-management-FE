@@ -10,6 +10,11 @@ const CartStyles = styled.div`
     font-size: 40px;
     position: relative;
     cursor: pointer;
+
+    svg {
+      font-size: 40px;
+      color: #fff !important;
+    }
   }
 
   .cart-item-count {
@@ -17,7 +22,7 @@ const CartStyles = styled.div`
     top: 0px;
     right: -10px;
     background-color: red;
-    color: white;
+    color: white !important;
     border-radius: 50%;
     padding: 2px 5px;
     font-size: 12px;
@@ -37,7 +42,7 @@ export const CartIcon = () => {
           onClick={() => navigate('/cart')}
         />
         {data?.getMyCart.cartItems && data.getMyCart.cartItems?.length > 0 && (
-          <div className="cart-item-count">
+          <div className="cart-item-count font-sans">
             {data.getMyCart.cartItems?.length}
           </div>
         )}

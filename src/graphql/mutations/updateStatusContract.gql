@@ -1,0 +1,6 @@
+mutation updateContractStatus($input: UpdateContractStatusDto!){
+    updateStatusContract(input: $input){
+        id
+        status
+    }
+}

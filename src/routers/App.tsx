@@ -14,6 +14,8 @@ import { ROLE } from '#/shared/utils/type';
 import { useRoutes } from 'react-router';
 import GuardRoute from './GuardRoute';
 import { Cart } from '#/pages/Client/Cart';
+import { MyContract } from '#/pages/Client/Contract';
+import { MyContractDetail } from '#/pages/Client/Contract/ContractDetail';
 
 const App = () => {
   const routes = useRoutes([
@@ -90,6 +92,26 @@ const App = () => {
           roles={[ROLE.USER]}
           isPrivate={true}
           children={<ClientLayout children={<Cart />} />}
+        />
+      ),
+    },
+    {
+      path: '/contract-management',
+      element: (
+        <GuardRoute
+          roles={[ROLE.USER]}
+          isPrivate={true}
+          children={<ClientLayout children={<MyContract />} />}
+        />
+      ),
+    },
+    {
+      path: '/contract-management/:id',
+      element: (
+        <GuardRoute
+          roles={[ROLE.USER]}
+          isPrivate={true}
+          children={<ClientLayout children={<MyContractDetail />} />}
         />
       ),
     },

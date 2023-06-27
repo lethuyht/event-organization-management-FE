@@ -1,0 +1,6 @@
+mutation confirmContractDeposit($input: ConfirmContractDeposit!) {
+    confirmContractDeposit(input: $input) {
+        id
+        status
+    }
+}
