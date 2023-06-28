@@ -360,7 +360,7 @@ export const createServiceContractHtml = (contract?: Contract, user?: User) => {
 </html>`;
 };
 
-export function MyContractDetail() {
+function MyContractDetail() {
   const { id } = useParams<{ id: string }>();
   const search = useLocation().search;
   const searchParams = new URLSearchParams(search);
@@ -575,3 +575,5 @@ export function MyContractDetail() {
     </MyContractDetailStyle>
   );
 }
+
+export default MyContractDetail;

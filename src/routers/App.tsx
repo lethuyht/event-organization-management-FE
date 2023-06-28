@@ -15,7 +15,7 @@ import { useRoutes } from 'react-router';
 import GuardRoute from './GuardRoute';
 import { Cart } from '#/pages/Client/Cart';
 import { MyContract } from '#/pages/Client/Contract';
-import { MyContractDetail } from '#/pages/Client/Contract/ContractDetail';
+import MyContractDetail from '#/pages/Client/Contract/ContractDetail';
 
 const App = () => {
   const routes = useRoutes([
