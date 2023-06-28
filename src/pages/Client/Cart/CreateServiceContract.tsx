@@ -14,7 +14,11 @@ import {
 import AddressForm from '#/shared/components/common/Address';
 import { useState } from 'react';
 import { userVar } from '#/graphql/cache';
-import { CartItem, useCreateContractMutation } from '#/generated/schemas';
+import {
+  CartItem,
+  refetchGetMyCartQuery,
+  useCreateContractMutation,
+} from '#/generated/schemas';
 import { NO_IMAGE } from '#/shared/utils/constant';
 import { showError, showSuccess } from '#/shared/utils/tools';
 import { DatePicker } from '#/shared/components/common/DatePicker';
@@ -61,6 +65,7 @@ export function CreateServiceContract({
     onError: error => {
       showError(error);
     },
+    refetchQueries: [refetchGetMyCartQuery()],
   });
 
   const handleCustomerTypeChange = (e: any) => {
