@@ -27,11 +27,36 @@ import { ContractStatusTag } from '#/pages/Client/Contract/ContractStatus';
 import PrimaryButton from '#/shared/components/buttons/PrimaryButton';
 import { showError, showSuccess } from '#/shared/utils/tools';
 import { useEffect } from 'react';
-// import CornerRibbon from 'react-corner-ribbon';
 import { DeleteOutlined } from '@ant-design/icons';
 
 const MyContractDetailStyle = styled.div`
   .ribbon {
+    .ribbon-wrap {
+      position: absolute;
+      inset: 0px;
+      overflow: hidden;
+      background-color: transparent;
+      pointer-events: none;
+
+      .ribbon-text {
+        position: absolute;
+        padding: 0.1em 2em;
+        z-index: 99;
+        text-align: center;
+        letter-spacing: 2px;
+        font-size: 14px;
+        pointer-events: auto;
+        box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 3px;
+        background-color: red;
+        color: rgb(240, 240, 240);
+        top: 0px;
+        right: 0px;
+        transform: translateY(-100%) rotate(90deg) translateX(70.7107%)
+          rotate(-45deg);
+        transform-origin: right bottom;
+      }
+    }
+
     & > div > div {
       padding: 0.5rem 4rem !important;
       font-size: 25px !important;
@@ -531,32 +556,31 @@ function MyContractDetail() {
               </Row>
 
               <Space className={'relative my-4 rounded-md'}>
-                {/*<div className={'ribbon'}>*/}
-                {/*  {data?.getContract?.status === ContractStatus.Draft && (*/}
-                {/*    <CornerRibbon position="top-right" backgroundColor="#000">*/}
-                {/*      Bản nháp*/}
-                {/*    </CornerRibbon>*/}
-                {/*  )}*/}
-                {/*  {[ContractStatus.Cancel, ContractStatus.AdminCancel].includes(*/}
-                {/*    data?.getContract?.status as any,*/}
-                {/*  ) && (*/}
-                {/*    <CornerRibbon position="top-right" backgroundColor="red">*/}
-                {/*      Đã hủy*/}
-                {/*    </CornerRibbon>*/}
-                {/*  )}*/}
-                {/*  {![*/}
-                {/*    ContractStatus.Cancel,*/}
-                {/*    ContractStatus.AdminCancel,*/}
-                {/*    ContractStatus.Draft,*/}
-                {/*  ].includes(data?.getContract?.status as any) && (*/}
-                {/*    <CornerRibbon*/}
-                {/*      position="top-right"*/}
-                {/*      backgroundColor="rgb(102, 222, 35)"*/}
-                {/*    >*/}
-                {/*      Chính thức*/}
-                {/*    </CornerRibbon>*/}
-                {/*  )}*/}
-                {/*</div>*/}
+                <div className={'ribbon'}>
+                  {data?.getContract?.status === ContractStatus.Draft && (
+                    <div className={'ribbon-wrap'}>
+                      <div className={'ribbon-text bg-black'}>Bản nháp</div>
+                    </div>
+                  )}
+                  {[ContractStatus.Cancel, ContractStatus.AdminCancel].includes(
+                    data?.getContract?.status as any,
+                  ) && (
+                    <div className={'ribbon-wrap'}>
+                      <div className={'ribbon-text bg-[red]'}>Đã hủy</div>
+                    </div>
+                  )}
+                  {![
+                    ContractStatus.Cancel,
+                    ContractStatus.AdminCancel,
+                    ContractStatus.Draft,
+                  ].includes(data?.getContract?.status as any) && (
+                    <div className={'ribbon-wrap'}>
+                      <div className={'ribbon-text bg-green-600'}>
+                        Chính thức
+                      </div>
+                    </div>
+                  )}
+                </div>
 
                 <div
                   className={'border-[1px] border-solid border-[#000]'}
