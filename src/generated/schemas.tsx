@@ -1452,6 +1452,7 @@ export const GetContractDocument = gql`
           service {
             id
             images
+            type
           }
         }
       }
@@ -1600,6 +1601,7 @@ export const GetEventDocument = gql`
         service {
           id
           images
+          type
         }
       }
       createdAt
@@ -2130,7 +2132,7 @@ export type GetContractQueryVariables = Exact<{
 }>;
 
 
-export type GetContractQuery = { getContract: { id: string, address: string, code?: string | null, fileUrl?: string | null, hireDate: any, hireEndDate: any, status: ContractStatus, totalPrice: number, paymentIntentId?: string | null, type: ContractType, createdAt?: any | null, updatedAt?: any | null, details: { contractCreatedDate: any, contractName: string, customerInfo: { address: string, name: string, phoneNumber: string, representative?: string | null, type: string } }, contractEvent?: { id: string, contractId: string, eventId: string, event: { id: string, isPublic: boolean, isUsed: boolean, detail: string, name: string, description: string, thumbnail?: string | null }, contractEventServiceItems: Array<{ amount: number, id: string, contractEventId: string, serviceItemId: string, serviceItem: { id: string, name: string, price?: number | null, description?: string | null, totalQuantity?: number | null, service: { id: string, images?: Array<string> | null } } }> } | null, contractServiceItems: Array<{ id: string, amount: number, hireDate: any, hireEndDate: any, serviceItemId: string, serviceItem: { id: string, name: string, price?: number | null, totalQuantity?: number | null, description?: string | null, service: { id: string, images?: Array<string> | null } } }> } };
+export type GetContractQuery = { getContract: { id: string, address: string, code?: string | null, fileUrl?: string | null, hireDate: any, hireEndDate: any, status: ContractStatus, totalPrice: number, paymentIntentId?: string | null, type: ContractType, createdAt?: any | null, updatedAt?: any | null, details: { contractCreatedDate: any, contractName: string, customerInfo: { address: string, name: string, phoneNumber: string, representative?: string | null, type: string } }, contractEvent?: { id: string, contractId: string, eventId: string, event: { id: string, isPublic: boolean, isUsed: boolean, detail: string, name: string, description: string, thumbnail?: string | null }, contractEventServiceItems: Array<{ amount: number, id: string, contractEventId: string, serviceItemId: string, serviceItem: { id: string, name: string, price?: number | null, description?: string | null, totalQuantity?: number | null, service: { id: string, images?: Array<string> | null, type: ServiceType } } }> } | null, contractServiceItems: Array<{ id: string, amount: number, hireDate: any, hireEndDate: any, serviceItemId: string, serviceItem: { id: string, name: string, price?: number | null, totalQuantity?: number | null, description?: string | null, service: { id: string, images?: Array<string> | null } } }> } };
 
 export type GetContractsQueryVariables = Exact<{
   queryParams: QueryFilterDto;
@@ -2144,7 +2146,7 @@ export type GetEventQueryVariables = Exact<{
 }>;
 
 
-export type GetEventQuery = { getEvent: { id: string, name: string, description: string, isPublic: boolean, detail: string, thumbnail?: string | null, isUsed: boolean, updatedAt?: any | null, createdAt?: any | null, eventServiceItems?: Array<{ id: string, amount: number, eventId: string, serviceItemId: string, createdAt?: any | null, updatedAt?: any | null, serviceItem: { id: string, name: string, price?: number | null, serviceId: string, totalQuantity?: number | null, description?: string | null, isPublished: boolean, images?: Array<string> | null, service: { id: string, images?: Array<string> | null } } }> | null } };
+export type GetEventQuery = { getEvent: { id: string, name: string, description: string, isPublic: boolean, detail: string, thumbnail?: string | null, isUsed: boolean, updatedAt?: any | null, createdAt?: any | null, eventServiceItems?: Array<{ id: string, amount: number, eventId: string, serviceItemId: string, createdAt?: any | null, updatedAt?: any | null, serviceItem: { id: string, name: string, price?: number | null, serviceId: string, totalQuantity?: number | null, description?: string | null, isPublished: boolean, images?: Array<string> | null, service: { id: string, images?: Array<string> | null, type: ServiceType } } }> | null } };
 
 export type GetEventsQueryVariables = Exact<{
   queryParams: QueryFilterDto;

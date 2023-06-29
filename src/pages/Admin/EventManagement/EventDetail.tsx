@@ -1,7 +1,7 @@
 import { useGetEventQuery } from '#/generated/schemas';
-import { showError } from '#/shared/utils/tools';
+import { formatCurrency, showError } from '#/shared/utils/tools';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { Button, Col, Image, Row, Typography } from 'antd';
+import { Button, Col, Image, Row, Table, Typography } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom';
 import { UpdateEventStatus } from '.';
 
@@ -14,6 +14,33 @@ export function EventDetail() {
     },
     onError: error => showError(error),
   });
+
+  const columns = [
+    {
+      title: 'Tên dịch vụ',
+      dataIndex: ['serviceItem', 'name'],
+      key: 'name',
+    },
+    {
+      title: 'Mô tả',
+      dataIndex: ['serviceItem', 'description'],
+      key: 'description',
+      render: (text: string) => (
+        <div dangerouslySetInnerHTML={{ __html: text || '' }} />
+      ),
+    },
+    {
+      title: 'Giá',
+      dataIndex: ['serviceItem', 'price'],
+      key: 'price',
+      render: (price: number) => <div>{formatCurrency(price)}</div>,
+    },
+    {
+      title: 'Số lượng',
+      dataIndex: 'amount',
+      key: 'amount',
+    },
+  ];
 
   return (
     <>
@@ -120,6 +147,23 @@ export function EventDetail() {
             dangerouslySetInnerHTML={{ __html: data?.getEvent.detail || '' }}
             className="px-4 text-black"
           ></div>
+        </Col>
+      </Row>
+
+      <Row className="my-4 w-full rounded-lg bg-white p-2" gutter={[16, 16]}>
+        <Col span={24}>
+          <Typography.Title level={3} className="text-[#00081e]">
+            Các dịch vụ kèm theo
+          </Typography.Title>
+        </Col>
+        <Col span={24}>
+          <Table
+            columns={columns}
+            dataSource={data?.getEvent?.eventServiceItems ?? []}
+            loading={loading}
+            rowKey="id"
+            pagination={false}
+          />
         </Col>
       </Row>
     </>

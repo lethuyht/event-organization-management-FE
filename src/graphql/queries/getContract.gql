@@ -50,6 +50,7 @@ query getContract($id: String!){
                     service{
                         id
                         images
+                        type
                     }
                 }
             }

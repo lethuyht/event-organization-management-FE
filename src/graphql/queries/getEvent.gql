@@ -24,6 +24,7 @@ query getEvent ($input: ID!) {
                 service{
                     id
                     images
+                    type
                 }
             }
             createdAt

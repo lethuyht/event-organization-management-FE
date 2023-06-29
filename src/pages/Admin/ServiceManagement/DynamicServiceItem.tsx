@@ -193,31 +193,31 @@ export function DynamicServiceItem({ initialValues, form }: Props) {
                       <Switch />
                     </Form.Item>
                   </Col>
-                  <Row gutter={[32, 32]}>
-                    {/* {fields.length > 1 ? (
-                  !initialValues[index]?.isUsed ? ( */}
-                    <Col span={6}>
-                      <Button
-                        type="ghost"
-                        onClick={() => remove(field.key)}
-                        icon={<MinusCircleOutlined />}
-                        className="bg-red-600 hover:text-white hover:opacity-50"
-                      >
-                        <Typography.Text>Xóa</Typography.Text>
-                      </Button>
-                    </Col>
-                    {/* ) : ( */}
-                    <Col span={6}>
-                      <Tag className="py-1 px-9" color="green">
-                        <Typography.Text className="text-lg text-black">
-                          Đã được đặt hàng
-                        </Typography.Text>
-                      </Tag>
-                    </Col>
-                    {/* )
-                ) : (
-                  <></>
-                )} */}
+                  <Row gutter={[32, 32]} className={'flex w-full justify-end'}>
+                    {fields.length > 1 ? (
+                      !initialValues[index]?.isUsed ? (
+                        <Col span={6} className={'flex w-full justify-end'}>
+                          <Button
+                            type="ghost"
+                            onClick={() => remove(field.key)}
+                            icon={<MinusCircleOutlined />}
+                            className="bg-red-600 hover:text-white hover:opacity-50"
+                          >
+                            <Typography.Text>Xóa</Typography.Text>
+                          </Button>
+                        </Col>
+                      ) : (
+                        <Col span={6} className={'flex w-full justify-end'}>
+                          <Tag className="py-1 px-9" color="green">
+                            <Typography.Text className="text-lg text-black">
+                              Đang sử dụng
+                            </Typography.Text>
+                          </Tag>
+                        </Col>
+                      )
+                    ) : (
+                      <></>
+                    )}
                   </Row>
                 </Row>
               ))}

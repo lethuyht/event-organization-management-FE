@@ -16,6 +16,8 @@ import {
 } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import { useParams } from 'react-router-dom';
+import { DynamicEventServiceItem } from '#/pages/Admin/EventManagement/DynamicEventServiceItem';
+import { useEffect } from 'react';
 
 const UpserEventStyles = styled.div`
   .ant-form-item-label {
@@ -80,6 +82,15 @@ export function UpsertEvent() {
           detail: values.detail || data?.getEvent?.detail,
           isPublic: values.isPublic || false,
           id: data ? data.getEvent?.id : undefined,
+          eventServiceItems: values.eventServiceItems.map((item: any) => {
+            return {
+              id: item.id,
+              serviceItemId: item.serviceItemId,
+              amount: Number(item.amount),
+              serviceId: undefined,
+              serviceType: undefined,
+            };
+          }),
         },
       },
     });
@@ -88,6 +99,12 @@ export function UpsertEvent() {
   const handleEditorChange = (text: string) => {
     form.setFieldsValue({ detail: text });
   };
+
+  useEffect(() => {
+    if (data?.getEvent?.detail) {
+      form.setFieldsValue({ detail: data?.getEvent?.detail });
+    }
+  }, [data]);
   return (
     <Skeleton loading={loading}>
       <UpserEventStyles className="rounded-lg bg-white p-4 ">
@@ -191,7 +208,16 @@ export function UpsertEvent() {
               initialValue={data?.getEvent?.detail}
             />
           </Form.Item>
-          <Form.Item></Form.Item>
+          <Form.Item
+            label={'Các dịch vụ kèm theo của sự kiện'}
+            name={'eventServiceItems'}
+            required
+          >
+            <DynamicEventServiceItem
+              initialValues={data?.getEvent?.eventServiceItems as any}
+              form={form}
+            />
+          </Form.Item>
         </Form>
       </UpserEventStyles>
     </Skeleton>
