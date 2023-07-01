@@ -15,6 +15,8 @@ import { UpsertEvent } from './EventManagement/UpsertEvent';
 import { ServiceManagement } from './ServiceManagement';
 import { ServiceDetail } from './ServiceManagement/Detail';
 import { UpsertService } from './ServiceManagement/Upsert';
+import { ContractAdminPage } from './Contract';
+import { ContractDetail } from './Contract/Detail';
 
 export function AdminPage() {
   const { handleLogout } = useAuthentication();
@@ -123,7 +125,13 @@ export function AdminPage() {
 
     {
       path: '/contract-management',
-      element: <div>Contract Management</div>,
+      children: [{
+        index: true,
+        element: <ContractAdminPage />,
+      }, {
+        path: ':id',
+        element: <ContractDetail />,
+      }]
     },
     { path: '*', element: <NotFoundPage /> },
   ]);

@@ -1,0 +1,6 @@
+mutation createEventRequest($input: EventRequestInput!){
+    createEventRequest(input: $input){
+        message
+        success
+    }
+}

@@ -124,13 +124,13 @@ export const createServiceContractHtml = (contract?: Contract, user?: User) => {
     <div class="px-10 ">
         <div>
             <ul class="my-4">
-                <li><i>- Căn cứ Bộ luật dân sự 2015;</i></li>
-                <li><i>- Căn cứ sự thỏa thuận của 2 bên</i></li>
+                <li ><i>- Căn cứ Bộ luật dân sự 2015;</i></li>
+                <li ><i>- Căn cứ sự thỏa thuận của 2 bên</i></li>
             </ul>
             <div>
                 Hôm nay, ngày ${dayjs(
-                  contract?.details?.contractCreatedDate,
-                ).format('DD/MM/YYYY')} chúng tôi gồm: 
+    contract?.details?.contractCreatedDate,
+  ).format('DD/MM/YYYY')} chúng tôi gồm: 
                
             </div>
         </div>
@@ -166,8 +166,8 @@ export const createServiceContractHtml = (contract?: Contract, user?: User) => {
                 <tr>
                     <td>ĐẠI DIỆN</td>
                     <td class="flex">
-                        <li class="flex">:  Ông/Bà LÊ THỊ THỦY</li>
-                        <li class="ml-16 flex">Chức danh:   GIÁM ĐỐC</li>
+                        <li  class="flex">:  Ông/Bà LÊ THỊ THỦY</li>
+                        <li  class="ml-16 flex">Chức danh:   GIÁM ĐỐC</li>
                     </td>
                 </tr>
                 <tr>
@@ -198,8 +198,8 @@ export const createServiceContractHtml = (contract?: Contract, user?: User) => {
                     </p>
                     <p>
                         Thời gian thực hiện: Từ ngày ${dayjs(
-                          contract?.hireDate,
-                        ).format('DD/MM/YYYY')} đến ngày ${dayjs(
+    contract?.hireDate,
+  ).format('DD/MM/YYYY')} đến ngày ${dayjs(
     contract?.hireEndDate,
   ).format('DD/MM/YYYY')}
                     </p>
@@ -220,29 +220,28 @@ export const createServiceContractHtml = (contract?: Contract, user?: User) => {
                                 <td>Đơn vị tiền</td>
                             </tr>
                             ${contract?.contractServiceItems?.map(
-                              (item, index) => {
-                                return `<tr>
+    (item, index) => {
+      return `<tr>
                                 <td>${index + 1}</td>
                                 <td>${item?.serviceItem?.name}</td>
                                 <td>${item.serviceItem.description}</td>
                                 <td>
                                     <p>Bắt đầu: ${formatDate(
-                                      item?.hireDate,
-                                    )}</p>
+        item?.hireDate,
+      )}</p>
                                     <p>Kết thúc: ${formatDate(
-                                      item?.hireEndDate,
-                                    )}</p>
+        item?.hireEndDate,
+      )}</p>
                                 </td>
                                 <td>${item?.amount}</td>
                                 <td>${item?.serviceItem?.price}</td>
-                                <td>${
-                                  item?.amount *
-                                  Number(item?.serviceItem?.price)
-                                }</td>
+                                <td>${item?.amount *
+        Number(item?.serviceItem?.price)
+        }</td>
                                 <td>VNĐ</td>
                             </tr>`;
-                              },
-                            )}
+    },
+  )}
                             
                             <tr>
                                 <th colspan="6">TỔNG CHI PHÍ</th>
@@ -270,8 +269,8 @@ export const createServiceContractHtml = (contract?: Contract, user?: User) => {
                     <div class="my-2">
                         2.3 Phương thức thanh toán: (Thanh toán bằng tiền mặt hoặc chuyển khoản)
                         <ul class="mx-4">
-                            <li>- Bên A thực hiện đặt cọc 30% giá trị hợp đồng cho bên B.</li>
-                            <li>- Bên A sẽ thanh toán bằng tiền mặt hoặc chuyển khoản cho bên B 100% phần giá trị
+                            <li >- Bên A thực hiện đặt cọc 30% giá trị hợp đồng cho bên B.</li>
+                            <li >- Bên A sẽ thanh toán bằng tiền mặt hoặc chuyển khoản cho bên B 100% phần giá trị
                                 dịch
                                 vụ kể trên và phát sinh (nếu có) căn cứ trên Biên bản thanh lý hợp đồng trong thời
                                 gian
@@ -307,15 +306,15 @@ export const createServiceContractHtml = (contract?: Contract, user?: User) => {
                     <div class="my-2">
                         4.1 Quyền lợi của bên A:
                         <ul class="mx-4">
-                            <li>- Nhận được dịch vụ tốt nhất và đầy đủ nhất do bên B cung cấp.</li>
-                            <li>- Quản lý và giám sát các hoạt động do bên B cung cấp và thực hiện.</li>
+                            <li >- Nhận được dịch vụ tốt nhất và đầy đủ nhất do bên B cung cấp.</li>
+                            <li >- Quản lý và giám sát các hoạt động do bên B cung cấp và thực hiện.</li>
                         </ul>
                     </div>
                     <div class="my-2">
                     <div>4.2 Nghĩa vụ của bên A:</div>                        
                         <ul class="mx-4">
-                            <li>- Thanh toán cho bên B theo như thoả thuận tai điều 2.</li>
-                            <li>- Phối hợp với bên B giải quyết các vấn đề phát sinh xảy ra trong chương trình thuộc
+                            <li >- Thanh toán cho bên B theo như thoả thuận tai điều 2.</li>
+                            <li >- Phối hợp với bên B giải quyết các vấn đề phát sinh xảy ra trong chương trình thuộc
                                 về trách nhiệm của bên A.
                             </li>
                         </ul>
@@ -326,28 +325,28 @@ export const createServiceContractHtml = (contract?: Contract, user?: User) => {
                     <div class="my-2">
                     <div>  5.1 Quyền lợi của bên B:</div>                      
                         <ul class="mx-4">
-                            <li>- Nhận được đầy đủ thanh toán của bên A như điều 2.</li>
+                            <li >- Nhận được đầy đủ thanh toán của bên A như điều 2.</li>
                         </ul>
                     </div>
                     <div class="my-2">
                       <div> 5.2 Nghĩa vụ của bên B:</div>
                         <ul class="mx-4">
-                            <li>- Bảo đảm tuyển dụng, cung cấp cho bên A các hạng hạng mục đã nêu với số lượng ,
+                            <li >- Bảo đảm tuyển dụng, cung cấp cho bên A các hạng hạng mục đã nêu với số lượng ,
                                 chất lượng như yêu cầu.
                             </li>
-                            <li>- Trong quá trình diễn ra chương trình, Bên B cam kết sẽ trực tiếp theo dõi, giám
+                            <li >- Trong quá trình diễn ra chương trình, Bên B cam kết sẽ trực tiếp theo dõi, giám
                                 sát, ghi chép và chụp hình lại trong biên bản nghiệm thu bàn giao cho Bên A.
                             </li>
-                            <li>- Cung cấp hóa đơn tài chính hợp pháp đối với dịch vụ cung cấp theo hợp đồng này và
+                            <li >- Cung cấp hóa đơn tài chính hợp pháp đối với dịch vụ cung cấp theo hợp đồng này và
                                 các hạng mục phát sinh được bên A chấp thuận (nếu có).
                             </li>
-                            <li>- Phối hợp với bên A giải quyết các vấn đề phát sinh xảy ra trong chương trình thuộc
+                            <li >- Phối hợp với bên A giải quyết các vấn đề phát sinh xảy ra trong chương trình thuộc
                                 về trách nhiệm của bên B.
                             </li>
-                            <li>- Bên B sẽ không chịu trách nhiệm về những dịch vụ nào khác ngoài nội dung và Bảng
+                            <li >- Bên B sẽ không chịu trách nhiệm về những dịch vụ nào khác ngoài nội dung và Bảng
                                 danh mục dịch vụ.
                             </li>
-                            <li>- Bên B cam kết không cung cấp và tiết lộ bất kỳ thông tin nào liên quan trực tiếp
+                            <li >- Bên B cam kết không cung cấp và tiết lộ bất kỳ thông tin nào liên quan trực tiếp
                                 hay gián tiếp đến sản phẩm của Bên A cũng như các nội dung khác cho bất kỳ bên thứ
                                 ba nào mà không có sự đồng ý trước của Bên A bằng văn bản.
                             </li>
@@ -543,15 +542,15 @@ function MyContractDetail() {
                     ContractStatus.InProgress,
                     ContractStatus.InProgress,
                   ].includes(data?.getContract.status as any) && (
-                    <Button
-                      block
-                      icon={<DeleteOutlined />}
-                      onClick={cancelContractHandler}
-                      className=" w-32 font-bold text-red-500 hover:bg-red-600 hover:text-white"
-                    >
-                      Hủy
-                    </Button>
-                  )}
+                      <Button
+                        block
+                        icon={<DeleteOutlined />}
+                        onClick={cancelContractHandler}
+                        className=" w-32 font-bold text-red-500 hover:bg-red-600 hover:text-white"
+                      >
+                        Hủy
+                      </Button>
+                    )}
                 </Col>
               </Row>
 
@@ -565,21 +564,21 @@ function MyContractDetail() {
                   {[ContractStatus.Cancel, ContractStatus.AdminCancel].includes(
                     data?.getContract?.status as any,
                   ) && (
-                    <div className={'ribbon-wrap'}>
-                      <div className={'ribbon-text bg-[red]'}>Đã hủy</div>
-                    </div>
-                  )}
+                      <div className={'ribbon-wrap'}>
+                        <div className={'ribbon-text bg-[red]'}>Đã hủy</div>
+                      </div>
+                    )}
                   {![
                     ContractStatus.Cancel,
                     ContractStatus.AdminCancel,
                     ContractStatus.Draft,
                   ].includes(data?.getContract?.status as any) && (
-                    <div className={'ribbon-wrap'}>
-                      <div className={'ribbon-text bg-green-600'}>
-                        Chính thức
+                      <div className={'ribbon-wrap'}>
+                        <div className={'ribbon-text bg-green-600'}>
+                          Chính thức
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
                 </div>
 
                 <div

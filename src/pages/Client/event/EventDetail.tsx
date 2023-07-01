@@ -1,9 +1,12 @@
 import { useGetEventQuery } from '#/generated/schemas';
 import { EVENT_DEFAULT } from '#/shared/utils/constant';
 import styled from '@emotion/styled';
-import { Col, Image, Row, Table, Typography } from 'antd';
+import { Alert, Col, Image, Row, Table, Typography } from 'antd';
 import { useParams } from 'react-router-dom';
 import { formatCurrency } from '#/shared/utils/tools';
+import { CreateEventContract } from '#/pages/Client/event/CreateEventContract';
+import { userVar } from '#/graphql/cache';
+import { ROLE } from '#/shared/utils/type';
 
 const EventDetailPageStyles = styled.div`
   .ant-input-affix-wrapper {
@@ -46,6 +49,7 @@ export function EventDetailPage() {
       input: id as any,
     },
   });
+  const user = userVar();
 
   const columns = [
     {
@@ -115,6 +119,26 @@ export function EventDetailPage() {
                 pagination={false}
               />
             </Col>
+            {event?.getEvent?.eventServiceItems?.length && (user && user.role?.name === ROLE.USER) && (
+              <Col span={24} className={'mt-4'}>
+                <Alert
+                  className={'rounded-md py-4 shadow-lg'}
+                  message={
+                    <Row className={'flex items-center justify-between'}>
+                      <Typography.Text className={'text-lg text-black'}>
+                        Bạn có nhu cầu tổ chức sự kiện này. Nhấn vào nút bên
+                        cạnh để đăng kí ngay nhé!
+                      </Typography.Text>
+                      <Col span={6}>
+                        <CreateEventContract event={event?.getEvent as any} />
+                      </Col>
+                    </Row>
+                  }
+                  type="info"
+                  showIcon
+                />
+              </Col>
+            )}
           </Row>
         )}
       </Row>

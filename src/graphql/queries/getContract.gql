@@ -3,6 +3,10 @@ query getContract($id: String!){
         id
         address
         code
+        user{
+            email
+            id
+        }
         details{
             contractCreatedDate
             contractName
