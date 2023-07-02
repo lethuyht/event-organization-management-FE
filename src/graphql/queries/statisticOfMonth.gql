@@ -1,0 +1,13 @@
+query statisticOfMonth($input: StatisticsDto!){
+    statisticOfMonth(input: $input){
+        details{
+            date
+            eventNumber
+            serviceNumber
+        }
+        revenue{
+            event
+            service
+        }
+    }
+}

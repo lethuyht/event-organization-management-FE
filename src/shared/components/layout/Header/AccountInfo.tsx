@@ -56,10 +56,10 @@ const adminMenus: MenuType[] = [
   },
   {
     key: 'admin-dashboard',
-    to: '/admin/contract-management',
+    to: '/admin/statistic',
     icon: <UserAccountSVG width={20} height={20} />,
     title: 'Vào trang quản trị',
-    href: ['/admin/contract-management'],
+    href: ['/admin/statistic'],
   },
   {
     key: 'logout',

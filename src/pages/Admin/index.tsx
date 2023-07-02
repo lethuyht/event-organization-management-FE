@@ -17,12 +17,19 @@ import { ServiceDetail } from './ServiceManagement/Detail';
 import { UpsertService } from './ServiceManagement/Upsert';
 import { ContractAdminPage } from './Contract';
 import { ContractDetail } from './Contract/Detail';
+import { StatisticPage } from '#/pages/Admin/Statistic';
 
 export function AdminPage() {
   const { handleLogout } = useAuthentication();
   const customMenus: Route = {
     path: '/admin',
     routes: [
+      {
+        path: '/admin/statistic',
+        name: 'Thống kê',
+        icon: <SolutionOutlined />,
+        key: '/admin/statistic',
+      },
       {
         path: '/admin/contract-management',
         name: 'Quản lý hợp đồng',
@@ -58,6 +65,15 @@ export function AdminPage() {
   };
 
   const routes = useRoutes([
+    {
+      path: '/statistic',
+      children: [
+        {
+          index: true,
+          element: <StatisticPage />,
+        },
+      ],
+    },
     {
       path: '/event-management',
 
@@ -125,13 +141,16 @@ export function AdminPage() {
 
     {
       path: '/contract-management',
-      children: [{
-        index: true,
-        element: <ContractAdminPage />,
-      }, {
-        path: ':id',
-        element: <ContractDetail />,
-      }]
+      children: [
+        {
+          index: true,
+          element: <ContractAdminPage />,
+        },
+        {
+          path: ':id',
+          element: <ContractDetail />,
+        },
+      ],
     },
     { path: '*', element: <NotFoundPage /> },
   ]);

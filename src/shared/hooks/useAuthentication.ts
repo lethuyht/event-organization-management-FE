@@ -17,7 +17,7 @@ const useAuthentication = () => {
       setRefreshToken(res.signIn.refreshToken);
       setUserId(res.signIn.id);
       if (res.signIn.role?.name === ROLE.ADMIN) {
-        navigate('/admin/contract-management');
+        navigate('/admin/statistic');
         window.location.reload();
       } else {
         navigate('/');

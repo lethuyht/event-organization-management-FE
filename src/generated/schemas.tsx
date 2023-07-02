@@ -2149,6 +2149,52 @@ export type GetServicesQueryResult = Apollo.QueryResult<GetServicesQuery, GetSer
 export function refetchGetServicesQuery(variables: GetServicesQueryVariables) {
       return { query: GetServicesDocument, variables: variables }
     }
+export const StatisticOfMonthDocument = gql`
+    query statisticOfMonth($input: StatisticsDto!) {
+  statisticOfMonth(input: $input) {
+    details {
+      date
+      eventNumber
+      serviceNumber
+    }
+    revenue {
+      event
+      service
+    }
+  }
+}
+    `;
+
+/**
+ * __useStatisticOfMonthQuery__
+ *
+ * To run a query within a React component, call `useStatisticOfMonthQuery` and pass it any options that fit your needs.
+ * When your component renders, `useStatisticOfMonthQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useStatisticOfMonthQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useStatisticOfMonthQuery(baseOptions: Apollo.QueryHookOptions<StatisticOfMonthQuery, StatisticOfMonthQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<StatisticOfMonthQuery, StatisticOfMonthQueryVariables>(StatisticOfMonthDocument, options);
+      }
+export function useStatisticOfMonthLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<StatisticOfMonthQuery, StatisticOfMonthQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<StatisticOfMonthQuery, StatisticOfMonthQueryVariables>(StatisticOfMonthDocument, options);
+        }
+export type StatisticOfMonthQueryHookResult = ReturnType<typeof useStatisticOfMonthQuery>;
+export type StatisticOfMonthLazyQueryHookResult = ReturnType<typeof useStatisticOfMonthLazyQuery>;
+export type StatisticOfMonthQueryResult = Apollo.QueryResult<StatisticOfMonthQuery, StatisticOfMonthQueryVariables>;
+export function refetchStatisticOfMonthQuery(variables: StatisticOfMonthQueryVariables) {
+      return { query: StatisticOfMonthDocument, variables: variables }
+    }
 export type MetaFragmentFragment = { totalItems: number, itemCount: number, itemsPerPage: number, totalPages: number, currentPage: number };
 
 export type AddItemToCartMutationVariables = Exact<{
@@ -2349,3 +2395,10 @@ export type GetServicesQueryVariables = Exact<{
 
 
 export type GetServicesQuery = { getServices: { meta: { totalItems: number, itemCount: number, itemsPerPage: number, totalPages: number, currentPage: number }, items: Array<{ id: string, name: string, description?: string | null, images?: Array<string> | null, type: ServiceType, detail?: string | null, isPublished: boolean, createdAt?: any | null, updatedAt?: any | null, serviceItems?: Array<{ id: string, name: string, price?: number | null, isUsed: boolean, isPublished: boolean, serviceId: string, description?: string | null, totalQuantity?: number | null, updatedAt?: any | null, createdAt?: any | null }> | null }> } };
+
+export type StatisticOfMonthQueryVariables = Exact<{
+  input: StatisticsDto;
+}>;
+
+
+export type StatisticOfMonthQuery = { statisticOfMonth: { details?: Array<{ date: any, eventNumber: number, serviceNumber: number }> | null, revenue: { event: number, service: number } } };
