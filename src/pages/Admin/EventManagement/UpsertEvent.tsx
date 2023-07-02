@@ -214,7 +214,7 @@ export function UpsertEvent() {
             required
           >
             <DynamicEventServiceItem
-              initialValues={data?.getEvent?.eventServiceItems as any}
+              initialValues={data?.getEvent?.eventServiceItems || []}
               form={form}
             />
           </Form.Item>
