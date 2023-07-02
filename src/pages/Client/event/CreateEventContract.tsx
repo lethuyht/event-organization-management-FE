@@ -159,18 +159,18 @@ export function CreateEventContract({ event }: Props) {
           hireEndDate: dayjs(values.hireDate[1]).format('YYYY-MM-DD'),
           customizedServiceItems: values.isCustomized
             ? selectedItems.map(item => {
-                return {
-                  serviceItemId: item,
-                  amount: values[item].amount,
-                };
-              })
+              return {
+                serviceItemId: item,
+                amount: Number(values[item].amount),
+              };
+            })
             : undefined,
         },
       },
     });
   };
 
-  useEffect(() => {}, [amountEdit]);
+  useEffect(() => { }, [amountEdit]);
 
   return (
     <>
@@ -430,13 +430,13 @@ export function CreateEventContract({ event }: Props) {
                                 <Typography.Text className="text-black ">
                                   {item.serviceItem.price
                                     ? formatCurrency(
-                                        !isCustomizedEvent
-                                          ? item.serviceItem.price * item.amount
-                                          : item.serviceItem.price *
-                                              (form.getFieldValue(
-                                                `${item.serviceItemId}`,
-                                              )?.amount || item.amount),
-                                      )
+                                      !isCustomizedEvent
+                                        ? item.serviceItem.price * item.amount
+                                        : item.serviceItem.price *
+                                        (form.getFieldValue(
+                                          `${item.serviceItemId}`,
+                                        )?.amount || item.amount),
+                                    )
                                     : '-'}
                                 </Typography.Text>
                               </Col>
