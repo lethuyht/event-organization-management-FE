@@ -14,6 +14,7 @@ export type Scalars = {
   Int: number;
   Float: number;
   Date: any;
+  DateScalar: any;
   DateTime: any;
 };
 
@@ -181,6 +182,12 @@ export type DepositContractDto = {
   cancelUrl: Scalars['String'];
   contractId: Scalars['ID'];
   successUrl: Scalars['String'];
+};
+
+export type DetailsStatistic = {
+  date: Scalars['DateScalar'];
+  eventNumber: Scalars['Float'];
+  serviceNumber: Scalars['Float'];
 };
 
 export type Event = {
@@ -525,6 +532,7 @@ export type Query = {
   getRoles: IRoles;
   getService: IService;
   getServices: IServices;
+  statisticOfMonth: StatisticsOfMonth;
   testQuery: Scalars['String'];
 };
 
@@ -581,6 +589,11 @@ export type QueryGetServiceArgs = {
 
 export type QueryGetServicesArgs = {
   query: QueryFilterDto;
+};
+
+
+export type QueryStatisticOfMonthArgs = {
+  input: StatisticsDto;
 };
 
 export type QueryFilterDto = {
@@ -641,6 +654,11 @@ export type RequestContractDto = {
 export type ResponseMessageBase = {
   message?: Maybe<Scalars['String']>;
   success?: Maybe<Scalars['Boolean']>;
+};
+
+export type Revenue = {
+  event: Scalars['Float'];
+  service: Scalars['Float'];
 };
 
 export type Role = {
@@ -705,6 +723,16 @@ export type SignUpDto = {
   lastName: Scalars['String'];
   password: Scalars['String'];
   phoneNumber: Scalars['String'];
+};
+
+export type StatisticsDto = {
+  month: Scalars['Float'];
+  year?: InputMaybe<Scalars['Float']>;
+};
+
+export type StatisticsOfMonth = {
+  details?: Maybe<Array<DetailsStatistic>>;
+  revenue: Revenue;
 };
 
 export type UpdateContractStatusDto = {
@@ -907,6 +935,74 @@ export function useCreateEventRequestMutation(baseOptions?: Apollo.MutationHookO
 export type CreateEventRequestMutationHookResult = ReturnType<typeof useCreateEventRequestMutation>;
 export type CreateEventRequestMutationResult = Apollo.MutationResult<CreateEventRequestMutation>;
 export type CreateEventRequestMutationOptions = Apollo.BaseMutationOptions<CreateEventRequestMutation, CreateEventRequestMutationVariables>;
+export const DeleteEventDocument = gql`
+    mutation deleteEvent($id: String!) {
+  deleteEvent(id: $id) {
+    message
+    success
+  }
+}
+    `;
+export type DeleteEventMutationFn = Apollo.MutationFunction<DeleteEventMutation, DeleteEventMutationVariables>;
+
+/**
+ * __useDeleteEventMutation__
+ *
+ * To run a mutation, you first call `useDeleteEventMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteEventMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteEventMutation, { data, loading, error }] = useDeleteEventMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteEventMutation(baseOptions?: Apollo.MutationHookOptions<DeleteEventMutation, DeleteEventMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteEventMutation, DeleteEventMutationVariables>(DeleteEventDocument, options);
+      }
+export type DeleteEventMutationHookResult = ReturnType<typeof useDeleteEventMutation>;
+export type DeleteEventMutationResult = Apollo.MutationResult<DeleteEventMutation>;
+export type DeleteEventMutationOptions = Apollo.BaseMutationOptions<DeleteEventMutation, DeleteEventMutationVariables>;
+export const DeleteServiceDocument = gql`
+    mutation deleteService($id: String!) {
+  deleteService(id: $id) {
+    message
+    success
+  }
+}
+    `;
+export type DeleteServiceMutationFn = Apollo.MutationFunction<DeleteServiceMutation, DeleteServiceMutationVariables>;
+
+/**
+ * __useDeleteServiceMutation__
+ *
+ * To run a mutation, you first call `useDeleteServiceMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteServiceMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteServiceMutation, { data, loading, error }] = useDeleteServiceMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteServiceMutation(baseOptions?: Apollo.MutationHookOptions<DeleteServiceMutation, DeleteServiceMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteServiceMutation, DeleteServiceMutationVariables>(DeleteServiceDocument, options);
+      }
+export type DeleteServiceMutationHookResult = ReturnType<typeof useDeleteServiceMutation>;
+export type DeleteServiceMutationResult = Apollo.MutationResult<DeleteServiceMutation>;
+export type DeleteServiceMutationOptions = Apollo.BaseMutationOptions<DeleteServiceMutation, DeleteServiceMutationVariables>;
 export const ConfirmContractDepositDocument = gql`
     mutation confirmContractDeposit($input: ConfirmContractDeposit!) {
   confirmContractDeposit(input: $input) {
@@ -2082,6 +2178,20 @@ export type CreateEventRequestMutationVariables = Exact<{
 
 
 export type CreateEventRequestMutation = { createEventRequest: { id: string } };
+
+export type DeleteEventMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteEventMutation = { deleteEvent: { message?: string | null, success?: boolean | null } };
+
+export type DeleteServiceMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteServiceMutation = { deleteService: { message?: string | null, success?: boolean | null } };
 
 export type ConfirmContractDepositMutationVariables = Exact<{
   input: ConfirmContractDeposit;

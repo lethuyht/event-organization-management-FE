@@ -1,7 +1,7 @@
-import { useGetEventQuery } from '#/generated/schemas';
-import { formatCurrency, showError } from '#/shared/utils/tools';
+import { useDeleteEventMutation, useGetEventQuery } from '#/generated/schemas';
+import { formatCurrency, showError, showSuccess } from '#/shared/utils/tools';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { Button, Col, Image, Row, Table, Typography } from 'antd';
+import { Button, Col, Image, Modal, Row, Table, Typography } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom';
 import { UpdateEventStatus } from '.';
 
@@ -41,6 +41,28 @@ export function EventDetail() {
       key: 'amount',
     },
   ];
+
+  const [deleteEvent] = useDeleteEventMutation({
+    onCompleted: () => {
+      showSuccess('Xóa sự kiện thành công');
+      navigate('/admin/event-management');
+    },
+    onError: error => showError(error),
+  });
+  const handleDeleteEvent = () => {
+    Modal.confirm({
+      title: 'Bạn có chắc chắn muốn xóa sự kiện này?',
+      okText: 'Đồng ý',
+      cancelText: 'Hủy',
+      onOk: () => {
+        deleteEvent({
+          variables: {
+            id: String(id),
+          },
+        });
+      },
+    });
+  };
 
   return (
     <>
@@ -124,7 +146,7 @@ export function EventDetail() {
                 <Button
                   block
                   icon={<DeleteOutlined />}
-                  onClick={() => {}}
+                  onClick={handleDeleteEvent}
                   className=" w-32 font-bold text-red-500"
                 >
                   Xóa

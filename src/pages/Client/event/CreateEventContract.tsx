@@ -129,7 +129,7 @@ export function CreateEventContract({ event }: Props) {
 
   const [createEventContract] = useCreateEventRequestMutation({
     onCompleted: data => {
-      // navigate(`/contract-management/${data.createEventRequest.id}`);
+      navigate(`/contract-management/${data.createEventRequest.id}`);
       showSuccess('Tạo hợp đồng thành công');
     },
     onError: error => showError(error),

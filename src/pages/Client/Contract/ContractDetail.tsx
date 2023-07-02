@@ -29,6 +29,8 @@ import PrimaryButton from '#/shared/components/buttons/PrimaryButton';
 import { showError, showSuccess } from '#/shared/utils/tools';
 import { useEffect } from 'react';
 import { DeleteOutlined } from '@ant-design/icons';
+import { ContractInfo } from '#/pages/Client/Contract/ContractInfo';
+import { ROLE } from '#/shared/utils/type';
 
 const MyContractDetailStyle = styled.div`
   .ribbon {
@@ -208,7 +210,7 @@ export const createServiceContractHtml = (contract?: Contract, user?: User) => {
                         Địa điểm: ${contract?.address}
                     </p>
                     <div class="service-table">
-                        <b>Bảng danh mục các dịch vụ trong hợp đồng</b>
+                        <b class="block w-full text-center my-2">Bảng danh mục các dịch vụ trong hợp đồng</b>
                         <table>
                             <tr>
                                 <td>STT</td>
@@ -518,7 +520,7 @@ export const createEventContract = (contract?: Contract, user?: User) => {
                         Địa điểm: ${contract?.address}
                     </p>
                     <div class="service-table">
-                        <b class="block w-full text-center">Bảng danh mục các dịch vụ kèm theo của sự kiện</b>
+                        <b class="block w-full text-center my-2">Bảng danh mục các dịch vụ kèm theo của sự kiện</b>
                         <table>
                             <tr>
                                 <td>STT</td>
@@ -823,7 +825,7 @@ function MyContractDetail() {
           >
             <Skeleton loading={loading}>
               <Row className={'rounded-md p-4 '}>
-                <Col span={24} className={'flex justify-between'}>
+                <Col span={24} className={'my-4 flex justify-between'}>
                   <Typography.Title level={5}>
                     Trạng thái:
                     {
@@ -851,11 +853,17 @@ function MyContractDetail() {
                       block
                       icon={<DeleteOutlined />}
                       onClick={cancelContractHandler}
-                      className=" w-32 font-bold text-red-500 hover:bg-red-600 hover:text-white"
+                      className=" mx-2 w-32 font-bold text-red-500 hover:bg-red-600 hover:text-white"
                     >
                       Hủy
                     </Button>
                   )}
+                </Col>
+                <Col span={24}>
+                  <ContractInfo
+                    status={data?.getContract.status as any}
+                    userType={ROLE.USER}
+                  />
                 </Col>
               </Row>
 

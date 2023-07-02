@@ -1,7 +1,11 @@
-import { ServiceType, useGetServiceQuery } from '#/generated/schemas';
-import { formatCurrency, showError } from '#/shared/utils/tools';
+import {
+  ServiceType,
+  useDeleteServiceMutation,
+  useGetServiceQuery,
+} from '#/generated/schemas';
+import { formatCurrency, showError, showSuccess } from '#/shared/utils/tools';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { Button, Col, Image, Row, Table, Typography } from 'antd';
+import { Button, Col, Image, Modal, Row, Table, Typography } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ServiceProps, UpdateServiceStatus } from '.';
 import { NO_IMAGE } from '#/shared/utils/constant';
@@ -42,6 +46,32 @@ export function ServiceDetail({ type }: ServiceProps) {
       key: 'totalQuantity',
     },
   ];
+
+  const [deleteService] = useDeleteServiceMutation({
+    onCompleted: () => {
+      showSuccess('Xóa dịch vụ thành công');
+      navigate(
+        `/admin/service-management/${
+          type === ServiceType.HumanResource ? 'human' : 'device'
+        }`,
+      );
+    },
+    onError: error => showError(error),
+  });
+  const handleDeleteService = () => {
+    Modal.confirm({
+      title: 'Bạn có chắc chắn muốn xóa sự kiện này?',
+      okText: 'Đồng ý',
+      cancelText: 'Hủy',
+      onOk: () => {
+        deleteService({
+          variables: {
+            id: String(id),
+          },
+        });
+      },
+    });
+  };
 
   return (
     <>
@@ -127,7 +157,7 @@ export function ServiceDetail({ type }: ServiceProps) {
               <Button
                 block
                 icon={<DeleteOutlined />}
-                onClick={() => {}}
+                onClick={handleDeleteService}
                 className=" w-32 font-bold text-red-500"
               >
                 Xóa
