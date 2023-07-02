@@ -11,16 +11,7 @@ import {
 } from '#/pages/Client/Contract/ContractDetail';
 import { ContractStatusTag } from '#/pages/Client/Contract/ContractStatus';
 import styled from '@emotion/styled';
-import {
-  Button,
-  Card,
-  Col,
-  Modal,
-  Row,
-  Skeleton,
-  Space,
-  Typography,
-} from 'antd';
+import { Button, Col, Modal, Row, Skeleton, Space, Typography } from 'antd';
 import { useParams } from 'react-router-dom';
 import { ContractInfo } from '#/pages/Client/Contract/ContractInfo';
 import { ROLE } from '#/shared/utils/type';
@@ -154,136 +145,122 @@ export function ContractDetail() {
 
   return (
     <ContractDetailStyle>
-      <Row className="mx-auto  max-w-container px-4 py-8" gutter={[16, 16]}>
-        <Col span={24} className="drop-shadow-xl">
-          <Card
-            title={
-              <Typography.Title level={3} className="text-[#f97316]">
-                CHI TIẾT HỢP ĐỒNG
-              </Typography.Title>
-            }
-            bordered={true}
-          >
-            <Skeleton loading={loading}>
-              <Row className={'rounded-md p-4 '}>
-                <Col span={24} className={'my-4 flex justify-between'}>
-                  <Typography.Title level={5}>
-                    Trạng thái:
-                    {
-                      <span className={'ml-4'}>
-                        <ContractStatusTag
-                          status={data?.getContract?.status || ''}
-                        />
-                      </span>
-                    }
-                  </Typography.Title>
-                  {data?.getContract.status === ContractStatus.DepositPaid && (
+      <Typography.Title level={2}>CHI TIẾT HỢP ĐỒNG</Typography.Title>
+      <Row className="mx-auto  max-w-container " gutter={[16, 16]}>
+        <Col span={24} className="rounded-md bg-[white] drop-shadow-xl ">
+          <Skeleton loading={loading}>
+            <Row className={'rounded-md p-4'}>
+              <Col span={24} className={'my-4 flex justify-between'}>
+                <Typography.Title level={5}>
+                  Trạng thái:
+                  {
+                    <span className={'ml-4'}>
+                      <ContractStatusTag
+                        status={data?.getContract?.status || ''}
+                      />
+                    </span>
+                  }
+                </Typography.Title>
+                {data?.getContract.status === ContractStatus.DepositPaid && (
+                  <div className={'flex justify-end'}>
+                    <PrimaryButton onClick={() => confirmContractHandler(true)}>
+                      Tiến hành thực hiện
+                    </PrimaryButton>
+                    <Button
+                      block
+                      icon={<DeleteOutlined />}
+                      onClick={() => {
+                        confirmContractHandler(false);
+                      }}
+                      className=" mx-2 w-32 font-bold text-red-500 hover:bg-red-600 hover:text-white"
+                    >
+                      Hủy
+                    </Button>
+                  </div>
+                )}
+                {data?.getContract.status === ContractStatus.InProgress &&
+                  dayjs().isAfter(data.getContract.hireDate) && (
                     <div className={'flex justify-end'}>
                       <PrimaryButton
-                        onClick={() => confirmContractHandler(true)}
+                        onClick={() =>
+                          updateContractStatusHandler(
+                            ContractStatus.WaitingPaid,
+                          )
+                        }
                       >
-                        Tiến hành thực hiện
+                        Yêu cầu thanh toán
                       </PrimaryButton>
-                      <Button
-                        block
-                        icon={<DeleteOutlined />}
-                        onClick={() => {
-                          confirmContractHandler(false);
-                        }}
-                        className=" mx-2 w-32 font-bold text-red-500 hover:bg-red-600 hover:text-white"
+                    </div>
+                  )}
+                {data?.getContract?.status === ContractStatus.WaitingPaid &&
+                  dayjs().isAfter(data?.getContract?.hireEndDate) && (
+                    <div className={'flex justify-end'}>
+                      <PrimaryButton
+                        onClick={() =>
+                          updateContractStatusHandler(ContractStatus.Completed)
+                        }
                       >
-                        Hủy
-                      </Button>
+                        Xác nhận hoàn thành
+                      </PrimaryButton>
                     </div>
                   )}
-                  {data?.getContract.status === ContractStatus.InProgress &&
-                    dayjs().isAfter(data.getContract.hireDate) && (
-                      <div className={'flex justify-end'}>
-                        <PrimaryButton
-                          onClick={() =>
-                            updateContractStatusHandler(
-                              ContractStatus.WaitingPaid,
-                            )
-                          }
-                        >
-                          Yêu cầu thanh toán
-                        </PrimaryButton>
-                      </div>
-                    )}
-                  {data?.getContract?.status === ContractStatus.WaitingPaid &&
-                    dayjs().isAfter(data?.getContract?.hireEndDate) && (
-                      <div className={'flex justify-end'}>
-                        <PrimaryButton
-                          onClick={() =>
-                            updateContractStatusHandler(
-                              ContractStatus.Completed,
-                            )
-                          }
-                        >
-                          Xác nhận hoàn thành
-                        </PrimaryButton>
-                      </div>
-                    )}
-                </Col>
-                <Col span={24}>
-                  <ContractInfo
-                    status={data?.getContract?.status as any}
-                    userType={ROLE.ADMIN}
-                  />
-                </Col>
-              </Row>
+              </Col>
+              <Col span={24}>
+                <ContractInfo
+                  status={data?.getContract?.status as any}
+                  userType={ROLE.ADMIN}
+                />
+              </Col>
+            </Row>
 
-              <Space className={'relative my-4 rounded-md'}>
-                <div className={'ribbon'}>
-                  {data?.getContract?.status === ContractStatus.Draft && (
-                    <div className={'ribbon-wrap'}>
-                      <div className={'ribbon-text bg-black'}>Bản nháp</div>
-                    </div>
-                  )}
-                  {[ContractStatus.Cancel, ContractStatus.AdminCancel].includes(
-                    data?.getContract?.status as any,
-                  ) && (
-                    <div className={'ribbon-wrap'}>
-                      <div className={'ribbon-text bg-[red]'}>Đã hủy</div>
-                    </div>
-                  )}
-                  {![
-                    ContractStatus.Cancel,
-                    ContractStatus.AdminCancel,
-                    ContractStatus.Draft,
-                  ].includes(data?.getContract?.status as any) && (
-                    <div className={'ribbon-wrap'}>
-                      <div className={'ribbon-text bg-green-600'}>
-                        Chính thức
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                {data?.getContract?.type === ContractType.Service ? (
-                  <div
-                    className={'border-[1px] border-solid border-[#000]'}
-                    dangerouslySetInnerHTML={{
-                      __html: createServiceContractHtml(
-                        data?.getContract as any,
-                        data?.getContract?.user as any,
-                      ),
-                    }}
-                  />
-                ) : (
-                  <div
-                    className={'border-[1px] border-solid border-[#000]'}
-                    dangerouslySetInnerHTML={{
-                      __html: createEventContract(
-                        data?.getContract as any,
-                        data?.getContract?.user as any,
-                      ),
-                    }}
-                  />
+            <Space className={'relative my-4 rounded-md'}>
+              <div className={'ribbon'}>
+                {data?.getContract?.status === ContractStatus.Draft && (
+                  <div className={'ribbon-wrap'}>
+                    <div className={'ribbon-text bg-black'}>Bản nháp</div>
+                  </div>
                 )}
-              </Space>
-            </Skeleton>
-          </Card>
+                {[ContractStatus.Cancel, ContractStatus.AdminCancel].includes(
+                  data?.getContract?.status as any,
+                ) && (
+                  <div className={'ribbon-wrap'}>
+                    <div className={'ribbon-text bg-[red]'}>Đã hủy</div>
+                  </div>
+                )}
+                {![
+                  ContractStatus.Cancel,
+                  ContractStatus.AdminCancel,
+                  ContractStatus.Draft,
+                ].includes(data?.getContract?.status as any) && (
+                  <div className={'ribbon-wrap'}>
+                    <div className={'ribbon-text bg-green-600'}>Chính thức</div>
+                  </div>
+                )}
+              </div>
+
+              {data?.getContract?.type === ContractType.Service ? (
+                <div
+                  className={'border-[1px] border-solid border-[#000]'}
+                  dangerouslySetInnerHTML={{
+                    __html: createServiceContractHtml(
+                      data?.getContract as any,
+                      data?.getContract?.user as any,
+                    ),
+                  }}
+                />
+              ) : (
+                <div
+                  className={'border-[1px] border-solid border-[#000]'}
+                  dangerouslySetInnerHTML={{
+                    __html: createEventContract(
+                      data?.getContract as any,
+                      data?.getContract?.user as any,
+                    ),
+                  }}
+                />
+              )}
+            </Space>
+          </Skeleton>
         </Col>
       </Row>
     </ContractDetailStyle>
