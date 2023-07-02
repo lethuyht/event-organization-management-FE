@@ -45,6 +45,7 @@ query getContract($id: String!){
                 id
                 contractEventId
                 serviceItemId
+                price
                 serviceItem{
                     id
                     name
@@ -67,6 +68,7 @@ query getContract($id: String!){
             hireDate
             hireEndDate
             serviceItemId
+            price
             serviceItem{
                 id
                 name
