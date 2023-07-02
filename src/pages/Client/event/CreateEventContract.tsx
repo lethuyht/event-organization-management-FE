@@ -17,7 +17,7 @@ import {
   Row,
   Typography,
 } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CustomerType } from '../Cart/CreateServiceContract';
 import { DatePicker } from '#/shared/components/common/DatePicker';
@@ -54,12 +54,13 @@ export function CreateEventContract({ event }: Props) {
   const navigate = useNavigate();
   const [dates, setDates] = useState<RangeValue>(null);
   const [checkAll, setCheckAll] = useState(true);
-  const [indeterminate, setIndeterminate] = useState(true);
+  const [indeterminate, setIndeterminate] = useState(false);
   const [selectedItems, setSelectedItems] = useState<string[]>(
     event?.eventServiceItems?.length
-      ? event.eventServiceItems.map(item => item.id)
+      ? event.eventServiceItems.map(item => item.serviceItemId)
       : [],
   );
+  const [amountEdit, setAmountEdit] = useState<boolean>(false);
   const disabledDate = (current: Dayjs) => {
     if (!dates) {
       return current < dayjs().add(1, 'week');
@@ -95,7 +96,7 @@ export function CreateEventContract({ event }: Props) {
   const onCheckAllChange = (e: CheckboxChangeEvent) => {
     setSelectedItems(
       e.target.checked && event?.eventServiceItems?.length
-        ? event?.eventServiceItems?.map(item => item.id)
+        ? event?.eventServiceItems?.map(item => item.serviceItemId)
         : [],
     );
     setIndeterminate(false);
@@ -105,9 +106,9 @@ export function CreateEventContract({ event }: Props) {
   const onChange = (checkedValues: CheckboxValueType[]) => {
     setSelectedItems(checkedValues as string[]);
     setIndeterminate(
-      !!checkedValues.length &&
-        checkedValues.length < Number(event?.eventServiceItems?.length),
+      checkedValues.length < Number(event?.eventServiceItems?.length),
     );
+
     setCheckAll(checkedValues.length === event?.eventServiceItems?.length);
   };
 
@@ -116,14 +117,14 @@ export function CreateEventContract({ event }: Props) {
       setIsCustomizedEvent(true);
     } else {
       setIsCustomizedEvent(false);
-      setCheckAll(true);
-      setIndeterminate(true);
-      setSelectedItems(
-        event?.eventServiceItems?.length
-          ? event.eventServiceItems.map(item => item.id)
-          : [],
-      );
     }
+    setCheckAll(true);
+    setIndeterminate(false);
+    setSelectedItems(
+      event?.eventServiceItems?.length
+        ? event.eventServiceItems.map(item => item.serviceItemId)
+        : [],
+    );
   };
 
   const [createEventContract] = useCreateEventRequestMutation({
@@ -168,6 +169,9 @@ export function CreateEventContract({ event }: Props) {
       },
     });
   };
+
+  useEffect(() => {}, [amountEdit]);
+
   return (
     <>
       <PrimaryButton
@@ -178,7 +182,7 @@ export function CreateEventContract({ event }: Props) {
       </PrimaryButton>
       <Modal
         closable
-        width={1000}
+        width={1500}
         title={
           <Typography.Title level={3} className={'text-[#f97316]'}>
             <ExclamationCircleOutlined className={'mr-4'} />
@@ -188,17 +192,17 @@ export function CreateEventContract({ event }: Props) {
         open={visible}
         onCancel={() => {
           setVisible(false);
-          form.resetFields();
-          setIsSameCreateAddress(false);
-          setEventAddress(undefined);
-          setIsCustomizedEvent(false);
-          setCheckAll(true);
-          setIndeterminate(true);
-          setSelectedItems(
-            event?.eventServiceItems?.length
-              ? event.eventServiceItems.map(item => item.id)
-              : [],
-          );
+          // form.resetFields();
+          // setIsSameCreateAddress(false);
+          // setEventAddress(undefined);
+          // setIsCustomizedEvent(false);
+          // setCheckAll(true);
+          // setIndeterminate(true);
+          // setSelectedItems(
+          //   event?.eventServiceItems?.length
+          //     ? event.eventServiceItems.map(item => item.id)
+          //     : [],
+          // );
         }}
         onOk={form.submit}
         okText={'Tạo hợp đồng'}
@@ -209,8 +213,14 @@ export function CreateEventContract({ event }: Props) {
           onFinish={handleCreateContract}
           className={'rounded-lg p-4 '}
         >
-          <Row gutter={[16, 16]}>
-            <Col span={24} className={'my-4 rounded-md p-4 shadow-lg'}>
+          <Row gutter={[16, 16]} className={'flex'}>
+            <Col
+              lg={10}
+              md={24}
+              className={
+                'my-4  rounded-md border-[1px] border-solid border-[#ccc] p-4 shadow-lg'
+              }
+            >
               <Row>
                 <Typography.Title level={4}>
                   Chọn dịch vụ kèm theo của sự kiện
@@ -259,7 +269,6 @@ export function CreateEventContract({ event }: Props) {
                         indeterminate={indeterminate}
                         onChange={onCheckAllChange}
                         checked={checkAll}
-                        defaultChecked={true}
                         disabled={!isCustomizedEvent}
                       >
                         <Typography.Text className="font-bold text-black">{`Tất cả (${event?.eventServiceItems?.length} sản phẩm)`}</Typography.Text>
@@ -302,9 +311,8 @@ export function CreateEventContract({ event }: Props) {
                                 className="flex w-full items-center"
                               >
                                 <Checkbox
-                                  value={item.id}
+                                  value={item.serviceItemId}
                                   disabled={!isCustomizedEvent}
-                                  defaultChecked={true}
                                   className={'flex items-center'}
                                 >
                                   <Row className=" flex w-full items-center justify-center">
@@ -353,7 +361,7 @@ export function CreateEventContract({ event }: Props) {
                               >
                                 {isCustomizedEvent ? (
                                   <Form.Item
-                                    name={[item.id, 'amount']}
+                                    name={[item.serviceItemId, 'amount']}
                                     initialValue={item.amount}
                                     rules={[
                                       {
@@ -392,7 +400,12 @@ export function CreateEventContract({ event }: Props) {
                                       },
                                     ]}
                                   >
-                                    <Input className={' text-center'} />
+                                    <Input
+                                      className={' text-center'}
+                                      onChange={() =>
+                                        setAmountEdit(!amountEdit)
+                                      }
+                                    />
                                   </Form.Item>
                                 ) : (
                                   <Typography.Text className="flex items-center text-black">
@@ -420,7 +433,9 @@ export function CreateEventContract({ event }: Props) {
                                         !isCustomizedEvent
                                           ? item.serviceItem.price * item.amount
                                           : item.serviceItem.price *
-                                              form.getFieldValue('0')?.amount,
+                                              (form.getFieldValue(
+                                                `${item.serviceItemId}`,
+                                              )?.amount || item.amount),
                                       )
                                     : '-'}
                                 </Typography.Text>
@@ -434,7 +449,13 @@ export function CreateEventContract({ event }: Props) {
                 </Col>
               </Row>
             </Col>
-            <Col span={24} className={'my-4 rounded-md p-4 shadow-lg'}>
+            <Col
+              lg={14}
+              md={24}
+              className={
+                'my-4 rounded-md border-[1px] border-solid border-[#ccc] p-4 shadow-lg'
+              }
+            >
               <Row>
                 <Typography.Title level={4}>
                   Thông tin hợp đồng

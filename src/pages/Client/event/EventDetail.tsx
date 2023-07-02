@@ -119,26 +119,28 @@ export function EventDetailPage() {
                 pagination={false}
               />
             </Col>
-            {event?.getEvent?.eventServiceItems?.length && (user && user.role?.name === ROLE.USER) && (
-              <Col span={24} className={'mt-4'}>
-                <Alert
-                  className={'rounded-md py-4 shadow-lg'}
-                  message={
-                    <Row className={'flex items-center justify-between'}>
-                      <Typography.Text className={'text-lg text-black'}>
-                        Bạn có nhu cầu tổ chức sự kiện này. Nhấn vào nút bên
-                        cạnh để đăng kí ngay nhé!
-                      </Typography.Text>
-                      <Col span={6}>
-                        <CreateEventContract event={event?.getEvent as any} />
-                      </Col>
-                    </Row>
-                  }
-                  type="info"
-                  showIcon
-                />
-              </Col>
-            )}
+            {event?.getEvent?.eventServiceItems?.length &&
+              user &&
+              user.role?.name === ROLE.USER && (
+                <Col span={24} className={'mt-4'}>
+                  <Alert
+                    className={'rounded-md py-4 shadow-lg'}
+                    message={
+                      <Row className={'flex items-center justify-between'}>
+                        <Typography.Text className={'text-lg text-black'}>
+                          Bạn có nhu cầu tổ chức sự kiện này. Nhấn vào nút bên
+                          cạnh để đăng kí ngay nhé!
+                        </Typography.Text>
+                        <Col span={6}>
+                          <CreateEventContract event={event?.getEvent as any} />
+                        </Col>
+                      </Row>
+                    }
+                    type="info"
+                    showIcon
+                  />
+                </Col>
+              )}
           </Row>
         )}
       </Row>

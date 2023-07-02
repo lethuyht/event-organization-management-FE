@@ -353,7 +353,7 @@ export type Mutation = {
   addItemToCart: ResponseMessageBase;
   changePassword: ResponseMessageBase;
   confirmContractDeposit: IContract;
-  createEventRequest: ResponseMessageBase;
+  createEventRequest: IContract;
   deleteEvent: ResponseMessageBase;
   deleteFileS3: Scalars['String'];
   deleteService: ResponseMessageBase;
@@ -877,8 +877,7 @@ export type CreateContractMutationOptions = Apollo.BaseMutationOptions<CreateCon
 export const CreateEventRequestDocument = gql`
     mutation createEventRequest($input: EventRequestInput!) {
   createEventRequest(input: $input) {
-    message
-    success
+    id
   }
 }
     `;
@@ -1489,6 +1488,7 @@ export const GetContractDocument = gql`
         id
         contractEventId
         serviceItemId
+        price
         serviceItem {
           id
           name
@@ -1509,6 +1509,7 @@ export const GetContractDocument = gql`
       hireDate
       hireEndDate
       serviceItemId
+      price
       serviceItem {
         id
         name
@@ -2080,7 +2081,7 @@ export type CreateEventRequestMutationVariables = Exact<{
 }>;
 
 
-export type CreateEventRequestMutation = { createEventRequest: { message?: string | null, success?: boolean | null } };
+export type CreateEventRequestMutation = { createEventRequest: { id: string } };
 
 export type ConfirmContractDepositMutationVariables = Exact<{
   input: ConfirmContractDeposit;
@@ -2185,7 +2186,7 @@ export type GetContractQueryVariables = Exact<{
 }>;
 
 
-export type GetContractQuery = { getContract: { id: string, address: string, code?: string | null, fileUrl?: string | null, hireDate: any, hireEndDate: any, status: ContractStatus, totalPrice: number, paymentIntentId?: string | null, type: ContractType, createdAt?: any | null, updatedAt?: any | null, user: { email: string, id: string }, details: { contractCreatedDate: any, contractName: string, customerInfo: { address: string, name: string, phoneNumber: string, representative?: string | null, type: string } }, contractEvent?: { id: string, contractId: string, eventId: string, event: { id: string, isPublic: boolean, isUsed: boolean, detail: string, name: string, description: string, thumbnail?: string | null }, contractEventServiceItems: Array<{ amount: number, id: string, contractEventId: string, serviceItemId: string, serviceItem: { id: string, name: string, price?: number | null, description?: string | null, totalQuantity?: number | null, service: { id: string, images?: Array<string> | null, type: ServiceType } } }> } | null, contractServiceItems: Array<{ id: string, amount: number, hireDate: any, hireEndDate: any, serviceItemId: string, serviceItem: { id: string, name: string, price?: number | null, totalQuantity?: number | null, description?: string | null, service: { id: string, images?: Array<string> | null } } }> } };
+export type GetContractQuery = { getContract: { id: string, address: string, code?: string | null, fileUrl?: string | null, hireDate: any, hireEndDate: any, status: ContractStatus, totalPrice: number, paymentIntentId?: string | null, type: ContractType, createdAt?: any | null, updatedAt?: any | null, user: { email: string, id: string }, details: { contractCreatedDate: any, contractName: string, customerInfo: { address: string, name: string, phoneNumber: string, representative?: string | null, type: string } }, contractEvent?: { id: string, contractId: string, eventId: string, event: { id: string, isPublic: boolean, isUsed: boolean, detail: string, name: string, description: string, thumbnail?: string | null }, contractEventServiceItems: Array<{ amount: number, id: string, contractEventId: string, serviceItemId: string, price: number, serviceItem: { id: string, name: string, price?: number | null, description?: string | null, totalQuantity?: number | null, service: { id: string, images?: Array<string> | null, type: ServiceType } } }> } | null, contractServiceItems: Array<{ id: string, amount: number, hireDate: any, hireEndDate: any, serviceItemId: string, price: number, serviceItem: { id: string, name: string, price?: number | null, totalQuantity?: number | null, description?: string | null, service: { id: string, images?: Array<string> | null } } }> } };
 
 export type GetContractsQueryVariables = Exact<{
   queryParams: QueryFilterDto;
