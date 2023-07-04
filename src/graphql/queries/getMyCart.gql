@@ -1,31 +1,32 @@
 query getMyCart {
-  getMyCart {
-    id
-    userId
-    cartItems {
-      id
-      serviceItemId
-      hireDate
-      hireEndDate
-      amount
-      serviceItem {
+    getMyCart {
         id
-        name
-        price
-        isPublished
-        serviceId
-        description
-        totalQuantity
-        updatedAt
-        createdAt
-        service {
-          id
-          images
-          type
+        userId
+        cartItems {
+            id
+            serviceItemId
+            hireDate
+            hireEndDate
+            amount
+            isAvailable
+            serviceItem {
+                id
+                name
+                price
+                isPublished
+                serviceId
+                description
+                totalQuantity
+                updatedAt
+                createdAt
+                service {
+                    id
+                    images
+                    type
+                }
+            }
+            createdAt
+            updatedAt
         }
-      }
-      createdAt
-      updatedAt
     }
-  }
 }
