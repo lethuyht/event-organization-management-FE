@@ -84,12 +84,12 @@ const AddressForm: React.FC<AddressFormProps> = ({ onChange }: Props) => {
   };
 
   const getAddressString = (): string => {
-    let addressString = '';
+    let addressString = [];
 
     if (selectedCity) {
       const city = cities.find(city => city.Id === selectedCity);
       if (city) {
-        addressString += city.Name + ', ';
+        addressString.unshift(city.Name);
       }
     }
 
@@ -98,7 +98,7 @@ const AddressForm: React.FC<AddressFormProps> = ({ onChange }: Props) => {
         .find(city => city.Id === selectedCity)
         ?.Districts.find(district => district.Id === selectedDistrict);
       if (district) {
-        addressString += district.Name + ', ';
+        addressString.unshift(district.Name);
       }
     }
 
@@ -108,13 +108,13 @@ const AddressForm: React.FC<AddressFormProps> = ({ onChange }: Props) => {
         ?.Districts.find(district => district.Id === selectedDistrict)
         ?.Wards.find(ward => ward.Id === selectedWard);
       if (ward) {
-        addressString += ward.Name + ', ';
+        addressString.unshift(ward.Name);
       }
     }
 
-    addressString += address;
+    addressString.unshift(address);
 
-    return addressString;
+    return addressString.join(', ');
   };
 
   return (

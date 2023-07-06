@@ -50,6 +50,7 @@ const SignUpForm = ({ className }: { className: string }) => {
                 {
                   type: 'email',
                   required: true,
+                  message: 'Email không hợp lệ!',
                 },
               ]}
             >

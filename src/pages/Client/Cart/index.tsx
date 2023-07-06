@@ -17,6 +17,7 @@ import {
   Modal,
   Row,
   Skeleton,
+  Tooltip,
   Typography,
 } from 'antd';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
@@ -89,7 +90,11 @@ export function Cart() {
     });
 
   const onCheckAllChange = (e: CheckboxChangeEvent) => {
-    setSelectedItems(e.target.checked ? cartItems.map(item => item.id) : []);
+    setSelectedItems(
+      e.target.checked
+        ? cartItems.filter(item => !!item?.isAvailable).map(item => item.id)
+        : [],
+    );
     setIndeterminate(false);
     setCheckAll(e.target.checked);
   };
@@ -97,7 +102,9 @@ export function Cart() {
   const onChange = (checkedValues: CheckboxValueType[]) => {
     setSelectedItems(checkedValues as string[]);
     setIndeterminate(
-      !!checkedValues.length && checkedValues.length < cartItems.length,
+      !!checkedValues.length &&
+      checkedValues.length <
+      cartItems.filter(item => item?.isAvailable).length,
     );
     setCheckAll(checkedValues.length === cartItems.length);
   };
@@ -120,7 +127,7 @@ export function Cart() {
           <Card
             title={
               <Typography.Title level={3} className="text-[#f97316]">
-                CHI TIẾT GIỎ HÀNG
+                CHI TIẾT DANH SÁCH ĐĂNG KÍ
               </Typography.Title>
             }
             bordered={true}
@@ -139,7 +146,8 @@ export function Cart() {
                           onChange={onCheckAllChange}
                           checked={checkAll}
                         >
-                          <Typography.Text className="font-bold text-black">{`Tất cả (${cartItems.length} sản phẩm)`}</Typography.Text>
+                          <Typography.Text className="font-bold text-black">{`Tất cả (${cartItems.filter(item => item?.isAvailable).length
+                            } sản phẩm)`}</Typography.Text>
                         </Checkbox>
                       </Col>
                       <Col span={3} className="text-center">
@@ -176,13 +184,18 @@ export function Cart() {
                           return (
                             <Row
                               key={index}
-                              className="my-3 rounded border border-solid border-slate-200 p-3"
+                              className={`my-3 rounded border border-solid border-slate-200 p-3 ${!item.isAvailable ? 'opacity-70' : ''
+                                }`}
                             >
                               <Col span={10} className="w-full">
-                                <Checkbox value={item.id}>
+                                <Checkbox
+                                  value={item.id}
+                                  disabled={!item?.isAvailable}
+                                >
                                   <Row className=" flex w-full items-center justify-center">
                                     <Col span={10}>
                                       <Image
+                                        preview={!!item?.isAvailable}
                                         src={
                                           item?.serviceItem?.service
                                             ?.images?.[0] || NO_IMAGE
@@ -254,8 +267,8 @@ export function Cart() {
                                 <Typography.Text className="text-black ">
                                   {item.serviceItem.price
                                     ? formatCurrency(
-                                        item.serviceItem.price * item.amount,
-                                      )
+                                      item.serviceItem.price * item.amount,
+                                    )
                                     : '-'}
                                 </Typography.Text>
                               </Col>
@@ -264,33 +277,48 @@ export function Cart() {
                                 className="flex w-full items-center justify-center"
                               >
                                 <Typography.Text>
-                                  <DeleteOutlined
-                                    onClick={() => {
-                                      Modal.confirm({
-                                        title:
-                                          'Bạn có chắc chắn muốn xóa sản phẩm này?',
-                                        icon: <ExclamationCircleOutlined />,
-                                        onOk() {
-                                          removeCartItem({
-                                            variables: {
-                                              cartItemId: item.id,
-                                            },
-                                          });
+                                  <Tooltip title={'Xóa'}>
+                                    <DeleteOutlined
+                                      onClick={() => {
+                                        Modal.confirm({
+                                          title:
+                                            'Bạn có chắc chắn muốn xóa sản phẩm này?',
+                                          icon: <ExclamationCircleOutlined />,
+                                          onOk() {
+                                            removeCartItem({
+                                              variables: {
+                                                cartItemId: item.id,
+                                              },
+                                            });
 
-                                          if (selectedItems.includes(item.id)) {
-                                            setSelectedItems(
-                                              selectedItems.filter(
-                                                selectedItem =>
-                                                  selectedItem !== item.id,
-                                              ),
-                                            );
-                                          }
-                                        },
-                                      });
-                                    }}
-                                  />
+                                            if (
+                                              selectedItems.includes(item.id)
+                                            ) {
+                                              setSelectedItems(
+                                                selectedItems.filter(
+                                                  selectedItem =>
+                                                    selectedItem !== item.id,
+                                                ),
+                                              );
+                                            }
+                                          },
+                                        });
+                                      }}
+                                    />
+                                  </Tooltip>
                                 </Typography.Text>
                               </Col>
+                              {!item.isAvailable && (
+                                <Col span={24} className={'my-2 ml-8'}>
+                                  <Typography.Text
+                                    className={
+                                      'my-2 rounded-2xl border-[1px] border-solid border-[#000] bg-[#ccc] p-2 text-black '
+                                    }
+                                  >
+                                    Không khả dụng.
+                                  </Typography.Text>
+                                </Col>
+                              )}
                             </Row>
                           );
                         })}

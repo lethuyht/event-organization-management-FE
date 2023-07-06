@@ -27,11 +27,12 @@ function SignInForm({ className }: { className: string }) {
             <Col span={24}>
               <Form.Item
                 name="email"
-                messageVariables={{ name: '' }}
+
                 rules={[
                   {
                     type: 'email',
                     required: true,
+                    message: 'Email không hợp lệ!',
                   },
                 ]}
               >

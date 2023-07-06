@@ -29,7 +29,7 @@ const userMenus: MenuType[] = [
     key: 'cart',
     to: '/cart',
     icon: <UserAccountSVG width={20} height={20} />,
-    title: 'Quản lý giỏ hàng',
+    title: 'Quản lý danh sách đăng kí',
     href: ['/cart'],
   },
   {
@@ -106,11 +106,10 @@ function AccountInfo() {
                 label: (
                   <span
                     onClick={menu.to ? () => navigate(`${menu.to}`) : logout}
-                    className={`flex items-center gap-3  ${
-                      menu?.href?.includes(pathname)
+                    className={`flex items-center gap-3  ${menu?.href?.includes(pathname)
                         ? 'text-[rgb(249 115 22)]'
                         : ''
-                    } text-2xl `}
+                      } text-2xl `}
                   >
                     {menu?.href?.includes(pathname) && (
                       <div className="h-2 w-2 rounded-full" />

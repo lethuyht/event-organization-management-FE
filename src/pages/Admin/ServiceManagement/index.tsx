@@ -77,9 +77,8 @@ export function UpdateServiceStatus({
 
   const showConfirm = (checked: boolean) => {
     confirm({
-      title: `Bạn có chắc chắn muốn ${
-        checked ? 'công khai' : 'ẩn'
-      } dịch vụ này không?`,
+      title: `Bạn có chắc chắn muốn ${checked ? 'công khai' : 'ẩn'
+        } dịch vụ này không?`,
       onOk() {
         return updateService({
           variables: {
@@ -144,15 +143,12 @@ export function ServiceManagement({ type }: ServiceProps) {
           images &&
           images.length > 0 && (
             <Row>
-              {images.slice(2).map((image, index) => (
-                <Image
-                  src={image}
-                  height={100}
-                  width={150}
-                  className="rounded"
-                  key={index}
-                />
-              ))}
+              <Image
+                src={images[0]}
+                height={100}
+                width={150}
+                className="rounded"
+              />
             </Row>
           )
         );
@@ -231,8 +227,7 @@ export function ServiceManagement({ type }: ServiceProps) {
               icon={<PlusOutlined />}
               onClick={() =>
                 navigate(
-                  `/admin/service-management/${
-                    type === ServiceType.Device ? 'device' : 'human'
+                  `/admin/service-management/${type === ServiceType.Device ? 'device' : 'human'
                   }/create`,
                 )
               }

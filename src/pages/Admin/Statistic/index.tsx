@@ -50,11 +50,11 @@ export function StatisticPage() {
       dayjs(selectedMonth).get('month') + 1,
     ).map(
       item =>
-        ({
-          date: item,
-          eventAmount: 0,
-          serviceAmount: 0,
-        } as any),
+      ({
+        date: item,
+        eventAmount: 0,
+        serviceAmount: 0,
+      } as any),
     ),
   );
   const { data, loading, refetch } = useStatisticOfMonthQuery({
@@ -88,11 +88,11 @@ export function StatisticPage() {
       getMonthDates(dayjs(date).get('year'), dayjs(date).get('month') + 1)
         .map(
           item =>
-            ({
-              date: item,
-              eventAmount: 0,
-              serviceAmount: 0,
-            } as any),
+          ({
+            date: item,
+            eventAmount: 0,
+            serviceAmount: 0,
+          } as any),
         )
         .sort((a, b) => dayjs(a.date).diff(dayjs(b.date))),
     );
@@ -266,6 +266,7 @@ export function StatisticPage() {
                         </Typography.Text>
                       }
                       value={data?.statisticOfMonth?.revenue?.service ?? 0}
+                      suffix={'VND'}
                       prefix={<ArrowUpOutlined />}
                     />
                   </Card>
@@ -280,6 +281,7 @@ export function StatisticPage() {
                         </Typography.Text>
                       }
                       value={data?.statisticOfMonth?.revenue?.event ?? 0}
+                      suffix={'VND'}
                       prefix={<ArrowUpOutlined />}
                     />
                   </Card>

@@ -1911,6 +1911,7 @@ export const GetMyCartDocument = gql`
       hireDate
       hireEndDate
       amount
+      isAvailable
       serviceItem {
         id
         name
@@ -2373,7 +2374,7 @@ export type GetMeQuery = { getMe: { avatar?: string | null, email: string, first
 export type GetMyCartQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMyCartQuery = { getMyCart: { id: string, userId: string, cartItems?: Array<{ id: string, serviceItemId: string, hireDate: any, hireEndDate: any, amount: number, createdAt?: any | null, updatedAt?: any | null, serviceItem: { id: string, name: string, price?: number | null, isPublished: boolean, serviceId: string, description?: string | null, totalQuantity?: number | null, updatedAt?: any | null, createdAt?: any | null, service: { id: string, images?: Array<string> | null, type: ServiceType } } }> | null } };
+export type GetMyCartQuery = { getMyCart: { id: string, userId: string, cartItems?: Array<{ id: string, serviceItemId: string, hireDate: any, hireEndDate: any, amount: number, isAvailable: boolean, createdAt?: any | null, updatedAt?: any | null, serviceItem: { id: string, name: string, price?: number | null, isPublished: boolean, serviceId: string, description?: string | null, totalQuantity?: number | null, updatedAt?: any | null, createdAt?: any | null, service: { id: string, images?: Array<string> | null, type: ServiceType } } }> | null } };
 
 export type GetMyContractsQueryVariables = Exact<{
   queryParams: QueryFilterDto;

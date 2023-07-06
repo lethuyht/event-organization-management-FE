@@ -120,8 +120,7 @@ export function EventDetailPage() {
               />
             </Col>
             {event?.getEvent?.eventServiceItems?.length &&
-              user &&
-              user.role?.name === ROLE.USER && (
+              localStorage.getItem("role") === ROLE.USER && (
                 <Col span={24} className={'mt-4'}>
                   <Alert
                     className={'rounded-md py-4 shadow-lg'}

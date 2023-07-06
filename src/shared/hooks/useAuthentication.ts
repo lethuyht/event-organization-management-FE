@@ -14,6 +14,7 @@ const useAuthentication = () => {
   const [signInMutation, { loading: signInLoading }] = useSignInMutation({
     onCompleted(res) {
       setToken(res.signIn.token);
+      localStorage.setItem('role', res.signIn.role?.name || '');
       setRefreshToken(res.signIn.refreshToken);
       setUserId(res.signIn.id);
       if (res.signIn.role?.name === ROLE.ADMIN) {
