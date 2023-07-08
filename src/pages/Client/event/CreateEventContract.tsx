@@ -155,22 +155,26 @@ export function CreateEventContract({ event }: Props) {
             },
           },
           isCustomized: values.isCustomized,
-          hireDate: dayjs(values.hireDate[0]).format('YYYY-MM-DD'),
-          hireEndDate: dayjs(values.hireDate[1]).format('YYYY-MM-DD'),
+          hireDate: dayjs(values.hireDate[0])
+            .startOf('day')
+            .format('YYYY-MM-DD HH:mm:ss'),
+          hireEndDate: dayjs(values.hireDate[1])
+            .endOf('day')
+            .format('YYYY-MM-DD HH:mm:ss'),
           customizedServiceItems: values.isCustomized
             ? selectedItems.map(item => {
-              return {
-                serviceItemId: item,
-                amount: Number(values[item].amount),
-              };
-            })
+                return {
+                  serviceItemId: item,
+                  amount: Number(values[item].amount),
+                };
+              })
             : undefined,
         },
       },
     });
   };
 
-  useEffect(() => { }, [amountEdit]);
+  useEffect(() => {}, [amountEdit]);
 
   return (
     <>
@@ -430,13 +434,13 @@ export function CreateEventContract({ event }: Props) {
                                 <Typography.Text className="text-black ">
                                   {item.serviceItem.price
                                     ? formatCurrency(
-                                      !isCustomizedEvent
-                                        ? item.serviceItem.price * item.amount
-                                        : item.serviceItem.price *
-                                        (form.getFieldValue(
-                                          `${item.serviceItemId}`,
-                                        )?.amount || item.amount),
-                                    )
+                                        !isCustomizedEvent
+                                          ? item.serviceItem.price * item.amount
+                                          : item.serviceItem.price *
+                                              (form.getFieldValue(
+                                                `${item.serviceItemId}`,
+                                              )?.amount || item.amount),
+                                      )
                                     : '-'}
                                 </Typography.Text>
                               </Col>

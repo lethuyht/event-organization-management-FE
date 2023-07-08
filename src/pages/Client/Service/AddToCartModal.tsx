@@ -55,8 +55,12 @@ export function AddToCartModal({ serviceItem, onChange }: Props) {
         variables: {
           input: {
             serviceItemId: serviceItem.id,
-            hireDate: dayjs(values.hireDate[0]).format('YYYY-MM-DD'),
-            hireEndDate: dayjs(values.hireDate[1]).format('YYYY-MM-DD'),
+            hireDate: dayjs(values.hireDate[0])
+              .startOf('day')
+              .format('YYYY-MM-DD HH:mm:ss'),
+            hireEndDate: dayjs(values.hireDate[1])
+              .endOf('day')
+              .format('YYYY-MM-DD HH:mm:ss'),
             amount: Number(values.amount),
           },
         },
