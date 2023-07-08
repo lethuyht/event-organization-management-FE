@@ -18,6 +18,7 @@ query getContract($id: String!){
                 type
             }
         }
+        refundReceiptUrl
         fileUrl
         hireDate
         hireEndDate

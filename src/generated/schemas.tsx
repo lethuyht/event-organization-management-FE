@@ -96,6 +96,7 @@ export type Contract = {
   hireEndDate: Scalars['DateTime'];
   id: Scalars['ID'];
   paymentIntentId?: Maybe<Scalars['String']>;
+  refundReceiptUrl?: Maybe<Scalars['String']>;
   status: ContractStatus;
   totalPrice: Scalars['Float'];
   type: ContractType;
@@ -257,6 +258,7 @@ export type IContract = {
   hireEndDate: Scalars['DateTime'];
   id: Scalars['ID'];
   paymentIntentId?: Maybe<Scalars['String']>;
+  refundReceiptUrl?: Maybe<Scalars['String']>;
   status: ContractStatus;
   totalPrice: Scalars['Float'];
   type: ContractType;
@@ -1557,6 +1559,7 @@ export const GetContractDocument = gql`
         type
       }
     }
+    refundReceiptUrl
     fileUrl
     hireDate
     hireEndDate
@@ -2343,7 +2346,7 @@ export type GetContractQueryVariables = Exact<{
 }>;
 
 
-export type GetContractQuery = { getContract: { id: string, address: string, code?: string | null, fileUrl?: string | null, hireDate: any, hireEndDate: any, status: ContractStatus, totalPrice: number, paymentIntentId?: string | null, type: ContractType, createdAt?: any | null, updatedAt?: any | null, user: { email: string, id: string }, details: { contractCreatedDate: any, contractName: string, customerInfo: { address: string, name: string, phoneNumber: string, representative?: string | null, type: string } }, contractEvent?: { id: string, contractId: string, eventId: string, event: { id: string, isPublic: boolean, isUsed: boolean, detail: string, name: string, description: string, thumbnail?: string | null }, contractEventServiceItems: Array<{ amount: number, id: string, contractEventId: string, serviceItemId: string, price: number, serviceItem: { id: string, name: string, price?: number | null, description?: string | null, totalQuantity?: number | null, service: { id: string, images?: Array<string> | null, type: ServiceType } } }> } | null, contractServiceItems: Array<{ id: string, amount: number, hireDate: any, hireEndDate: any, serviceItemId: string, price: number, serviceItem: { id: string, name: string, price?: number | null, totalQuantity?: number | null, description?: string | null, service: { id: string, images?: Array<string> | null } } }> } };
+export type GetContractQuery = { getContract: { id: string, address: string, code?: string | null, refundReceiptUrl?: string | null, fileUrl?: string | null, hireDate: any, hireEndDate: any, status: ContractStatus, totalPrice: number, paymentIntentId?: string | null, type: ContractType, createdAt?: any | null, updatedAt?: any | null, user: { email: string, id: string }, details: { contractCreatedDate: any, contractName: string, customerInfo: { address: string, name: string, phoneNumber: string, representative?: string | null, type: string } }, contractEvent?: { id: string, contractId: string, eventId: string, event: { id: string, isPublic: boolean, isUsed: boolean, detail: string, name: string, description: string, thumbnail?: string | null }, contractEventServiceItems: Array<{ amount: number, id: string, contractEventId: string, serviceItemId: string, price: number, serviceItem: { id: string, name: string, price?: number | null, description?: string | null, totalQuantity?: number | null, service: { id: string, images?: Array<string> | null, type: ServiceType } } }> } | null, contractServiceItems: Array<{ id: string, amount: number, hireDate: any, hireEndDate: any, serviceItemId: string, price: number, serviceItem: { id: string, name: string, price?: number | null, totalQuantity?: number | null, description?: string | null, service: { id: string, images?: Array<string> | null } } }> } };
 
 export type GetContractsQueryVariables = Exact<{
   queryParams: QueryFilterDto;

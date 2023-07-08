@@ -1,6 +1,6 @@
 import { ContractStatus } from '#/generated/schemas';
 import { ROLE } from '#/shared/utils/type';
-import { Alert } from 'antd';
+import { Alert, Typography } from 'antd';
 
 interface Props {
   status: string;
@@ -46,7 +46,7 @@ export function ContractInfo({ status, userType }: Props) {
         showIcon
         type={'error'}
         message={
-          'Hợp đồng đã bị hủy bởi hệ thống. Trong trường hợp bạn đã đặt cọc, vui lòng kiểm tra lại trong tài khoản. Nếu có thắc mắc, cin vui lòng liên hệ hệ thống của chúng tôi. Xin cảm ơn!'
+          'Hợp đồng đã bị hủy bởi hệ thống. Trong trường hợp bạn đã đặt cọc, vui lòng kiểm tra lại trong tài khoản hoặc nhấn vào chi tiết hóa đơn để xem chi tiết. Nếu có thắc mắc, cin vui lòng liên hệ hệ thống của chúng tôi. Xin cảm ơn!'
         }
       ></Alert>
     ) : status === ContractStatus.Completed ? (
@@ -66,7 +66,14 @@ export function ContractInfo({ status, userType }: Props) {
       showIcon
       type={'warning'}
       message={
-        'Hợp đồng đã được đặt cọc thành công. Vui lòng xem xét và tiến hành thực hiên hợp đồng. Chuyển trạng thái của hợp đồng thành (Đang thực hiện) để tiến hành thực hiện hợp đồng. Nếu không chuyển trạng thái của hợp đồng trước ngày hợp đồng  bắt đầu, hợp đồng sẽ được hệ thống tự hủy và tiền đặt cọc sẽ được hoàn về phía người thuê!'
+        <Typography.Text className="text-black">
+          Hợp đồng đã được đặt cọc thành công. Vui lòng xem xét và tiến hành
+          thực hiên hợp đồng. Chuyển trạng thái của hợp đồng thành{' '}
+          <span className={'font-bold text-blue-600'}>Đang thực hiện</span> để
+          tiến hành thực hiện hợp đồng. Nếu không chuyển trạng thái của hợp đồng
+          trước ngày hợp đồng bắt đầu, hợp đồng sẽ được hệ thống tự hủy và tiền
+          đặt cọc sẽ được hoàn về phía người thuê!
+        </Typography.Text>
       }
     ></Alert>
   ) : status === ContractStatus.InProgress ? (
@@ -74,7 +81,11 @@ export function ContractInfo({ status, userType }: Props) {
       showIcon
       type={'info'}
       message={
-        'Hợp đồng đang thực hiện. Hệ thống sẽ tự động chuyển trạng thái sáng (Chờ thanh toán) khi đến ngày kết thúc thực hiện hợp đồng.'
+        <Typography.Text className="text-black">
+          Hợp đồng đang thực hiện. Hệ thống sẽ tự động chuyển trạng thái sáng{' '}
+          <span className="font-bold text-orange-500">Chờ thanh toán</span> khi
+          đến ngày kết thúc thực hiện hợp đồng.
+        </Typography.Text>
       }
     ></Alert>
   ) : status === ContractStatus.WaitingPaid ? (

@@ -858,6 +858,23 @@ function MyContractDetail() {
                       Hủy
                     </Button>
                   )}
+
+                  {data?.getContract.status === ContractStatus.AdminCancel &&
+                    data?.getContract?.refundReceiptUrl && (
+                      <PrimaryButton
+                        block
+                        onClick={() => {
+                          data?.getContract?.refundReceiptUrl &&
+                            window.open(
+                              data?.getContract?.refundReceiptUrl,
+                              '_blank',
+                            );
+                        }}
+                        className=" mx-2 w-44 hover:bg-red-600 hover:text-white"
+                      >
+                        Hóa đơn hoàn tiền
+                      </PrimaryButton>
+                    )}
                 </Col>
                 <Col span={24}>
                   <ContractInfo
