@@ -3,7 +3,7 @@ import '#/shared/utils/style.css';
 import { ApolloProvider } from '@apollo/client';
 import * as Sentry from '@sentry/react';
 import { ConfigProvider } from 'antd';
-import enUS from 'antd/es/locale/en_US';
+import viVN from 'antd/es/locale/vi_VN';
 import 'antd/dist/antd.css';
 
 import { createRoot } from 'react-dom/client';
@@ -15,8 +15,9 @@ import App from './routers/App';
 import i18n from './shared/i18n';
 import { getPopupContainer } from './shared/utils/tools';
 import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
+import 'dayjs/locale/vi';
+import utc from 'dayjs/plugin/utc';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -30,7 +31,7 @@ createRoot(document.getElementById('root')!).render(
           getPopupContainer={getPopupContainer}
           form={formConfig}
           componentSize="large"
-          locale={enUS}
+          locale={viVN}
         >
           <BrowserRouter>
             <App />

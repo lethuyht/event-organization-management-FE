@@ -5,4 +5,4 @@ import generatePicker from 'antd/es/date-picker/generatePicker';
 
 export type Picker = 'date' | 'week' | 'month' | 'year' | 'time' | 'quarter';
 
-export const DatePicker = generatePicker<Dayjs>(dayjsGenerateConfig);
+export const DatePicker = generatePicker<Dayjs>(dayjsGenerateConfig as any);

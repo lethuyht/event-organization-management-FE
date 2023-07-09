@@ -147,7 +147,11 @@ export function ServiceDetail({ type }: ServiceProps) {
                 htmlType="submit"
                 icon={<EditOutlined />}
                 onClick={() => {
-                  navigate(`/admin/service-management/${type}/edit/${id}`);
+                  navigate(
+                    `/admin/service-management/${
+                      type === ServiceType.Device ? 'device' : 'human'
+                    }/edit/${id}`,
+                  );
                 }}
               >
                 Cập nhật
