@@ -240,7 +240,13 @@ export const createServiceContractHtml = (contract?: Contract, user?: User) => {
                                 <td>${item?.serviceItem?.price}</td>
                                 <td>${
                                   item?.amount *
-                                  Number(item?.serviceItem?.price)
+                                  Number(item?.serviceItem?.price) *
+                                  Number(
+                                    dayjs(contract?.hireEndDate).diff(
+                                      dayjs(contract?.hireDate),
+                                      'day',
+                                    ) + 1,
+                                  )
                                 }</td>
                                 <td>VNĐ</td>
                             </tr>`;
@@ -543,7 +549,13 @@ export const createEventContract = (contract?: Contract, user?: User) => {
                                 <td>${item?.serviceItem?.price}</td>
                                 <td>${
                                   item?.amount *
-                                  Number(item?.serviceItem?.price)
+                                  Number(item?.serviceItem?.price) *
+                                  Number(
+                                    dayjs(contract?.hireEndDate).diff(
+                                      dayjs(contract?.hireDate),
+                                      'day',
+                                    ) + 1,
+                                  )
                                 }</td>
                                 <td>VNĐ</td>
                             </tr>`;

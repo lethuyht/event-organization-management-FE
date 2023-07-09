@@ -133,9 +133,9 @@ export function CreateServiceContract({
           address: value.address,
           details: {
             contractName: value.contractName,
-            contractCreatedDate: dayjs(value.contractCreatedDate).format(
-              'YYYY-MM-DD',
-            ),
+            contractCreatedDate: dayjs(value.contractCreatedDate)
+              .tz('Asia/Ho_Chi_Minh')
+              .format('YYYY-MM-DD HH:mm:ss ZZ'),
             customerInfo: {
               type: value.customerType,
               name: value.customerName,

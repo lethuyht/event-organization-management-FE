@@ -103,8 +103,8 @@ export function Cart() {
     setSelectedItems(checkedValues as string[]);
     setIndeterminate(
       !!checkedValues.length &&
-      checkedValues.length <
-      cartItems.filter(item => item?.isAvailable).length,
+        checkedValues.length <
+          cartItems.filter(item => item?.isAvailable).length,
     );
     setCheckAll(checkedValues.length === cartItems.length);
   };
@@ -113,7 +113,10 @@ export function Cart() {
     const total = selectedItems.reduce((total, item) => {
       const cartItem = cartItems.find(itemCart => itemCart.id === item);
       const itemPrice = cartItem
-        ? cartItem?.amount * Number(cartItem?.serviceItem?.price)
+        ? cartItem?.amount *
+          Number(cartItem?.serviceItem?.price) *
+          (dayjs(cartItem?.hireEndDate).diff(dayjs(cartItem?.hireDate), 'day') +
+            1)
         : 0;
       return total + itemPrice;
     }, 0);
@@ -146,8 +149,9 @@ export function Cart() {
                           onChange={onCheckAllChange}
                           checked={checkAll}
                         >
-                          <Typography.Text className="font-bold text-black">{`Tất cả (${cartItems.filter(item => item?.isAvailable).length
-                            } sản phẩm)`}</Typography.Text>
+                          <Typography.Text className="font-bold text-black">{`Tất cả (${
+                            cartItems.filter(item => item?.isAvailable).length
+                          } sản phẩm)`}</Typography.Text>
                         </Checkbox>
                       </Col>
                       <Col span={3} className="text-center">
@@ -163,10 +167,15 @@ export function Cart() {
                         </Typography.Text>
                       </Col>
                       <Col span={4} className="text-center">
-                        <Typography.Text className="font-bold text-black">
-                          {' '}
-                          Thành tiền
-                        </Typography.Text>
+                        <Tooltip
+                          title={'Đơn giá x Số lượng x Số ngày thuê'}
+                          placement="top"
+                        >
+                          <Typography.Text className="font-bold text-black">
+                            {' '}
+                            Thành tiền
+                          </Typography.Text>
+                        </Tooltip>
                       </Col>
                       <Col span={4} className="text-center">
                         <Typography.Text className="font-bold text-black">
@@ -184,8 +193,9 @@ export function Cart() {
                           return (
                             <Row
                               key={index}
-                              className={`my-3 rounded border border-solid border-slate-200 p-3 ${!item.isAvailable ? 'opacity-70' : ''
-                                }`}
+                              className={`my-3 rounded border border-solid border-slate-200 p-3 ${
+                                !item.isAvailable ? 'opacity-70' : ''
+                              }`}
                             >
                               <Col span={10} className="w-full">
                                 <Checkbox
@@ -267,8 +277,14 @@ export function Cart() {
                                 <Typography.Text className="text-black ">
                                   {item.serviceItem.price
                                     ? formatCurrency(
-                                      item.serviceItem.price * item.amount,
-                                    )
+                                        item.serviceItem.price *
+                                          item.amount *
+                                          (dayjs(item.hireEndDate).diff(
+                                            dayjs(item.hireDate),
+                                            'day',
+                                          ) +
+                                            1),
+                                      )
                                     : '-'}
                                 </Typography.Text>
                               </Col>
@@ -350,19 +366,28 @@ export function Cart() {
                     );
                     return (
                       <Row key={index} className="border-b-[1px] py-4">
-                        <Col span={16}>
+                        <Col span={15}>
                           {
                             <Typography.Text className="font-bold uppercase text-black">
                               {cartItem?.serviceItem?.name}
                             </Typography.Text>
                           }
                         </Col>
-                        <Col span={4} className="text-center">
+                        <Col span={3} className="text-center">
                           <Typography.Text className="text-black">
                             x{cartItem?.amount}
                           </Typography.Text>
+                        </Col>{' '}
+                        <Col span={3} className="text-center">
+                          <Typography.Text className="text-black">
+                            x
+                            {dayjs(cartItem?.hireEndDate).diff(
+                              cartItem?.hireDate,
+                              'day',
+                            ) + 1}
+                          </Typography.Text>
                         </Col>
-                        <Col span={4} className="text-center">
+                        <Col span={3} className="text-center">
                           <Typography.Text className="float-right text-black">
                             {formatCurrency(cartItem?.serviceItem.price || 0)}
                           </Typography.Text>

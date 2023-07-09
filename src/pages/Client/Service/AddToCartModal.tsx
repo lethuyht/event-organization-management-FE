@@ -56,11 +56,13 @@ export function AddToCartModal({ serviceItem, onChange }: Props) {
           input: {
             serviceItemId: serviceItem.id,
             hireDate: dayjs(values.hireDate[0])
+              .tz('Asia/Ho_Chi_Minh')
               .startOf('day')
-              .format('YYYY-MM-DD HH:mm:ss'),
+              .format('YYYY-MM-DD HH:mm:ss ZZ'),
             hireEndDate: dayjs(values.hireDate[1])
+              .tz('Asia/Ho_Chi_Minh')
               .endOf('day')
-              .format('YYYY-MM-DD HH:mm:ss'),
+              .format('YYYY-MM-DD HH:mm:ss ZZ'),
             amount: Number(values.amount),
           },
         },

@@ -14,6 +14,13 @@ import { client } from './graphql/client';
 import App from './routers/App';
 import i18n from './shared/i18n';
 import { getPopupContainer } from './shared/utils/tools';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.tz.setDefault('Asia/Ho_Chi_Minh');
 
 createRoot(document.getElementById('root')!).render(
   <Sentry.ErrorBoundary fallback={<p>An error has occurred</p>}>

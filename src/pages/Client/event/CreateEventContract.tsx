@@ -143,9 +143,9 @@ export function CreateEventContract({ event }: Props) {
           address: values.address,
           details: {
             contractName: values.contractName,
-            contractCreatedDate: dayjs(values.contractCreatedDate).format(
-              'YYYY-MM-DD',
-            ),
+            contractCreatedDate: dayjs(values.contractCreatedDate)
+              .tz('Asia/Ho_Chi_Minh')
+              .format('YYYY-MM-DD HH:mm:ss ZZ'),
             customerInfo: {
               type: values.customerType,
               name: values.customerName,
@@ -156,11 +156,13 @@ export function CreateEventContract({ event }: Props) {
           },
           isCustomized: values.isCustomized,
           hireDate: dayjs(values.hireDate[0])
+            .tz('Asia/Ho_Chi_Minh')
             .startOf('day')
-            .format('YYYY-MM-DD HH:mm:ss'),
+            .format('YYYY-MM-DD HH:mm:ss ZZ'),
           hireEndDate: dayjs(values.hireDate[1])
+            .tz('Asia/Ho_Chi_Minh')
             .endOf('day')
-            .format('YYYY-MM-DD HH:mm:ss'),
+            .format('YYYY-MM-DD HH:mm:ss ZZ'),
           customizedServiceItems: values.isCustomized
             ? selectedItems.map(item => {
                 return {
