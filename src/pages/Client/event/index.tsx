@@ -171,6 +171,7 @@ export function EventPage() {
             <div className="mt-6 flex justify-center">
               <Pagination
                 current={currentPage}
+                defaultPageSize={pageSize}
                 onChange={page => {
                   scrollToTop();
                   setCurrentPage(page);
