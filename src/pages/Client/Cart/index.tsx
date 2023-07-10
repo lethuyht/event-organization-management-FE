@@ -357,7 +357,7 @@ export function Cart() {
             }
             bordered={true}
           >
-            <Row>
+            <Row gutter={[8, 8]}>
               {selectedItems.length > 0 ? (
                 <Col span={24}>
                   {selectedItems.map((item: string, index: number) => {
@@ -366,7 +366,7 @@ export function Cart() {
                     );
                     return (
                       <Row key={index} className="border-b-[1px] py-4">
-                        <Col span={15}>
+                        <Col span={12}>
                           {
                             <Typography.Text className="font-bold uppercase text-black">
                               {cartItem?.serviceItem?.name}
@@ -387,7 +387,7 @@ export function Cart() {
                             ) + 1}
                           </Typography.Text>
                         </Col>
-                        <Col span={3} className="text-center">
+                        <Col span={6} className="text-center">
                           <Typography.Text className="float-right text-black">
                             {formatCurrency(cartItem?.serviceItem.price || 0)}
                           </Typography.Text>
