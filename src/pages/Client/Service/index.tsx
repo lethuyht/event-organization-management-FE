@@ -146,7 +146,9 @@ export function Service({ type }: Props) {
                   >
                     <Card
                       onClick={() => {
-                        window.location.href = `/device/${device.id}`;
+                        window.location.href = `/${
+                          type === ServiceType.Device ? 'device' : 'human-event'
+                        }/${device.id}`;
                       }}
                       hoverable
                       cover={

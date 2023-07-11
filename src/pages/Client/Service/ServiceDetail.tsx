@@ -8,11 +8,15 @@ import { SLIDER_IMAGES } from '#/shared/utils/constant';
 import { getToken } from '#/shared/utils/token';
 import { formatCurrency, showError, useTable } from '#/shared/utils/tools';
 import styled from '@emotion/styled';
-import { Row, Table, Typography, Col, Image } from 'antd';
+import { Col, Row, Table, Typography } from 'antd';
 import { useParams } from 'react-router-dom';
 import { AddToCartModal } from './AddToCartModal';
 
 const DeviceDetailPageStyles = styled.div`
+  .slick-slide.slick-active.slick-current {
+    margin-bottom: -10px;
+  }
+
   .ant-input-affix-wrapper {
     background-color: white !important;
     padding: 10px 20px !important;
@@ -24,6 +28,7 @@ const DeviceDetailPageStyles = styled.div`
 
     .anticon {
       margin-right: 10px !important;
+
       svg {
         color: black !important;
         font-size: 20px !important;
@@ -33,14 +38,17 @@ const DeviceDetailPageStyles = styled.div`
 
   .ant-card-meta-detail {
     width: 100%;
+
     .ant-card-meta-title {
       font-size: 16px;
       font-weight: bold;
     }
+
     .ant-card-meta-description .day {
       color: orange;
     }
   }
+
   .ant-table-thead {
     background-color: #ffff;
   }
@@ -55,6 +63,38 @@ const DeviceDetailPageStyles = styled.div`
 
   .ant-image {
     width: 100% !important;
+  }
+
+  .ant-table-content {
+    .ant-table-cell-fix {
+      &-left {
+        background-color: #ffffff !important;
+        @media only screen and (max-width: 948px) {
+          left: unset !important;
+          z-index: unset !important;
+
+          &-last:after {
+            bottom: unset !important;
+          }
+        }
+      }
+
+      &-right {
+        background-color: #ffffff !important;
+        @media only screen and (max-width: 948px) {
+          right: unset !important;
+          z-index: unset !important;
+
+          &-first:after {
+            bottom: unset !important;
+          }
+        }
+      }
+    }
+
+    .ant-table-thead .ant-table-cell {
+      background-color: #00081e !important;
+    }
   }
 `;
 
@@ -138,6 +178,7 @@ export function ServiceDetailPage({ type }: Props) {
     {
       title: 'Hành động',
       key: 'actions',
+      fixed: 'right' as any,
       render: (record: ServiceItem) => (
         <AddToCartModal serviceItem={record} onChange={() => {}} />
       ),
